@@ -3,31 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sefas3DShop – Moderne 3D-Druck Deko & Gadgets</title>
+    <title>Sefas3DShop – Neuheiten der Woche</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f8f9fa; color: #333; line-height: 1.6; }
         header { background: #1a1a1a; color: #fff; text-align: center; padding: 3rem 1rem; }
         header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff9900; }
         header p { font-size: 1.2rem; opacity: 0.9; }
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        
+        .container { max-width: 1100px; margin: 2rem auto; padding: 0 1rem; }
+        
         .hero-banner { background: #ffffff; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2.5rem; border: 2px solid #ff9900; }
         .hero-banner h2 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #1a1a1a; }
         .hero-banner p { color: #666; margin-bottom: 1.5rem; }
-        .section-title { font-size: 1.8rem; margin: 2.5rem 0 1rem 0; border-bottom: 2px solid #ff9900; padding-bottom: 0.5rem; color: #1a1a1a; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ff9900; padding-bottom: 0.5rem; margin-bottom: 1.5rem; }
+        .section-title { font-size: 1.8rem; color: #1a1a1a; }
+        .badge-week { background: #ff9900; color: #fff; font-size: 0.85rem; padding: 0.4rem 0.9rem; border-radius: 20px; font-weight: bold; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
         .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
         .card:hover { transform: translateY(-5px); }
-        .card-img { width: 100%; height: 230px; object-fit: cover; background-color: #eee; }
+        
+        .card-icon-box { height: 160px; background: #222222; display: flex; align-items: center; justify-content: center; font-size: 4rem; }
         .card-body { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 1.15rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600; }
+        .card-title { font-size: 1.1rem; color: #1a1a1a; font-weight: 600; margin-bottom: 0.5rem; }
         .price { font-size: 1.25rem; font-weight: bold; color: #ff9900; margin: 0.5rem 0 1rem 0; }
+        
         .btn-group { display: flex; gap: 0.5rem; }
-        .btn { display: inline-block; background: #ff9900; color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 6px; font-weight: bold; font-size: 0.9rem; text-align: center; flex: 1; }
+        .btn { display: inline-block; background: #ff9900; color: #fff; text-decoration: none; padding: 0.6rem 0.8rem; border-radius: 6px; font-weight: bold; font-size: 0.85rem; text-align: center; flex: 1; }
         .btn:hover { background: #e68a00; }
-        .btn-main { background: #ff9900; font-size: 1.1rem; padding: 0.8rem 1.8rem; }
+        .btn-main { background: #ff9900; font-size: 1.1rem; padding: 0.8rem 1.8rem; flex: none; }
         .btn-paypal { background: #0070ba; }
         .btn-paypal:hover { background: #005ea6; }
+        
         footer { text-align: center; padding: 2rem; background: #1a1a1a; color: #aaa; margin-top: 4rem; font-size: 0.9rem; }
     </style>
 </head>
@@ -40,131 +49,71 @@
 
     <div class="container">
         
-        <!-- Haupt-Banner mit Direktlink zu deinen 88 Anzeigen -->
+        <!-- Banner zum Gesamtsortiment -->
         <div class="hero-banner">
-            <h2>Über 80+ Artikel direkt verfügbar!</h2>
-            <p>Besuche mein offizielles Kleinanzeigen-Profil, um das vollständige Sortiment zu durchstöbern und direkt anzufragen.</p>
-            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn btn-main">Alle Angebote auf Kleinanzeigen ansehen</a>
+            <h2>Über 80+ Artikel im Gesamtsortiment!</h2>
+            <p>Besuche mein offizielles Kleinanzeigen-Profil, um das vollständige Sortiment zu durchstöbern.</p>
+            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn btn-main">Alle Produkte auf Kleinanzeigen ansehen</a>
         </div>
 
-        <!-- Herbst & Weihnachts-Deko -->
-        <h2 class="section-title">Herbst- & Weihnachts-Deko</h2>
+        <!-- Neuheiten der Woche Header -->
+        <div class="section-header">
+            <h2 class="section-title">✨ Neuheiten der Woche</h2>
+            <span class="badge-week">Frisch gedruckt</span>
+        </div>
+
         <div class="grid">
             
+            <!-- Neuheit 1 -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1508747703725-719777637510?w=500&auto=format&fit=crop" alt="Moderner Deko Kürbis" class="card-img">
+                <div class="card-icon-box">🎃</div>
                 <div class="card-body">
-                    <h3 class="card-title">Moderner Deko Kürbis – Geriffelter Kürbis (Skandi / Japandi)</h3>
+                    <h3 class="card-title">Moderner Deko Kürbis (Skandi / Japandi Stil)</h3>
                     <div>
                         <div class="price">5,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Neuheit 2 -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=500&auto=format&fit=crop" alt="Weihnachtsglocken Anhänger" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Moderne Weihnachtsglocken Anhänger – Baumschmuck</h3>
-                    <div>
-                        <div class="price">5,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1512389142860-9c449e58a543?w=500&auto=format&fit=crop" alt="Moderner Nussknacker" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Moderner Nussknacker Deko – Eleganter Advents-Soldat</h3>
-                    <div>
-                        <div class="price">5,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1545232979-fbf596a12b6f?w=500&auto=format&fit=crop" alt="Moderner Weihnachtswichtel" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Moderner Weihnachtswichtel – Gnom Figur</h3>
-                    <div>
-                        <div class="price">6,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Wohn-Deko, Vasen & Figuren -->
-        <h2 class="section-title">Wohn-Deko, Vasen & Figuren</h2>
-        <div class="grid">
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1612196808214-b7e239e5f6b7?w=500&auto=format&fit=crop" alt="Moderne Rillen-Vase" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Moderne Rillen-Vase (15 cm)</h3>
-                    <div>
-                        <div class="price">10,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?w=500&auto=format&fit=crop" alt="Dackel Ablageschale" class="card-img">
+                <div class="card-icon-box">🐕</div>
                 <div class="card-body">
                     <h3 class="card-title">Dackel Ablageschale / Deko-Hund (Schwarz)</h3>
                     <div>
                         <div class="price">15,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div>
-
-        <!-- Gadgets & Service -->
-        <h2 class="section-title">Gaming & Wunschanfertigungen</h2>
-        <div class="grid">
-
+            <!-- Neuheit 3 -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1606813907291-d86efa9b94db?w=500&auto=format&fit=crop" alt="PS5 Controller & Headset Halterung" class="card-img">
+                <div class="card-icon-box">🎮</div>
                 <div class="card-body">
                     <h3 class="card-title">PS5 Controller & Headset Halterung / Standfuß</h3>
                     <div>
                         <div class="price">11,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
                 </div>
             </div>
 
+            <!-- Neuheit 4 -->
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop" alt="3D-Druck Service" class="card-img">
+                <div class="card-icon-box">🛠️</div>
                 <div class="card-body">
-                    <h3 class="card-title">Individueller 3D-Druck Service & Wunschdesign</h3>
+                    <h3 class="card-title">Individueller 3D-Druck Service auf Bestellung</h3>
                     <div>
                         <div class="price">Auf Anfrage</div>
                         <div class="btn-group">
