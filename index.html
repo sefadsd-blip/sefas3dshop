@@ -11,6 +11,9 @@
         header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; color: #ff9900; }
         header p { font-size: 1.2rem; opacity: 0.9; }
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 1rem; }
+        .hero-banner { background: #ffffff; border-radius: 12px; padding: 2rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); margin-bottom: 2.5rem; border: 2px solid #ff9900; }
+        .hero-banner h2 { font-size: 1.8rem; margin-bottom: 0.5rem; color: #1a1a1a; }
+        .hero-banner p { color: #666; margin-bottom: 1.5rem; }
         .section-title { font-size: 1.8rem; margin: 2.5rem 0 1rem 0; border-bottom: 2px solid #ff9900; padding-bottom: 0.5rem; color: #1a1a1a; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
         .card { background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); transition: transform 0.2s; display: flex; flex-direction: column; justify-content: space-between; }
@@ -20,8 +23,9 @@
         .card-title { font-size: 1.15rem; margin-bottom: 0.5rem; color: #1a1a1a; font-weight: 600; }
         .price { font-size: 1.25rem; font-weight: bold; color: #ff9900; margin: 0.5rem 0 1rem 0; }
         .btn-group { display: flex; gap: 0.5rem; }
-        .btn { display: inline-block; background: #ff9900; color: #fff; text-decoration: none; padding: 0.6rem; border-radius: 6px; font-weight: bold; font-size: 0.85rem; text-align: center; flex: 1; }
+        .btn { display: inline-block; background: #ff9900; color: #fff; text-decoration: none; padding: 0.7rem 1rem; border-radius: 6px; font-weight: bold; font-size: 0.9rem; text-align: center; flex: 1; }
         .btn:hover { background: #e68a00; }
+        .btn-main { background: #ff9900; font-size: 1.1rem; padding: 0.8rem 1.8rem; }
         .btn-paypal { background: #0070ba; }
         .btn-paypal:hover { background: #005ea6; }
         footer { text-align: center; padding: 2rem; background: #1a1a1a; color: #aaa; margin-top: 4rem; font-size: 0.9rem; }
@@ -36,6 +40,13 @@
 
     <div class="container">
         
+        <!-- Haupt-Banner mit Direktlink zu deinen 88 Anzeigen -->
+        <div class="hero-banner">
+            <h2>Über 80+ Artikel direkt verfügbar!</h2>
+            <p>Besuche mein offizielles Kleinanzeigen-Profil, um das vollständige Sortiment zu durchstöbern und direkt anzufragen.</p>
+            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn btn-main">Alle Angebote auf Kleinanzeigen ansehen</a>
+        </div>
+
         <!-- Herbst & Weihnachts-Deko -->
         <h2 class="section-title">Herbst- & Weihnachts-Deko</h2>
         <div class="grid">
@@ -47,7 +58,7 @@
                     <div>
                         <div class="price">5,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -61,7 +72,7 @@
                     <div>
                         <div class="price">5,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -75,7 +86,7 @@
                     <div>
                         <div class="price">5,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -89,35 +100,7 @@
                     <div>
                         <div class="price">6,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1576919228236-a097c32a5cd4?w=500&auto=format&fit=crop" alt="Rentier mit Schlitten Schale" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Rentier mit Schlitten Schale – Weihnachtsdeko</h3>
-                    <div>
-                        <div class="price">10,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1513297887119-d46091b24bfa?w=500&auto=format&fit=crop" alt="Moderner Schneemann Deko" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Moderner Schneemann Deko – Geriffelte Winterfigur</h3>
-                    <div>
-                        <div class="price">5,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -137,35 +120,7 @@
                     <div>
                         <div class="price">10,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1581783342308-f792dbdd27c5?w=500&auto=format&fit=crop" alt="Dekorative Vasen im Beutel-Design" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Dekorative Vasen im Beutel-Design</h3>
-                    <div>
-                        <div class="price">6,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=500&auto=format&fit=crop" alt="Blumentopf mit Herz-Händen" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Süßer Blumentopf mit Herz-Händen (Übertopf)</h3>
-                    <div>
-                        <div class="price">10,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -179,35 +134,7 @@
                     <div>
                         <div class="price">15,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop" alt="Stylische Katzen Deko" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Stylische Katzen Deko im Rillen-Design</h3>
-                    <div>
-                        <div class="price">5,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1532323544230-7191fd51bc1b?w=500&auto=format&fit=crop" alt="Schönes Wandregal rund" class="card-img">
-                <div class="card-body">
-                    <h3 class="card-title">Schönes Wandregal rund / Metall-Optik Regal</h3>
-                    <div>
-                        <div class="price">15,00 €</div>
-                        <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -216,8 +143,8 @@
 
         </div>
 
-        <!-- Haushalt & Gaming Gadgets -->
-        <h2 class="section-title">Haushalt & Gaming Gadgets</h2>
+        <!-- Gadgets & Service -->
+        <h2 class="section-title">Gaming & Wunschanfertigungen</h2>
         <div class="grid">
 
             <div class="card">
@@ -227,7 +154,7 @@
                     <div>
                         <div class="price">11,00 €</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
+                            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn">Auf Kleinanzeigen</a>
                             <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
                         </div>
                     </div>
@@ -235,14 +162,13 @@
             </div>
 
             <div class="card">
-                <img src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?w=500&auto=format&fit=crop" alt="Design Küchenrollenhalter" class="card-img">
+                <img src="https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=500&auto=format&fit=crop" alt="3D-Druck Service" class="card-img">
                 <div class="card-body">
-                    <h3 class="card-title">Design-Küchenrollenhalter im modernen Rillen-Look</h3>
+                    <h3 class="card-title">Individueller 3D-Druck Service & Wunschdesign</h3>
                     <div>
-                        <div class="price">9,00 €</div>
+                        <div class="price">Auf Anfrage</div>
                         <div class="btn-group">
-                            <a href="https://www.kleinanzeigen.de" target="_blank" class="btn">Auf Kleinanzeigen</a>
-                            <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
+                            <a href="mailto:Sefad.sd@gmail.com" class="btn">E-Mail Anfrage</a>
                         </div>
                     </div>
                 </div>
