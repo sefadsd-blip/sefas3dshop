@@ -518,7 +518,7 @@
         Deutschland</p>
 
         <h3>Kontakt</h3>
-        <p>E-Mail: info@sefas3dshop.de</p>
+        <p>E-Mail: sefad.sd@gmail.com</p>
 
         <h3>Umsatzsteuer-ID</h3>
         <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: Kleinunternehmer nach § 19 UStG</p>
@@ -617,7 +617,6 @@
           </div>
         </div>
 
-        <!-- Dynamische Zahlungsanweisungen (PayPal / Revolut) -->
         <div id="paymentDetailsBox"></div>
 
         <button class="checkout-btn" style="width: 100%; margin-top: 15px;" onclick="finishOrder()">Zurück zum Shop</button>
@@ -808,7 +807,7 @@
       document.getElementById('stepCart').style.display = 'block';
     }
 
-    function submitOrder(event) {
+    async function submitOrder(event) {
       event.preventDefault();
 
       const firstName = document.getElementById('custFirstName').value;
@@ -820,9 +819,34 @@
 
       const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const total = subtotal + 3.90;
-
       const orderNum = Math.floor(10000 + Math.random() * 90000);
 
+      const itemsList = cart.map(i => `${i.quantity}x ${i.title} (${(i.price * i.quantity).toFixed(2)} €)`).join('\n');
+
+      // 1. Bestellung per E-Mail an sefad.sd@gmail.com senden
+      try {
+        fetch("https://formsubmit.co/ajax/sefad.sd@gmail.com", {
+          method: "POST",
+          headers: { 
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          body: JSON.stringify({
+            _subject: `Neue Bestellung #${orderNum} bei Sefas3DShop!`,
+            Bestellnummer: `#${orderNum}`,
+            Kunde: `${firstName} ${lastName}`,
+            Email: email,
+            Adresse: `${street}, ${zip}`,
+            Zahlungsart: payment,
+            Gesamtsumme: `${total.toFixed(2).replace('.', ',')} €`,
+            Bestellte_Artikel: itemsList
+          })
+        });
+      } catch (err) {
+        console.error("Fehler beim Senden der E-Mail:", err);
+      }
+
+      // 2. Kunden-Bestätigung im Shop anzeigen
       document.getElementById('confOrderNum').innerText = `#${orderNum}`;
       document.getElementById('confName').innerText = `${firstName} ${lastName}`;
       document.getElementById('confAddress').innerText = `${street}, ${zip}`;
@@ -830,7 +854,6 @@
       document.getElementById('confPayment').innerText = payment;
       document.getElementById('confTotal').innerText = `${total.toFixed(2).replace('.', ',')} €`;
 
-      // Zahlungsdetails generieren
       const paymentBox = document.getElementById('paymentDetailsBox');
       if (payment === 'PayPal') {
         paymentBox.innerHTML = `
