@@ -3,26 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sefas3DShop - Mein Online-Shop</title>
+  <title>Sefas3DShop - Custom 3D-Drucke &amp; Design</title>
   <style>
     :root {
-      --rossmann-red: #d0021b;
-      --rossmann-dark-red: #a80014;
-      --bg-gray: #f4f4f4;
-      --text-color: #333333;
-      --border-color: #e0e0e0;
+      --bg-dark: #121214;
+      --card-bg: #1e1e24;
+      --card-hover: #262630;
+      --accent: #ff6b00;
+      --accent-hover: #e05d00;
+      --text-main: #f0f0f5;
+      --text-muted: #a0a0b0;
+      --border-color: #2e2e38;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: Arial, Helvetica, sans-serif;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: var(--bg-gray);
-      color: var(--text-color);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -30,25 +33,24 @@
 
     /* Top Utility Bar */
     .top-bar {
-      background-color: #ffffff;
+      background-color: #0b0b0d;
       border-bottom: 1px solid var(--border-color);
       padding: 8px 30px;
       font-size: 0.85rem;
       display: flex;
       justify-content: space-between;
-      color: #666;
+      color: var(--text-muted);
     }
 
     /* Header */
     header {
-      background-color: var(--rossmann-red);
-      color: white;
+      background-color: #1a1a20;
+      border-bottom: 1px solid var(--border-color);
       padding: 15px 30px;
-      sticky: top;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .header-main {
@@ -62,49 +64,57 @@
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
-      letter-spacing: -0.5px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 1px;
       cursor: pointer;
     }
 
     .logo span {
-      background-color: white;
-      color: var(--rossmann-red);
-      padding: 2px 6px;
-      border-radius: 4px;
-      margin-left: 4px;
+      color: var(--text-main);
     }
 
     .search-bar {
       flex: 1;
-      max-width: 500px;
+      max-width: 450px;
       display: flex;
     }
 
     .search-bar input {
       width: 100%;
       padding: 10px 15px;
-      border: none;
-      border-radius: 4px 0 0 4px;
-      font-size: 0.95rem;
+      border-radius: 20px 0 0 20px;
+      border: 1px solid var(--border-color);
+      border-right: none;
+      background-color: #121214;
+      color: var(--text-main);
       outline: none;
     }
 
+    .search-bar input:focus {
+      border-color: var(--accent);
+    }
+
     .search-bar button {
-      background-color: #333;
+      background-color: var(--accent);
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 0 4px 4px 0;
+      border-radius: 0 20px 20px 0;
       cursor: pointer;
       font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .search-bar button:hover {
+      background-color: var(--accent-hover);
     }
 
     .cart-btn {
-      background-color: white;
-      color: var(--rossmann-red);
-      border: none;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
       padding: 10px 18px;
       border-radius: 20px;
       font-weight: bold;
@@ -112,17 +122,16 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-      transition: transform 0.1s, background-color 0.2s;
+      transition: background-color 0.2s, transform 0.1s;
     }
 
     .cart-btn:hover {
-      background-color: #f8f8f8;
+      background-color: var(--card-hover);
       transform: scale(1.03);
     }
 
     .cart-badge {
-      background-color: var(--rossmann-red);
+      background-color: var(--accent);
       color: white;
       border-radius: 50%;
       padding: 2px 8px;
@@ -131,7 +140,8 @@
 
     /* Hauptnavigation */
     nav {
-      background-color: var(--rossmann-dark-red);
+      background-color: #16161a;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .nav-container {
@@ -146,46 +156,49 @@
     }
 
     .nav-link {
-      color: white;
+      color: var(--text-main);
       text-decoration: none;
       padding: 14px 20px;
       display: block;
-      font-weight: bold;
+      font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .nav-link:hover, .nav-link.active {
-      background-color: rgba(255, 255, 255, 0.15);
+      background-color: var(--card-bg);
+      color: var(--accent);
     }
 
-    /* Dropdown Menü für Produkte */
+    /* Dropdown Menü */
     .dropdown {
       display: none;
       position: absolute;
       top: 100%;
       left: 0;
-      background-color: white;
+      background-color: #1a1a20;
       min-width: 220px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-      border-radius: 0 0 4px 4px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      border: 1px solid var(--border-color);
+      border-radius: 0 0 8px 8px;
       z-index: 200;
     }
 
     .dropdown a {
-      color: var(--text-color);
+      color: var(--text-muted);
       padding: 12px 16px;
       text-decoration: none;
       display: block;
       font-size: 0.9rem;
-      border-bottom: 1px solid #f0f0f0;
+      border-bottom: 1px solid var(--border-color);
+      cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .dropdown a:hover {
-      background-color: var(--bg-gray);
-      color: var(--rossmann-red);
-      font-weight: bold;
+      background-color: var(--card-hover);
+      color: var(--accent);
     }
 
     .nav-item:hover .dropdown {
@@ -195,7 +208,7 @@
     /* Main Container */
     .main-container {
       max-width: 1200px;
-      margin: 20px auto;
+      margin: 25px auto;
       padding: 0 20px;
       flex: 1;
       width: 100%;
@@ -204,106 +217,111 @@
     .section-title {
       font-size: 1.5rem;
       margin-bottom: 20px;
-      border-bottom: 2px solid var(--rossmann-red);
+      border-bottom: 2px solid var(--accent);
       padding-bottom: 8px;
-      color: var(--rossmann-red);
+      color: var(--text-main);
     }
 
     /* Produkt-Grid */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 25px;
     }
 
     .product-card {
-      background-color: white;
+      background-color: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 8px;
+      border-radius: 12px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: box-shadow 0.2s, transform 0.2s;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
 
     .product-card:hover {
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transform: translateY(-3px);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background-color: var(--card-hover);
     }
 
     .product-img {
       width: 100%;
-      height: 200px;
+      height: 220px;
       object-fit: cover;
-      background-color: #f9f9f9;
+      background-color: #121214;
     }
 
     .product-info {
-      padding: 15px;
+      padding: 18px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
 
     .product-title {
-      font-size: 1rem;
-      font-weight: bold;
+      font-size: 1.05rem;
+      font-weight: 600;
       margin-bottom: 8px;
+      line-height: 1.3;
       height: 2.6em;
       overflow: hidden;
     }
 
     .product-price {
-      font-size: 1.25rem;
-      color: var(--rossmann-red);
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .product-details {
-      font-size: 0.8rem;
-      color: #666;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
       margin-bottom: 12px;
     }
 
+    .product-details {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 15px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
     .badge {
-      display: inline-block;
-      background-color: #eee;
-      padding: 2px 6px;
-      border-radius: 3px;
-      margin-right: 4px;
-      margin-bottom: 4px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.75rem;
     }
 
     .add-btn {
       margin-top: auto;
-      background-color: var(--rossmann-red);
+      background-color: var(--accent);
       color: white;
       border: none;
       padding: 10px;
-      border-radius: 4px;
-      font-weight: bold;
+      border-radius: 8px;
+      font-weight: 600;
       cursor: pointer;
       transition: background-color 0.2s;
     }
 
     .add-btn:hover {
-      background-color: var(--rossmann-dark-red);
+      background-color: var(--accent-hover);
     }
 
     /* Impressum Bereich */
     .impressum-box {
-      background-color: white;
+      background-color: var(--card-bg);
       padding: 30px;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid var(--border-color);
       line-height: 1.6;
     }
 
     .impressum-box h3 {
-      margin-top: 15px;
-      margin-bottom: 5px;
-      color: var(--rossmann-red);
+      margin-top: 18px;
+      margin-bottom: 6px;
+      color: var(--accent);
     }
 
     /* Modal / Popup für Warenkorb */
@@ -314,7 +332,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
+      background-color: rgba(0, 0, 0, 0.7);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -325,12 +343,14 @@
     }
 
     .modal-content {
-      background-color: white;
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
       width: 90%;
       max-width: 500px;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
       max-height: 80vh;
       display: flex;
       flex-direction: column;
@@ -341,12 +361,12 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border-color);
-      padding-bottom: 10px;
+      padding-bottom: 12px;
       margin-bottom: 15px;
     }
 
     .modal-header h2 {
-      color: var(--rossmann-red);
+      color: var(--accent);
       font-size: 1.3rem;
     }
 
@@ -355,7 +375,11 @@
       border: none;
       font-size: 1.5rem;
       cursor: pointer;
-      color: #888;
+      color: var(--text-muted);
+    }
+
+    .close-btn:hover {
+      color: var(--text-main);
     }
 
     .cart-items {
@@ -368,30 +392,31 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-color);
     }
 
     .cart-item-title {
-      font-weight: bold;
-      font-size: 0.9rem;
-      max-width: 250px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      max-width: 240px;
     }
 
     .cart-item-price {
-      color: var(--rossmann-red);
+      color: var(--accent);
       font-weight: bold;
     }
 
     .remove-item {
-      color: #999;
+      color: var(--text-muted);
       cursor: pointer;
-      margin-left: 10px;
+      margin-left: 12px;
       font-weight: bold;
+      font-size: 1.2rem;
     }
 
     .remove-item:hover {
-      color: var(--rossmann-red);
+      color: #ff4d4d;
     }
 
     .cart-footer {
@@ -408,23 +433,25 @@
     }
 
     .checkout-btn {
-      background-color: #27ae60;
+      background-color: var(--accent);
       color: white;
       border: none;
       padding: 10px 20px;
-      border-radius: 4px;
+      border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.2s;
     }
 
     .checkout-btn:hover {
-      background-color: #219653;
+      background-color: var(--accent-hover);
     }
 
     /* Footer */
     footer {
-      background-color: #333;
-      color: white;
+      background-color: #1a1a20;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
       text-align: center;
       padding: 20px;
       margin-top: 40px;
@@ -437,7 +464,7 @@
   <!-- Top Bar -->
   <div class="top-bar">
     <span>Kostenlose Lieferung ab 49 €</span>
-    <span>Schneller 3D-Druck & Versand aus Deutschland</span>
+    <span>Präzise 3D-Drucke &amp; Schneller Versand aus Deutschland</span>
   </div>
 
   <!-- Header -->
@@ -446,7 +473,7 @@
       <div class="logo" onclick="showPage('all')">Sefas3D<span>Shop</span></div>
       <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Produkt oder Kategorie suchen..." oninput="handleSearch()">
-        <button>Suchen</button>
+        <button onclick="handleSearch()">Suchen</button>
       </div>
       <!-- Klickbarer Warenkorb Button -->
       <button class="cart-btn" onclick="toggleCartModal()">
@@ -463,7 +490,7 @@
         <div class="dropdown">
           <a onclick="filterCategory('alle')">Alle Kategorien</a>
           <a onclick="filterCategory('Deko')">Deko</a>
-          <a onclick="filterCategory('Werkstatt')">Werkstatt & Haushalt</a>
+          <a onclick="filterCategory('Werkstatt')">Werkstatt &amp; Haushalt</a>
           <a onclick="filterCategory('Weihnachten')">Weihnachten</a>
         </div>
       </li>
@@ -517,7 +544,7 @@
         <button class="close-btn" onclick="toggleCartModal()">&times;</button>
       </div>
       <div class="cart-items" id="cartItems">
-        <p style="text-align: center; color: #777; padding: 20px;">Dein Warenkorb ist leer.</p>
+        <p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>
       </div>
       <div class="cart-footer">
         <div class="cart-total">Gesamt: <span id="cartTotal">0,00 €</span></div>
@@ -574,14 +601,13 @@
 
     let cart = [];
     let currentPage = 'all';
-    let currentCategoryFilter = 'alle';
 
     function renderProducts(items) {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
 
       if (items.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Keine Produkte gefunden.</p>';
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Keine Produkte gefunden.</p>';
         return;
       }
 
@@ -589,7 +615,7 @@
         const card = document.createElement('div');
         card.className = 'product-card';
 
-        const imgUrl = `https://placehold.co/400x300/f8f8f8/d0021b?text=${encodeURIComponent(p.title)}`;
+        const imgUrl = `https://placehold.co/400x300/1e1e24/ff6b00?text=${encodeURIComponent(p.title)}`;
 
         card.innerHTML = `
           <img class="product-img" src="${imgUrl}" alt="${p.title}" loading="lazy">
@@ -619,7 +645,6 @@
       if (page === 'all') {
         document.getElementById('navAll').classList.add('active');
         document.getElementById('sectionTitle').innerText = 'Alle Produkte';
-        currentCategoryFilter = 'alle';
         renderProducts(products);
       } else if (page === 'new') {
         document.getElementById('navNew').classList.add('active');
@@ -635,7 +660,6 @@
 
     function filterCategory(cat) {
       showPage('all');
-      currentCategoryFilter = cat;
       document.getElementById('sectionTitle').innerText = cat === 'alle' ? 'Alle Produkte' : `Kategorie: ${cat}`;
       if (cat === 'alle') {
         renderProducts(products);
@@ -682,7 +706,7 @@
       const cartTotal = document.getElementById('cartTotal');
 
       if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Dein Warenkorb ist leer.</p>';
+        cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>';
         cartTotal.innerText = '0,00 €';
         return;
       }
@@ -699,7 +723,7 @@
         div.innerHTML = `
           <div>
             <div class="cart-item-title">${item.title}</div>
-            <small>${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</small>
+            <small style="color: var(--text-muted);">${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</small>
           </div>
           <div>
             <span class="cart-item-price">${itemTotal.toFixed(2).replace('.', ',')} €</span>
