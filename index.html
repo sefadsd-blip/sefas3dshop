@@ -435,7 +435,6 @@
       font-size: 0.9rem;
     }
 
-    /* Impressum Box */
     .impressum-box {
       background-color: var(--card-bg);
       padding: 30px;
@@ -632,18 +631,20 @@
 
   <script>
     const products = [
-      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true, sizes: ["Standard"], colors: ["Braun", "Beige"] },
-      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Beige"] },
-      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
-      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Holz-Optik"] },
-      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true, sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Orange", "Beige"] },
-      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Beige"] },
-      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] }
+      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true, sizes: [], colors: ["Braun", "Beige"] },
+      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true, sizes: [], colors: ["Beige"] },
+      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false, sizes: [], colors: ["Beige", "Schwarz"] },
+      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false, sizes: [], colors: ["Holz-Optik"] },
+      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true, sizes: [], colors: ["Schwarz"] },
+      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false, sizes: [], colors: ["Orange", "Beige"] },
+      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true, sizes: [], colors: ["Weiß"] },
+      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false, sizes: [], colors: ["Schwarz"] },
+      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] },
+      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] },
+      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["3er-Set"], colors: ["Weiß"] },
+      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false, sizes: [], colors: ["Beige"] },
+      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: 10.00, category: "Deko", isNew: false, sizes: ["15 cm"], colors: ["Beige"] },
+      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] }
     ];
 
     let cart = [];
@@ -663,14 +664,17 @@
         card.className = 'product-card';
         const imgUrl = `https://placehold.co/400x300/1e1e24/ff6b00?text=${encodeURIComponent(p.title)}`;
 
+        const sizeBadges = p.sizes.filter(s => s !== "Standard").map(s => `<span class="badge">${s}</span>`).join('');
+        const colorBadges = p.colors.map(c => `<span class="badge">${c}</span>`).join('');
+
         card.innerHTML = `
           <img class="product-img" src="${imgUrl}" alt="${p.title}" loading="lazy">
           <div class="product-info">
             <div class="product-title">${p.title}</div>
             <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
             <div class="product-details">
-              ${p.colors.map(c => `<span class="badge">${c}</span>`).join('')}
-              ${p.sizes.map(s => `<span class="badge">${s}</span>`).join('')}
+              ${colorBadges}
+              ${sizeBadges}
             </div>
             <button class="add-btn" onclick="addToCart(${p.id})">In den Warenkorb</button>
           </div>
@@ -716,7 +720,6 @@
       renderProducts(products.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)));
     }
 
-    /* Warenkorb / Modal Steuerung */
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
       const existing = cart.find(item => item.id === productId);
