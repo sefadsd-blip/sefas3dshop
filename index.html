@@ -37,7 +37,7 @@
 
         .brand-name { font-size: 1.3rem; font-weight: bold; color: #ff9900; text-decoration: none; white-space: nowrap; }
 
-        /* --- SUCHLEISTE (HEADER MITTE) --- */
+        /* --- SUCHLEISTE --- */
         .search-container {
             flex-grow: 1;
             max-width: 450px;
@@ -68,7 +68,7 @@
             pointer-events: none;
         }
 
-        /* --- AUSKLAPPBARE SIDEBAR (MENÜ) --- */
+        /* --- SIDEBAR --- */
         .sidebar {
             width: 260px;
             background: #1a1a1a;
@@ -177,9 +177,8 @@
         .btn:hover { background: #e68a00; }
         .btn-paypal { background: #0070ba; }
         .btn-paypal:hover { background: #005ea6; }
-        .btn-main { background: #ff9900; font-size: 1.05rem; padding: 0.8rem 1.8rem; text-decoration: none; color: #fff; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 1rem; }
+        .btn-main { background: #ff9900; font-size: 1.05rem; padding: 0.8rem 1.8rem; text-decoration: none; color: #fff; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 1.5rem; }
 
-        /* Hinweis wenn nichts gefunden wird */
         #no-results {
             display: none;
             text-align: center;
@@ -192,7 +191,7 @@
 </head>
 <body>
 
-    <!-- HEADER OBEN (MIT HAMBURGER & SUCHLEISTE) -->
+    <!-- HEADER OBEN -->
     <header>
         <div class="header-left">
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menü öffnen">☰</button>
@@ -275,7 +274,7 @@
                 <!-- Neuheit 3: Modernes Eichhörnchen -->
                 <div class="card product-card">
                     <img src="eichhoernchen.jpg" alt="Modernes Eichhörnchen Deko" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🐿️️</div>
+                    <div class="card-icon-box" style="display: none;">🐿️</div>
                     <div class="card-body">
                         <h3 class="card-title">Modernes Eichhörnchen Deko</h3>
                         <div>
@@ -308,14 +307,82 @@
         <!-- KATEGORIE 2: ALLE PRODUKTE -->
         <section id="produkte" class="section-block">
             <div class="section-title">
-                <span>📦 Alle Produkte (80+ Artikel)</span>
+                <span>📦 Alle Produkte</span>
+                <span class="badge">80+ Artikel im Sortiment</span>
             </div>
-            <p style="color: #666; margin-bottom: 1rem;">
-                Mein vollständiges Sortiment mit über 80 verschiedenen Artikeln, Ersatzteilen und Deko-Objekten verwalte ich direkt über mein Kleinanzeigen-Profil.
-            </p>
-            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn-main">
-                Gesamtes Sortiment auf Kleinanzeigen öffnen ↗
-            </a>
+
+            <!-- Produkt-Karten Übersicht -->
+            <div class="grid">
+                
+                <div class="card product-card">
+                    <img src="vase.jpg" alt="Moderne Rillen-Vase" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="card-icon-box" style="display: none;">🏺</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Moderne Rillen-Vase (15 cm)</h3>
+                        <div>
+                            <div class="price">10,00 €</div>
+                            <div class="btn-group">
+                                <a href="https://www.kleinanzeigen.de/s-anzeige/moderne-rillen-vase-15-cm-/3525145769-246-12917" target="_blank" class="btn">Kleinanzeigen</a>
+                                <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card product-card">
+                    <img src="kuerbis.jpg" alt="Moderner Deko Kürbis" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="card-icon-box" style="display: none;">🎃</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Moderner Deko Kürbis (Skandi Style)</h3>
+                        <div>
+                            <div class="price">5,00 €</div>
+                            <div class="btn-group">
+                                <a href="https://www.kleinanzeigen.de/s-anzeige/moderner-deko-kuerbis-geriffelter-kuerbis-skandi-japandi-stil-3/3524116045-246-12917" target="_blank" class="btn">Kleinanzeigen</a>
+                                <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card product-card">
+                    <img src="eichhoernchen.jpg" alt="Modernes Eichhörnchen Deko" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="card-icon-box" style="display: none;">🐿️</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Modernes Eichhörnchen Deko</h3>
+                        <div>
+                            <div class="price">5,00 €</div>
+                            <div class="btn-group">
+                                <a href="https://www.kleinanzeigen.de/s-anzeige/modernes-eichhoernchen-deko-geriffelte-tierfigur-3d-druck/3517443783-246-12917" target="_blank" class="btn">Kleinanzeigen</a>
+                                <a href="https://www.paypal.me/SefaDemir969" target="_blank" class="btn btn-paypal">PayPal</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card product-card">
+                    <div class="card-icon-box">🛠️</div>
+                    <div class="card-body">
+                        <h3 class="card-title">Individueller 3D-Druck Service</h3>
+                        <div>
+                            <div class="price">Auf Anfrage</div>
+                            <div class="btn-group">
+                                <a href="mailto:Sefad.sd@gmail.com" class="btn">E-Mail Anfrage</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Banner zum Kleinanzeigen Profil -->
+            <div style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px dashed #ddd;">
+                <p style="color: #666; font-size: 0.95rem;">
+                    Du suchst noch mehr Auswahl? Mein vollständiges Gesamtsortiment mit allen 80+ Produkten findest du auf Kleinanzeigen:
+                </p>
+                <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn-main">
+                    Gesamtes Sortiment auf Kleinanzeigen öffnen ↗
+                </a>
+            </div>
         </section>
 
         <!-- KATEGORIE 3: IMPRESSUM -->
@@ -345,10 +412,10 @@
             </div>
         </section>
 
-        <!-- HINWEIS FALLS SUCHBEGRIFF NICHT GEFUNDEN -->
+        <!-- HINWEIS BEI SUCHE OHNE TREFFER -->
         <div id="no-results">
-            <h3 style="margin-bottom: 0.5rem; color: #1a1a1a;">Keine direkten Neuheiten gefunden</h3>
-            <p style="color: #666; margin-bottom: 1rem;">Möglicherweise ist der gesuchte Artikel in meinem 80+ Gesamtsortiment vorhanden!</p>
+            <h3 style="margin-bottom: 0.5rem; color: #1a1a1a;">Keine direkten Treffer auf der Seite gefunden</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Möglicherweise ist der gesuchte Artikel in meinem 80+ Gesamtsortiment auf Kleinanzeigen verfügbar!</p>
             <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn-main">
                 Gesamtsortiment auf Kleinanzeigen durchsuchen ↗
             </a>
@@ -363,7 +430,6 @@
         }
 
         function showCategory(categoryId, btn) {
-            // Suchfeld zurücksetzen
             document.getElementById('searchInput').value = '';
             document.getElementById('no-results').style.display = 'none';
 
@@ -374,7 +440,6 @@
 
             document.getElementById(categoryId).classList.add('active');
 
-            // Karten alle wieder einblenden
             var cards = document.querySelectorAll('.product-card');
             cards.forEach(function(card) {
                 card.style.display = 'flex';
@@ -391,12 +456,10 @@
 
         function filterProducts() {
             var input = document.getElementById('searchInput').value.toLowerCase();
-            var cards = document.querySelectorAll('.product-card');
+            var activeBlock = document.querySelector('.section-block.active');
+            var cards = activeBlock ? activeBlock.querySelectorAll('.product-card') : [];
             var noResults = document.getElementById('no-results');
             var visibleCount = 0;
-
-            // Zur Neuheiten-Kategorie wechseln wenn gesucht wird
-            showCategory('neuheiten', document.querySelector('.cat-btn'));
 
             cards.forEach(function(card) {
                 var title = card.querySelector('.card-title').innerText.toLowerCase();
@@ -409,10 +472,10 @@
             });
 
             if (visibleCount === 0 && input.trim() !== '') {
-                document.getElementById('neuheiten').style.display = 'none';
+                if (activeBlock) activeBlock.style.display = 'none';
                 noResults.style.display = 'block';
             } else {
-                document.getElementById('neuheiten').style.display = 'block';
+                if (activeBlock) activeBlock.style.display = 'block';
                 noResults.style.display = 'none';
             }
         }
