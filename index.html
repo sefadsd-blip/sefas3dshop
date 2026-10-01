@@ -12,17 +12,18 @@
         header {
             background: #1a1a1a;
             color: #fff;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 1rem;
             position: sticky;
             top: 0;
             z-index: 200;
             box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
-        .header-left { display: flex; align-items: center; gap: 1.2rem; }
+        .header-left { display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
         
         .menu-toggle {
             background: none;
@@ -34,7 +35,38 @@
         }
         .menu-toggle:hover { color: #ff9900; }
 
-        .brand-name { font-size: 1.4rem; font-weight: bold; color: #ff9900; text-decoration: none; }
+        .brand-name { font-size: 1.3rem; font-weight: bold; color: #ff9900; text-decoration: none; white-space: nowrap; }
+
+        /* --- SUCHLEISTE (HEADER MITTE) --- */
+        .search-container {
+            flex-grow: 1;
+            max-width: 450px;
+            position: relative;
+        }
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.2rem;
+            border-radius: 20px;
+            border: 1px solid #444;
+            background: #2b2b2b;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
+        }
+        .search-input:focus {
+            background: #333;
+            border-color: #ff9900;
+        }
+        .search-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 0.85rem;
+            color: #aaa;
+            pointer-events: none;
+        }
 
         /* --- AUSKLAPPBARE SIDEBAR (MENÜ) --- */
         .sidebar {
@@ -77,11 +109,11 @@
 
         .sidebar-footer { font-size: 0.8rem; color: #777; line-height: 1.4; border-top: 1px solid #333; padding-top: 1rem; }
 
-        /* --- KATEGORIEN-TABS OBEN --- */
+        /* --- KATEGORIEN LEISTE --- */
         .category-bar {
             display: flex;
             gap: 0.8rem;
-            padding: 1rem 1.5rem;
+            padding: 0.8rem 1.5rem;
             background: #fff;
             border-bottom: 1px solid #eee;
             overflow-x: auto;
@@ -89,7 +121,7 @@
         .cat-btn {
             background: #f0f0f0;
             border: none;
-            padding: 0.6rem 1.2rem;
+            padding: 0.5rem 1.1rem;
             border-radius: 20px;
             font-weight: 600;
             cursor: pointer;
@@ -113,9 +145,9 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            display: none; /* Standardmäßig ausblenden */
+            display: none;
         }
-        .section-block.active { display: block; } /* Nur aktive Kategorie anzeigen */
+        .section-block.active { display: block; }
 
         .section-title {
             font-size: 1.5rem;
@@ -146,26 +178,41 @@
         .btn-paypal { background: #0070ba; }
         .btn-paypal:hover { background: #005ea6; }
         .btn-main { background: #ff9900; font-size: 1.05rem; padding: 0.8rem 1.8rem; text-decoration: none; color: #fff; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 1rem; }
+
+        /* Hinweis wenn nichts gefunden wird */
+        #no-results {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
     </style>
 </head>
 <body>
 
-    <!-- HEADER OBEN (MIT HAMBURGER-MENÜ LINKS) -->
+    <!-- HEADER OBEN (MIT HAMBURGER & SUCHLEISTE) -->
     <header>
         <div class="header-left">
             <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menü öffnen">☰</button>
             <a href="#" class="brand-name">Sefas3DShop</a>
         </div>
+
+        <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" class="search-input" placeholder="Produkte suchen..." onkeyup="filterProducts()">
+        </div>
     </header>
 
-    <!-- KATEGORIEN LEISTE OBEN -->
+    <!-- KATEGORIEN LEISTE -->
     <div class="category-bar">
         <button class="cat-btn active" onclick="showCategory('neuheiten', this)">✨ Neuheiten</button>
         <button class="cat-btn" onclick="showCategory('produkte', this)">📦 Alle Produkte</button>
         <button class="cat-btn" onclick="showCategory('impressum', this)">⚖️ Impressum</button>
     </div>
 
-    <!-- AUSKLAPPBARE SEITENLEISTE LINKS -->
+    <!-- AUSKLAPPBARE SIDEBAR LINKS -->
     <aside class="sidebar" id="sidebar">
         <div>
             <ul class="nav-menu">
@@ -194,7 +241,7 @@
             <div class="grid">
                 
                 <!-- Neuheit 1: Rillen-Vase -->
-                <div class="card">
+                <div class="card product-card">
                     <img src="vase.jpg" alt="Moderne Rillen-Vase" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="card-icon-box" style="display: none;">🏺</div>
                     <div class="card-body">
@@ -210,7 +257,7 @@
                 </div>
 
                 <!-- Neuheit 2: Deko-Kürbis -->
-                <div class="card">
+                <div class="card product-card">
                     <img src="kuerbis.jpg" alt="Moderner Deko Kürbis" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                     <div class="card-icon-box" style="display: none;">🎃</div>
                     <div class="card-body">
@@ -226,9 +273,9 @@
                 </div>
 
                 <!-- Neuheit 3: Modernes Eichhörnchen -->
-                <div class="card">
+                <div class="card product-card">
                     <img src="eichhoernchen.jpg" alt="Modernes Eichhörnchen Deko" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🐿️</div>
+                    <div class="card-icon-box" style="display: none;">🐿️️</div>
                     <div class="card-body">
                         <h3 class="card-title">Modernes Eichhörnchen Deko</h3>
                         <div>
@@ -242,7 +289,7 @@
                 </div>
 
                 <!-- Neuheit 4: Custom Service -->
-                <div class="card">
+                <div class="card product-card">
                     <div class="card-icon-box">🛠️</div>
                     <div class="card-body">
                         <h3 class="card-title">Individueller 3D-Druck Service</h3>
@@ -298,6 +345,15 @@
             </div>
         </section>
 
+        <!-- HINWEIS FALLS SUCHBEGRIFF NICHT GEFUNDEN -->
+        <div id="no-results">
+            <h3 style="margin-bottom: 0.5rem; color: #1a1a1a;">Keine direkten Neuheiten gefunden</h3>
+            <p style="color: #666; margin-bottom: 1rem;">Möglicherweise ist der gesuchte Artikel in meinem 80+ Gesamtsortiment vorhanden!</p>
+            <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" class="btn-main">
+                Gesamtsortiment auf Kleinanzeigen durchsuchen ↗
+            </a>
+        </div>
+
     </main>
 
     <script>
@@ -307,22 +363,57 @@
         }
 
         function showCategory(categoryId, btn) {
-            // Alle Abschnitte verstecken
+            // Suchfeld zurücksetzen
+            document.getElementById('searchInput').value = '';
+            document.getElementById('no-results').style.display = 'none';
+
             var blocks = document.querySelectorAll('.section-block');
             blocks.forEach(function(block) {
                 block.classList.remove('active');
             });
 
-            // Gewählten Abschnitt anzeigen
             document.getElementById(categoryId).classList.add('active');
 
-            // Aktiven Button-Status aktualisieren
+            // Karten alle wieder einblenden
+            var cards = document.querySelectorAll('.product-card');
+            cards.forEach(function(card) {
+                card.style.display = 'flex';
+            });
+
             var buttons = document.querySelectorAll('.cat-btn, .nav-menu button');
             buttons.forEach(function(b) {
                 b.classList.remove('active');
             });
             if (btn) {
                 btn.classList.add('active');
+            }
+        }
+
+        function filterProducts() {
+            var input = document.getElementById('searchInput').value.toLowerCase();
+            var cards = document.querySelectorAll('.product-card');
+            var noResults = document.getElementById('no-results');
+            var visibleCount = 0;
+
+            // Zur Neuheiten-Kategorie wechseln wenn gesucht wird
+            showCategory('neuheiten', document.querySelector('.cat-btn'));
+
+            cards.forEach(function(card) {
+                var title = card.querySelector('.card-title').innerText.toLowerCase();
+                if (title.includes(input)) {
+                    card.style.display = 'flex';
+                    visibleCount++;
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            if (visibleCount === 0 && input.trim() !== '') {
+                document.getElementById('neuheiten').style.display = 'none';
+                noResults.style.display = 'block';
+            } else {
+                document.getElementById('neuheiten').style.display = 'block';
+                noResults.style.display = 'none';
             }
         }
     </script>
