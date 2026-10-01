@@ -580,10 +580,8 @@
           <div class="form-group">
             <label>Zahlungsart *</label>
             <select id="custPayment">
-              <option>PayPal</option>
-              <option>Kreditkarte</option>
-              <option>Klarna Rechnung</option>
-              <option>Vorkasse / Überweisung</option>
+              <option value="PayPal">PayPal</option>
+              <option value="Überweisung (Revolut)">Überweisung (Revolut)</option>
             </select>
           </div>
 
@@ -606,7 +604,7 @@
       <div id="stepConfirmation" style="display: none; text-align: center; padding: 10px 0;">
         <div style="font-size: 3rem; color: #27ae60; margin-bottom: 10px;">✓</div>
         <h2 style="color: var(--accent); margin-bottom: 10px;">Vielen Dank für deine Bestellung!</h2>
-        <p style="color: var(--text-muted); margin-bottom: 15px;">Wir haben deine Bestellung erfolgreich erhalten und beginnen in Kürze mit dem 3D-Druck.</p>
+        <p style="color: var(--text-muted); margin-bottom: 15px;">Wir haben deine Bestellung erhalten. Bitte schließe die Zahlung mit den untenstehenden Daten ab:</p>
         
         <div class="order-summary" style="text-align: left;">
           <div><strong>Bestellnummer:</strong> <span id="confOrderNum" style="color: var(--accent);">#1001</span></div>
@@ -619,7 +617,10 @@
           </div>
         </div>
 
-        <button class="checkout-btn" style="width: 100%;" onclick="finishOrder()">Zurück zum Shop</button>
+        <!-- Dynamische Zahlungsanweisungen (PayPal / Revolut) -->
+        <div id="paymentDetailsBox"></div>
+
+        <button class="checkout-btn" style="width: 100%; margin-top: 15px;" onclick="finishOrder()">Zurück zum Shop</button>
       </div>
 
     </div>
@@ -828,6 +829,33 @@
       document.getElementById('confEmail').innerText = email;
       document.getElementById('confPayment').innerText = payment;
       document.getElementById('confTotal').innerText = `${total.toFixed(2).replace('.', ',')} €`;
+
+      // Zahlungsdetails generieren
+      const paymentBox = document.getElementById('paymentDetailsBox');
+      if (payment === 'PayPal') {
+        paymentBox.innerHTML = `
+          <div style="background-color: #121214; padding: 15px; border-radius: 8px; border: 1px solid var(--accent); margin-top: 15px; text-align: left;">
+            <h4 style="color: var(--accent); margin-bottom: 8px;">💳 Zahlung per PayPal</h4>
+            <p style="font-size: 0.85rem; color: var(--text-main);">Bitte sende <strong>${total.toFixed(2).replace('.', ',')} €</strong> an folgende PayPal-Adresse:</p>
+            <p style="font-size: 1rem; font-weight: bold; color: var(--accent); margin: 6px 0;">paypal@sefas3dshop.de</p>
+            <p style="font-size: 0.8rem; color: var(--text-muted);">Verwendungszweck: <strong>#${orderNum}</strong></p>
+          </div>
+        `;
+      } else {
+        paymentBox.innerHTML = `
+          <div style="background-color: #121214; padding: 15px; border-radius: 8px; border: 1px solid var(--accent); margin-top: 15px; text-align: left;">
+            <h4 style="color: var(--accent); margin-bottom: 8px;">🏦 Überweisung (Revolut Bank)</h4>
+            <p style="font-size: 0.85rem; color: var(--text-main);">Bitte überweise <strong>${total.toFixed(2).replace('.', ',')} €</strong> auf folgendes Konto:</p>
+            <div style="font-size: 0.85rem; color: var(--text-main); margin-top: 8px; line-height: 1.5;">
+              <div><strong>Empfänger:</strong> Sefa Demir (Sefas3DShop)</div>
+              <div><strong>Bank:</strong> Revolut Bank</div>
+              <div><strong>IBAN:</strong> DE12 3456 7890 1234 5678 90</div>
+              <div><strong>BIC / SWIFT:</strong> REVODE21XXX</div>
+              <div><strong>Verwendungszweck:</strong> #${orderNum}</div>
+            </div>
+          </div>
+        `;
+      }
 
       document.getElementById('stepCheckout').style.display = 'none';
       document.getElementById('stepConfirmation').style.display = 'block';
