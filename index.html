@@ -1,476 +1,760 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sefas3DShop – 3D-Druck & Deko</title>
-    <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f8; color: #333; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sefas3DShop - Produktkatalog</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        header {
-            background: #1a1a1a; color: #fff; padding: 0.8rem 1.2rem;
-            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-            position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-        }
+    body {
+      background-color: #f4f6f8;
+      color: #333;
+      padding: 20px;
+    }
 
-        .header-left { display: flex; align-items: center; gap: 1rem; }
-        .menu-toggle { background: none; border: none; color: #fff; font-size: 1.8rem; cursor: pointer; }
-        .menu-toggle:hover { color: #ff9900; }
-        .brand-name { font-size: 1.3rem; font-weight: bold; color: #ff9900; text-decoration: none; }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        .search-container { flex-grow: 1; max-width: 450px; position: relative; }
-        .search-input { width: 100%; padding: 0.5rem 1rem 0.5rem 2.2rem; border-radius: 20px; border: 1px solid #444; background: #2b2b2b; color: #fff; font-size: 0.9rem; outline: none; }
-        .search-input:focus { border-color: #ff9900; }
-        .search-icon { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: #aaa; }
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
 
-        .sidebar {
-            width: 260px; background: #1a1a1a; color: #fff; padding: 2rem 1.5rem;
-            position: fixed; top: 60px; bottom: 0; left: -260px;
-            display: flex; flex-direction: column; justify-content: space-between;
-            z-index: 150; transition: left 0.3s ease;
-        }
-        .sidebar.active { left: 0; }
-        .nav-menu { list-style: none; }
-        .nav-menu li { margin-bottom: 0.8rem; }
-        .nav-menu button { width: 100%; color: #ddd; background: none; border: none; padding: 0.8rem; border-radius: 8px; font-size: 1rem; cursor: pointer; text-align: left; }
-        .nav-menu button:hover, .nav-menu button.active { background: #ff9900; color: #fff; }
-        .sidebar-footer { font-size: 0.8rem; color: #777; border-top: 1px solid #333; padding-top: 1rem; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-        .category-bar { display: flex; gap: 0.8rem; padding: 0.8rem 1.5rem; background: #fff; border-bottom: 1px solid #eee; overflow-x: auto; }
-        .cat-btn { background: #f0f0f0; border: none; padding: 0.5rem 1.1rem; border-radius: 20px; font-weight: 600; cursor: pointer; white-space: nowrap; }
-        .cat-btn.active, .cat-btn:hover { background: #ff9900; color: #fff; }
+    .product-card {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        .main-content { padding: 2rem 1.5rem; max-width: 1100px; margin: 0 auto; }
-        .section-block { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); display: none; }
-        .section-block.active { display: block; }
-        .section-title { font-size: 1.5rem; color: #1a1a1a; border-bottom: 2px solid #ff9900; padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center; }
-        .badge { background: #ff9900; color: #fff; font-size: 0.8rem; padding: 0.3rem 0.8rem; border-radius: 20px; }
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-        .card { background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-img { width: 100%; height: 200px; object-fit: cover; background: #eee; }
-        .card-icon-box { height: 200px; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
-        .card-body { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-title { font-size: 1rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.5rem; }
-        .price { font-size: 1.2rem; font-weight: bold; color: #ff9900; margin: 0.5rem 0; }
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background-color: #eee;
+    }
 
-        .select-label { font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem; margin-bottom: 0.2rem; display: block; }
-        .opt-select { width: 100%; padding: 0.45rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 0.6rem; font-size: 0.85rem; }
-        
-        .btn-buy { background: #ff9900; color: #fff; border: none; padding: 0.7rem; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 0.5rem; }
-        .btn-buy:hover { background: #e68a00; }
-        
-        .btn-whatsapp { background: #25D366; color: #fff; text-decoration: none; padding: 0.5rem; border-radius: 6px; font-size: 0.8rem; font-weight: bold; text-align: center; display: block; }
-        .btn-whatsapp:hover { background: #1ebc57; }
+    .product-info {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
 
-        .modal { display: none; position: fixed; z-index: 300; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; padding: 1rem; }
-        .modal-content { background: #fff; padding: 2rem; border-radius: 12px; max-width: 500px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
-        .close-modal { position: absolute; right: 1rem; top: 1rem; font-size: 1.5rem; cursor: pointer; font-weight: bold; }
-        
-        .form-group { margin-bottom: 1rem; }
-        .form-group label { display: block; font-size: 0.85rem; font-weight: 600; margin-bottom: 0.3rem; }
-        .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
-        
-        .payment-info { background: #f8f9fa; border: 1px solid #e0e0e0; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-size: 0.85rem; display: none; }
-        .success-message { display: none; text-align: center; padding: 1.5rem; background: #e8f5e9; border: 1px solid #c8e6c9; color: #2e7d32; border-radius: 8px; margin-top: 1rem; }
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1a252f;
+    }
 
-        #no-results { display: none; text-align: center; padding: 2rem; background: #fff; border-radius: 12px; }
-    </style>
+    .product-price {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #27ae60;
+      margin-bottom: 12px;
+    }
+
+    .product-meta {
+      font-size: 0.85rem;
+      color: #666;
+      margin-top: auto;
+    }
+
+    .product-meta div {
+      margin-top: 4px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #eef2f5;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <div class="header-left">
-            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
-            <a href="#" class="brand-name">Sefas3DShop</a>
-        </div>
-        <div class="search-container">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="searchInput" class="search-input" placeholder="Produkte suchen..." onkeyup="filterProducts()">
-        </div>
-    </header>
+  <header>
+    <h1>Produktkatalog</h1>
+  </header>
 
-    <div class="category-bar">
-        <button class="cat-btn active" onclick="showCategory('neuheiten', this)">✨ Neuheiten</button>
-        <button class="cat-btn" onclick="showCategory('produkte', this)">📦 Alle Produkte</button>
-        <button class="cat-btn" onclick="showCategory('impressum', this)">⚖️ Impressum</button>
-    </div>
+  <main>
+    <div id="product-container" class="product-grid"></div>
+  </main>
 
-    <aside class="sidebar" id="sidebar">
-        <div>
-            <ul class="nav-menu">
-                <li><button class="active" onclick="showCategory('neuheiten', this); toggleMenu();">✨ Neuheiten</button></li>
-                <li><button onclick="showCategory('produkte', this); toggleMenu();">📦 Alle Produkte</button></li>
-                <li><button onclick="showCategory('impressum', this); toggleMenu();">⚖️ Impressum</button></li>
-            </ul>
-        </div>
-        <div class="sidebar-footer">&copy; 2026 Sefas3DShop<br>Sefa Demir</div>
-    </aside>
+  <script>
+    const products = [
+      { 
+        id: 17, 
+        title: "Dekoratives Eichhörnchen Fuzzy Skin", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Braun", "Beige"] 
+      },
+      { 
+        id: 18, 
+        title: "Moderner Weihnachtswichtel / Gnom", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige"] 
+      },
+      { 
+        id: 19, 
+        title: "Japandi Vogel Deko (Geriffelt)", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f4/f4323c21-f3db-4e14-9988-fa03295dbbb7?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige", "Schwarz"] 
+      },
+      { 
+        id: 20, 
+        title: "Modernes Eichhörnchen Deko (Geriffelt)", 
+        price: "7,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/227181c4-ce52-4740-976d-dfbc3f2eb305?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Holz-Optik / Braun"] 
+      },
+      { 
+        id: 21, 
+        title: "Französische Bulldogge Schalen-Figur", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 22, 
+        title: "Moderne Kürbis Deko (Geriffelt)", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f8/f8e434d7-d716-4315-a7b2-0a1496a8497f?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige", "Orange", "Schwarz"] 
+      },
+      { 
+        id: 23, 
+        title: "Moderne Osterhasen Deko (Geriffelt)", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d3/d39c0fa4-89bd-49ce-ae97-aa6b23d537f8?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß", "Schwarz"] 
+      },
+      { 
+        id: 24, 
+        title: "Süßer Untersetzer mit Armen (Hug Coaster)", 
+        price: "4,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/1d/1d1326c2-0731-41e9-9be3-fcd34d3d3448?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Rosa", "Beige"] 
+      },
+      { 
+        id: 25, 
+        title: "Hirsch Teelichthalter Elegante Deko", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/1c/1c94d039-4d64-42ff-b485-eb99f6aa6883?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 26, 
+        title: "Elegante Erdmännchen Deko Figur", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/6b/6b9faed1-3d7f-4ca6-b8b8-084a92911b3d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß", "Holz-Optik", "Schwarz"] 
+      },
+      { 
+        id: 27, 
+        title: "Deko Dackel Figur mit Schale", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b2/b24888be-3773-40e1-8f83-e18e80ae4e68?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 28, 
+        title: "Gorilla Schlüsselbrett & Ablage Deko", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9c/9c551bc9-aa72-4bd5-b28e-eb97bd660d5b?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 29, 
+        title: "Moderne Deko-Rentiere Skandi-Stil", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/3f/3fe244a1-0941-4fb2-bd75-a831ef7ba1b9?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grau", "Weiß"] 
+      },
+      { 
+        id: 30, 
+        title: "Flavor / Sirup Flaschen Halter", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f3/f3764831-29be-4dc9-9833-dcb5fdf9e28f?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 31, 
+        title: "Akku-Schrauber Halterung Werkbank", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/56/563e41ee-1941-4560-afbf-6bc718dcdd4c?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 32, 
+        title: "Wunderschönes Tannenzapfen-Häuschen", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/73/732598be-8d6d-4950-843e-7901fb9eb841?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Braun", "Grün"] 
+      },
+      { 
+        id: 33, 
+        title: "Akustikpaneel Halterung / Haken Schwarz", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a07aef-9562-4144-8ea6-cddf9468e82a?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 34, 
+        title: "Dekorative Eichel / Aufbewahrungsdose", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e7/e7529452-f4fb-4b53-a7bb-cb147576a9aa?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Braun/Beige"] 
+      },
+      { 
+        id: 35, 
+        title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/13/13593cb8-a537-47b1-9eb0-e147e09710fa?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["3er-Set"], 
+        colors: ["Weiß", "Holz-Optik"] 
+      },
+      { 
+        id: 36, 
+        title: "Moderne Christbaumkugel Tanne", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a8/a8e5cf2e-c79c-4af4-afaa-646558712387?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grün", "Rot"] 
+      },
+      { 
+        id: 37, 
+        title: "UNO Kartenbox / Kartenetui", 
+        price: "7,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/27/273959ad-0a46-4a58-84d2-955794a0438a?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Blau", "Rot"] 
+      },
+      { 
+        id: 38, 
+        title: "Französische Bulldogge Dekoschale", 
+        price: "20,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/28/28f52a40-e477-4b7c-b514-ba5d7402ae60?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige", "Schwarz"] 
+      },
+      { 
+        id: 39, 
+        title: "Französische Bulldogge Figur Deko", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a2/a2b7606a-49dc-4a23-b4ee-10c7a324bda3?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß", "Schwarz"] 
+      },
+      { 
+        id: 40, 
+        title: "Design-Küchenrollenhalter Rillen-Look", 
+        price: "9,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/42/42f9e42e-13c5-430f-b258-29cf9a9a0ebc?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz", "Weiß"] 
+      },
+      { 
+        id: 41, 
+        title: "Dackel Ablageschale Deko-Hund Schwarz", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/29/29bfca62-3bdc-4c60-aee8-232a51f8b4a1?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 42, 
+        title: "Schönes Wandregal rund Metall-Regal Schwarz", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a0f76a-5431-419b-a010-fa20215093e3?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 43, 
+        title: "Stylische Katzen Deko Rillen-Design", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e7/e7a2b00f-8c38-4e89-98e3-0c463fa70221?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß", "Beige", "Schwarz"] 
+      },
+      { 
+        id: 44, 
+        title: "Moderner Schneemann Deko mit Hut", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d3/d3f7e53f-a18a-4061-893d-4952be7b8ca5?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grün", "Weiß", "Grau"] 
+      },
+      { 
+        id: 45, 
+        title: "Moderne Rillen-Vase (15 cm)", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["15 cm"], 
+        colors: ["Beige", "Grün"] 
+      },
+      { 
+        id: 46, 
+        title: "Rentier mit Schlitten Schale Weihnachtsdeko", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a3cddf-6a7e-4db4-b250-999313ea59e5?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 47, 
+        title: "Süßer Blumentopf mit Herz-Händen Übertopf", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ca/cad21a5a-3507-42f7-ae86-cd07df6874bf?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 48, 
+        title: "PS5 Controller & Headset Halterung Standfuß", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/3011a00a-1a80-498c-8519-7d87bd427a1c?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 50, 
+        title: "Moderner Deko Kürbis Skandi / Japandi", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b2/b2d07675-01f2-4bd5-a1eb-ef2e635e16da?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Orange", "Weiß", "Beige"] 
+      },
+      { 
+        id: 51, 
+        title: "Dekorative Vasen im Beutel-Design", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/15/15777df4-3996-419b-a010-333e6ea058a9?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grün", "Beige", "Weiß"] 
+      },
+      { 
+        id: 52, 
+        title: "Deko Rentier / Weihnachtsdeko modern", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f3/f301d293-e4ff-4d1e-84b2-0a9117651a2d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grau", "Weiß"] 
+      },
+      { 
+        id: 53, 
+        title: "Universal Kartenspiel-Box Modular", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f9/f974146c-7ff4-4f44-8318-5a00f9bdc0a1?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grau", "Schwarz"] 
+      },
+      { 
+        id: 57, 
+        title: "Universal Fahrrad Flaschenhalter", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/40/40d321b4-9b98-4c61-93a7-28662ad59af8?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Blau", "Schwarz"] 
+      },
+      { 
+        id: 58, 
+        title: "Einhänge-Bett-Organizer Nachttisch", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d7/d73f252c-f7b8-4447-813f-a39094695f61?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 59, 
+        title: "Ovales Kerzentablett Rillen-Design", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/37/37bb91d9-99b6-4b9b-a8bc-aa93e3495b8e?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige", "Weiß"] 
+      },
+      { 
+        id: 60, 
+        title: "Chipsdosen Lifter (Pringles Schiene)", 
+        price: "4,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c7/c733e83f-c59d-4968-860e-bdb8d4408baa?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz", "Beige"] 
+      },
+      { 
+        id: 61, 
+        title: "Wandhalterung für Schaufeln & Besen", 
+        price: "4,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/89/8917c9da-8831-43fd-97dd-02ad2bc1697e?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 62, 
+        title: "Kabelbinder Halter / Dispenser Organizer", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/78/7888620d-521b-412a-bd7d-5832ae1de009?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz", "Grau"] 
+      },
+      { 
+        id: 63, 
+        title: "Praktischer Folienhalter für Schranktür", 
+        price: "4,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/63/630144b7-16bc-4ea0-9d5b-c35474b8eaa3?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 64, 
+        title: "Moderner Pflanztopf Bogen-Muster Boho", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/79/79508466-f1bf-4b37-8e0e-968f4f0bcaf8?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Beige", "Weiß"] 
+      },
+      { 
+        id: 65, 
+        title: "Schrankeinsatz / Regaleinsatz Tellerregal", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ce/ce80dced-4e20-4ae6-98ba-34904788e306?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 66, 
+        title: "Gehörschutz Wandhalterung Werkstatt", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/300aad95-2e8b-4cef-9457-f66a4434d315?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 67, 
+        title: "Maulschlüssel Halter Wand Werkstatt", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ee/eee08fee-f932-4d3b-a801-788b21251d3d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Lila", "Schwarz"] 
+      },
+      { 
+        id: 68, 
+        title: "Spraydosenhalter 3er Set Wandhalterung", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/8e/8e6a3a67-727f-471a-bf75-a4ee42d59c92?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 69, 
+        title: "Spülmaschinentabs Halter Schranktür Box", 
+        price: "14,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b5/b5c15152-eaf3-4d19-9b6f-f7cbb3a39819?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 70, 
+        title: "Eier Spender / Eierhalter Kühlschrank", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b8/b81021ef-af3f-4faf-ae29-f85bbac0cea8?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz", "Blau", "Rot"] 
+      },
+      { 
+        id: 71, 
+        title: "Schleifscheiben-Halter Lochwand", 
+        price: "11,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f0/f0cc8f72-9cd2-4988-b8b2-7dedc480422d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 72, 
+        title: "Akku Gartenwerkzeug Wandhaken 3er-Set", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c4/c4e470a6-ba8b-4573-95a0-7b708be6d0ea?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 73, 
+        title: "Moderne Weihnachtsglocken Anhänger", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/22197626-d621-4f1d-b6a3-c5b16e45aa98?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grün", "Beige", "Rot"] 
+      },
+      { 
+        id: 74, 
+        title: "Silikonkartuschen Halter Stapelbar", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/24/242f86ea-f6ff-4f3e-ba23-26b04e73715d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Grau"] 
+      },
+      { 
+        id: 75, 
+        title: "Tütchen Halter / Gewürzpulver-Spender", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/01/01a01686-7d34-4679-91fc-6f5866554550?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 76, 
+        title: "Dosen Spender / Dosenhalter Stapelbar", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a5/a54a069c-0fb9-4642-aab1-ca3aaff4011f?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 77, 
+        title: "Winkelschleifer Wandhalterung / Flex Halterung", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/bc/bcdf38ff-281e-4352-9445-ff9cbdb48e50?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 78, 
+        title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", 
+        price: "15,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/16/162c6d36-4dff-4f2b-9a70-cd2decaa8897?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Set (3 Größen)"], 
+        colors: ["Weiß"] 
+      },
+      { 
+        id: 79, 
+        title: "Toilettenpapierhalter mit Smartphone-Ablage", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b7/b7fdb4c9-d6a4-4635-a955-21ae586ec70e?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Orange", "Schwarz", "Weiß"] 
+      },
+      { 
+        id: 80, 
+        title: "Makita 18V Akku Halterung für 3 Akkus", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cf/cf865676-451a-4a19-9552-4f4b3dd2f4e4?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["3 Akkus"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 81, 
+        title: "Einzigartiger Geweih Kerzenständer", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a4/a4c86ea8-0794-4d8c-9213-2fefb73e0682?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Braun / Holz-Optik"] 
+      },
+      { 
+        id: 82, 
+        title: "Planeten / Todesstern Christbaumkugeln", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b1/b15c508a-e52d-4a7d-8a95-0be0fe80f3eb?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Gold", "Silber", "Blau"] 
+      },
+      { 
+        id: 83, 
+        title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cb/cbd5e355-9b10-4d1e-b416-85cee4474ff8?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Weiß", "Grau"] 
+      },
+      { 
+        id: 84, 
+        title: "Moderner Nussknacker Advents-Soldat", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/64/64bc0eb0-e7f0-41ed-9db3-7dc4b9b91754?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Rot", "Grün", "Grau"] 
+      },
+      { 
+        id: 85, 
+        title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", 
+        price: "8,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/3d/3d97d6df-141b-4b8a-8b10-fad7794ba6cf?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz", "Weiß"] 
+      },
+      { 
+        id: 86, 
+        title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", 
+        price: "10,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/07/07a9be7f-cadc-4c5f-a29b-75cbd6867f35?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz"] 
+      },
+      { 
+        id: 87, 
+        title: "Klopapierhalter Schaf", 
+        price: "5,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/5e/5ec6321e-de70-445a-b3f9-62b2bde234ad?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Schwarz/Weiß"] 
+      },
+      { 
+        id: 88, 
+        title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", 
+        price: "6,00 €", 
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/dc/dc30194f-23c5-43fd-b486-e689e0f16d2d?rule=$_59.AUTO", 
+        category: "alle", 
+        sizes: ["Standard"], 
+        colors: ["Gold", "Rot", "Silber"] 
+      }
+    ];
 
-    <main class="main-content">
+    function renderProducts(items) {
+      const container = document.getElementById('product-container');
+      container.innerHTML = '';
 
-        <!-- NEUHEITEN -->
-        <section id="neuheiten" class="section-block active">
-            <div class="section-title">
-                <span>✨ Neuheiten der Woche</span>
-                <span class="badge">Frisch gedruckt</span>
+      items.forEach(product => {
+        const card = document.createElement('div');
+        card.className = 'product-card';
+
+        const colorsBadges = product.colors.map(c => `<span class="badge">${c}</span>`).join('');
+        const sizesBadges = product.sizes.map(s => `<span class="badge">${s}</span>`).join('');
+
+        card.innerHTML = `
+          <img class="product-image" src="${product.img}" alt="${product.title}" loading="lazy">
+          <div class="product-info">
+            <h2 class="product-title">${product.title}</h2>
+            <div class="product-price">${product.price}</div>
+            <div class="product-meta">
+              <div><strong>Größen:</strong> ${sizesBadges}</div>
+              <div><strong>Farben:</strong> ${colorsBadges}</div>
             </div>
-            <div class="grid" id="neuheitenGrid"></div>
-        </section>
+          </div>
+        `;
 
-        <!-- ALLE PRODUKTE -->
-        <section id="produkte" class="section-block">
-            <div class="section-title">
-                <span>📦 Alle Produkte</span>
-                <span class="badge" id="productCountBadge">88 Artikel</span>
-            </div>
-            <p style="color: #666; margin-bottom: 1.5rem;">Wähle dein gewünschtes Modell, die Größe und Farbe aus und bestelle direkt.</p>
-            <div class="grid" id="alleProdukteGrid"></div>
-        </section>
+        container.appendChild(card);
+      });
+    }
 
-        <!-- IMPRESSUM -->
-        <section id="impressum" class="section-block">
-            <div class="section-title"><span>⚖️ Impressum</span></div>
-            <div style="line-height: 1.8; color: #444; font-size: 0.95rem;">
-                <p><strong>Angaben gemäß § 5 DDG:</strong></p>
-                <p>Sefas3DShop<br>Sefa Demir<br>Neuer Weg 42<br>32369 Rahden<br>Deutschland</p>
-                <br>
-                <p><strong>Kontakt:</strong><br>Telefon / WhatsApp: +49 162 2580511<br>E-Mail: Sefad.sd@gmail.com</p>
-                <br>
-                <p><strong>Umsatzsteuer-Hinweis:</strong><br>Gemäß § 19 UStG wird keine Umsatzsteuer berechnet und ausgewiesen (Kleinunternehmerregelung).</p>
-            </div>
-        </section>
-
-        <div id="no-results">
-            <h3>Keine Artikel mit diesem Namen gefunden</h3>
-            <p style="color: #666; margin-top: 0.5rem;">Überprüfe deinen Suchbegriff oder durchstöbere alle Kategorien.</p>
-        </div>
-
-    </main>
-
-    <!-- POPUP CHECKOUT FORMULAR -->
-    <div class="modal" id="checkoutModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeCheckout()">&times;</span>
-            <h2 style="margin-bottom: 0.5rem; color: #1a1a1a;">Bestellung aufgeben</h2>
-            <p id="modalProductDetails" style="color: #ff9900; font-weight: bold; margin-bottom: 1.5rem; font-size: 1.05rem;"></p>
-
-            <form id="orderForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitOrder(event)">
-                <input type="hidden" name="access_key" value="f4673fc3-7e4a-4fe4-bfcb-397bbe06ba60">
-                <input type="hidden" name="subject" id="emailSubject" value="Neue Bestellung über Sefas3DShop">
-                <input type="hidden" name="from_name" value="Sefas3DShop Website">
-
-                <input type="hidden" name="Produkt" id="orderProduct">
-                <input type="hidden" name="Preis" id="orderPrice">
-                <input type="hidden" name="Gewaehlte_Groesse" id="orderSize">
-                <input type="hidden" name="Wunschfarbe" id="orderColor">
-
-                <div class="form-group">
-                    <label>Vor- & Nachname *</label>
-                    <input type="text" name="Kundenname" id="custName" required placeholder="z. B. Max Mustermann">
-                </div>
-
-                <div class="form-group">
-                    <label>E-Mail-Adresse für Bestätigung *</label>
-                    <input type="email" name="email" id="custEmail" required placeholder="max@beispiel.de">
-                </div>
-
-                <div class="form-group">
-                    <label>Lieferadresse (Straße, Hausnr., PLZ, Ort) *</label>
-                    <textarea name="Lieferadresse" id="custAddress" rows="3" required placeholder="Musterstraße 12, 12345 Musterstadt"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>Zahlungsart *</label>
-                    <select name="Zahlungsart" id="paymentMethod" onchange="togglePaymentDetails()" required>
-                        <option value="">-- Bitte wählen --</option>
-                        <option value="PayPal">PayPal</option>
-                        <option value="Überweisung">Banküberweisung (C24 Bank)</option>
-                    </select>
-                </div>
-
-                <div id="paypalDetails" class="payment-info">
-                    <strong>PayPal-Zahlung:</strong><br>
-                    Du wirst nach dem Bestellen zu PayPal weitergeleitet oder kannst den Betrag direkt an <strong>SefaDemir969</strong> senden.
-                </div>
-
-                <div id="bankDetails" class="payment-info">
-                    <strong>Überweisung (C24 Bank):</strong><br>
-                    Nach Absenden erhältst du unsere C24 Bank-IBAN direkt per E-Mail für die Überweisung mitgeteilt.
-                </div>
-
-                <button type="submit" id="submitBtn" class="btn-buy" style="margin-top: 1.5rem; font-size: 1rem; padding: 0.9rem;">
-                    🛒 Verbindlich bestellen
-                </button>
-            </form>
-
-            <div id="successMessage" class="success-message">
-                <h3>Vielen Dank für deine Bestellung!</h3>
-                <p>Eine Bestätigung wurde per E-Mail versendet. Deine Bestellung geht in Kürze in den Druck!</p>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // ==========================================
-        // DEINE PRODUKTE (MIT DIREKTEN KLEINANZEIGEN BILD-URLS)
-        // ==========================================
-        const products = [
-            // Neuheiten / Highlights
-            { id: 1, title: "Moderne Rillen-Vase (15 cm)", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/19/19977b1f-a757-4718-9717-1b897d3392ef?rule=$_59.AUTO", category: "neuheiten", sizes: ["15 cm (Standard)", "20 cm", "25 cm"], colors: ["Schwarz (Matt)", "Weiß (Seidenmatt)", "Marmor-Optik", "Gold"] },
-            { id: 2, title: "Moderner Deko Kürbis (Skandi)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/86/86c6c36e-e77f-481a-a0dc-7f0eb65a8b4d?rule=$_59.AUTO", category: "neuheiten", sizes: ["Standard"], colors: ["Orange", "Weiß", "Schwarz", "Beige"] },
-            { id: 3, title: "Deko Rentier / Weihnachtsdeko", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/8a/8af8e74e-209e-4992-b5e5-331718fc2aa0?rule=$_59.AUTO", category: "neuheiten", sizes: ["Standard"], colors: ["Schwarz", "Weiß", "Rot", "Grün"] },
-            { id: 4, title: "Dekorative Vasen im Beutel-Design", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/97/9788aa00-17bd-4a0e-8065-6656b707d9bc?rule=$_59.AUTO", category: "neuheiten", sizes: ["Standard"], colors: ["Weiß", "Beige", "Grau"] },
-            
-            // Alle Produkte
-            { id: 5, title: "Rentier mit Schlitten Schale", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a7/a7a0654c-580c-4210-ab7e-23bd7b9ca063?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz", "Gold"] },
-            { id: 6, title: "Süßer Blumentopf mit Herz-Händen", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c2/c2fb9166-9f25-489e-9564-13a718ada97d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-            { id: 7, title: "PS5 Controller & Headset Halterung", price: "11,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/30a16c1c-dc8d-4720-ae99-fef9abc62bb3?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 8, title: "Design-Küchenrollenhalter (Rillen-Look)", price: "9,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e5/e5e56682-32a4-430b-adf1-fa576939c74e?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 9, title: "Dackel Ablageschale / Deko-Hund", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f0/f0f11a68-9510-47d7-a508-1712d557ecb6?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Braun"] },
-            { id: 10, title: "Schönes Wandregal rund (Metall-Regal)", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/2a/2a64b6af-dcfd-483b-ac47-b9921b760db6?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 11, title: "Stylische Katzen Deko (Rillen-Design)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f5/f5f2201c-3bb0-4088-893f-bdd8aeaf1901?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 12, title: "Moderner Schneemann Deko (Geriffelt)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/14/1455ecf9-4e1a-44d0-8b0b-d0f4444c7e44?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Blau"] },
-            { id: 13, title: "Moderne Weihnachtsglocken (Baumschmuck)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b2/b2db0548-b48a-4e2e-83b0-166f3c86be3a?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Rot", "Grün", "Weiß"] },
-            { id: 14, title: "Moderner Nussknacker Deko (Soldat)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/09/0943ff7b-38f9-4c58-8829-34ca09862788?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Rot", "Grün"] },
-            { id: 15, title: "Moderner Weihnachtswichtel (Gnom)", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/47/47edb529-cbbe-436d-b52a-3ae12799f036?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
-            { id: 16, title: "Japandi Vogel Deko (Geriffelt)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/06/064648f9-226b-42c8-bd06-9a03a53ff081?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grün"] },
-            { id: 17, title: "Modernes Eichhörnchen Deko", price: "7,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik", "Schwarz"] },
-            { id: 18, title: "Französische Bulldogge Schalen-Figur", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e0/e0828fc9-9255-4dae-86c5-3cde483012dd?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 19, title: "Moderne Kürbis Deko (Geriffelt)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/0a/0a3b992b-4082-4f22-b138-8bafe724b164?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
-            { id: 20, title: "Moderne Osterhasen Deko (Geriffelt)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/89/89fbda52-744d-4531-9a7d-d93707354695?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-            { id: 21, title: "Süßer Untersetzer mit Armen ('Hug Coaster')", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cd/cd4b19ae-e4b8-40e2-bbfc-ce894f54c0f5?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige", "Grau"] },
-            { id: 22, title: "Hirsch Teelichthalter", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/91/91a2fa74-0879-4940-8cd8-d2b20cc85bf5?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-            { id: 23, title: "Elegante Erdmännchen Deko Figur", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/7b/7bcac82a-fc95-4bba-b891-4495d7538e4b?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-            { id: 24, title: "Deko Dackel Figur mit Schale", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f6/f6bc77c2-f7ef-4745-9b3c-a980a19206e0?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 25, title: "Gorilla Schlüsselbrett & Ablage", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9c/9c42d314-15e7-468f-9df1-83983c8a65fc?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Silber", "Schwarz"] },
-            { id: 26, title: "Flexibler Oktopus Schlüsselanhänger", price: "3,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/98/9848fe0d-e775-4c11-869c-1768d3e9c476?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Bunt"] },
-            { id: 27, title: "Süße Deko-Schafe im modernen Design", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/83/83f4692e-f3ff-4408-9299-656f4fd5ee3d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Beige"] },
-            { id: 28, title: "Moderne Deko-Rentiere (Skandi Stil)", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/44/4427e5c4-9d05-429c-93c6-ffaab4db6ce0?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
-            { id: 29, title: "Flavor / Sirup Flaschen Halter", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/92/929c8f57-a5f7-4487-aae8-ad957eee1faf?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 30, title: "Akku-Schrauber Halterung für Werkbank", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/eb/ebbbf96f-1150-4b11-b083-928ac19db5d2?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Blau"] },
-            { id: 31, title: "Tannenzapfen-Häuschen Deko", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/db/db5e7a38-629a-470d-bd7d-ffec96793cc4?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik"] },
-            { id: 32, title: "Akustikpaneel Halterung / Haken", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/36/36fb07c0-f0d6-450a-80a1-d908930daeea?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 33, title: "Dekorative Eichel / Aufbewahrungsdose", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/11/1150d40a-0e14-48ab-967a-c942121456de?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige", "Braun"] },
-            { id: 34, title: "Dekoratives Eichhörnchen (Fuzzy Skin)", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/14/143618f3-862d-4806-8d9e-f255dbb7b701?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Braun"] },
-            { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/15/1588c8b0-ce3c-41cd-b831-8e4a639495db?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grün", "Weiß"] },
-            { id: 36, title: "Moderne Christbaumkugel Tanne", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a8/a8e5cf2e-c79c-4af4-afaa-646558712387?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grün", "Rot"] },
-            { id: 37, title: "UNO Kartenbox / Kartenetui", price: "7,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/27/273959ad-0a46-4a58-84d2-955794a0438a?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Blau", "Rot"] },
-            { id: 38, title: "Französische Bulldogge Dekoschale", price: "20,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/28/28f52a40-e477-4b7c-b514-ba5d7402ae60?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
-            { id: 39, title: "Französische Bulldogge Figur Deko", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a2/a2b7606a-49dc-4a23-b4ee-10c7a324bda3?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-            { id: 40, title: "Moderner Fernbedienungshalter (Lamellen)", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/15/15cf8552-4fa2-4048-901a-0e1f74f4fb14?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Braun"] },
-            { id: 41, title: "Handtuchhaken Badheizkörper 3er Set", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/2e/2efb12b0-3322-408e-9a40-902b2ade351b?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 42, title: "Deko-Schale 'Offene Hände'", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/11/11c0efa6-8f06-4832-b825-16ba6b0aa8d0?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige / Stein", "Schwarz"] },
-            { id: 43, title: "Deko-Figuren-Set 'Die 3 Weisen Affen'", price: "20,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/63/63e8fda8-6bcb-4f8d-82d8-36563216d748?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
-            { id: 44, title: "Smarter Lade-Organizer Steckdose", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a0/a0f2609a-4f3b-423b-b441-8d820ac204e1?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 45, title: "Wand-Organizer mit Ablage & Haken", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c0/c0496808-951a-46bf-b462-eda9b07a4570?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
-            { id: 46, title: "Couch-Organizer für Snacks & Getränke", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/5b/5b20181e-76f9-482b-a7e6-307f28802133?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Beige"] },
-            { id: 47, title: "Automatischer Eierspender Kühlschrank", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/91/91ef82d4-d92e-4622-93a6-dbab545c6270?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 48, title: "Gewürzhalter 5er-Set Wand & Schrank", price: "9,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/5b/5b6efa4f-f23a-4f1f-8280-efc7d4916c33?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 49, title: "Kaffeekapselhalter Wandhalterung", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/55/55167292-4d59-4460-9ec6-7e1fb755b40c?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 50, title: "Modulärer Bad & Schreibtisch Organizer", price: "12,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a9/a9bb6f5a-81bb-47cd-a8bf-ddb3d257d079?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 51, title: "Beweglicher Oktopus (Fidget Toy)", price: "14,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/15/1550a1bf-6125-4e22-93f8-e08d256af1f9?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Gelb", "Bunt"] },
-            { id: 52, title: "Fensterstopper / Balkontürstopper Keil", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e6/e6eaaea6-abb6-4b19-ac7f-6b24256de3a0?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik", "Schwarz"] },
-            { id: 53, title: "Universal Kartenspiel-Box Modular", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f9/f974146c-7ff4-4f44-8318-5a00f9bdc0a1?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
-            { id: 54, title: "Personalisierter Schlüsselanhänger Wunschname", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ac/ac6f0905-8b1c-4629-8fb2-0db5c3f9d16d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 55, title: "Professioneller Dart-Ständer / Halter", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/de/ded811f8-dc65-4d68-9a15-8b38b79e1572?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 56, title: "3er Set Türstopper & Fensterkeil", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b3/b3890468-5269-4fc4-bd4a-3684d837def2?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
-            { id: 57, title: "Universal Fahrrad Flaschenhalter", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/40/40d321b4-9b98-4c61-93a7-28662ad59af8?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Blau", "Schwarz"] },
-            { id: 58, title: "Einhänge-Bett-Organizer Nachttisch", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d7/d73f252c-f7b8-4447-813f-a39094695f61?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 59, title: "Ovales Kerzentablett Rillen-Design", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/37/37bb91d9-99b6-4b9b-a8bc-aa93e3495b8e?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
-            { id: 60, title: "Chipsdosen Lifter (Pringles Schiene)", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c7/c733e83f-c59d-4968-860e-bdb8d4408baa?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Beige"] },
-            { id: 61, title: "Wandhalterung für Schaufeln & Besen", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/89/8917c9da-8831-43fd-97dd-02ad2bc1697e?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 62, title: "Kabelbinder Halter / Dispenser Organizer", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/78/7888620d-521b-412a-bd7d-5832ae1de009?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
-            { id: 63, title: "Praktischer Folienhalter für Schranktür", price: "4,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/63/630144b7-16bc-4ea0-9d5b-c35474b8eaa3?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 64, title: "Moderner Pflanztopf Bogen-Muster Boho", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/79/79508466-f1bf-4b37-8e0e-968f4f0bcaf8?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
-            { id: 65, title: "Schrankeinsatz / Regaleinsatz Tellerregal", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ce/ce80dced-4e20-4ae6-98ba-34904788e306?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 66, title: "Gehörschutz Wandhalterung Werkstatt", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/300aad95-2e8b-4cef-9457-f66a4434d315?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 67, title: "Maulschlüssel Halter Wand Werkstatt", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ee/eee08fee-f932-4d3b-a801-788b21251d3d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Lila", "Schwarz"] },
-            { id: 68, title: "Spraydosenhalter 3er Set Wandhalterung", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/8e/8e6a3a67-727f-471a-bf75-a4ee42d59c92?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 69, title: "Spülmaschinentabs Halter Schranktür Box", price: "14,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b5/b5c15152-eaf3-4d19-9b6f-f7cbb3a39819?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 70, title: "Eier Spender / Eierhalter Kühlschrank", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b8/b81021ef-af3f-4faf-ae29-f85bbac0cea8?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Blau", "Rot"] },
-            { id: 71, title: "Schleifscheiben-Halter Lochwand", price: "11,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f0/f0cc8f72-9cd2-4988-b8b2-7dedc480422d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 72, title: "Akku Gartenwerkzeug Wandhaken 3er-Set", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c4/c4e470a6-ba8b-4573-95a0-7b708be6d0ea?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 73, title: "Weihnachtskugel Schale Süßigkeiten", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/44/445136e9-56d6-403d-b86e-1fceb10fe5a9?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grün", "Rot"] },
-            { id: 74, title: "Silikonkartuschen Halter Stapelbar", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/24/242f86ea-f6ff-4f3e-ba23-26b04e73715d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grau"] },
-            { id: 75, title: "Tütchen Halter / Gewürzpulver-Spender", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/01/01a01686-7d34-4679-91fc-6f5866554550?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 76, title: "Dosen Spender / Dosenhalter Stapelbar", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a5/a54a069c-0fb9-4642-aab1-ca3aaff4011f?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
-            { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/bc/bcdf38ff-281e-4352-9445-ff9cbdb48e50?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 78, title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", price: "15,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/16/162c6d36-4dff-4f2b-9a70-cd2decaa8897?rule=$_59.AUTO", category: "alle", sizes: ["Set (3 Größen)"], colors: ["Weiß"] },
-            { id: 79, title: "Toilettenpapierhalter mit Smartphone-Ablage", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b7/b7fdb4c9-d6a4-4635-a955-21ae586ec70e?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
-            { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cf/cf865676-451a-4a19-9552-4f4b3dd2f4e4?rule=$_59.AUTO", category: "alle", sizes: ["3 Akkus"], colors: ["Schwarz"] },
-            { id: 81, title: "Einzigartiger Geweih Kerzenständer", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a4/a4c86ea8-0794-4d8c-9213-2fefb73e0682?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Braun / Holz-Optik"] },
-            { id: 82, title: "Planeten / Todesstern Christbaumkugeln", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b1/b15c508a-e52d-4a7d-8a95-0be0fe80f3eb?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Gold", "Silber", "Blau"] },
-            { id: 83, title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cb/cbd5e355-9b10-4d1e-b416-85cee4474ff8?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
-            { id: 84, title: "3D-Druck Tannenbaum mit Christbaumkugel-Halterung", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/2e/2ebbc60a-5fa0-47e4-8c9f-4a3c52d74bd8?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Grün", "Schwarz"] },
-            { id: 85, title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", price: "8,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/3d/3d97d6df-141b-4b8a-8b10-fad7794ba6cf?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-            { id: 86, title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", price: "10,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/07/07a9be7f-cadc-4c5f-a29b-75cbd6867f35?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
-            { id: 87, title: "Klopapierhalter Schaf", price: "5,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/5e/5ec6321e-de70-445a-b3f9-62b2bde234ad?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Schwarz/Weiß"] },
-            { id: 88, title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", price: "6,00 €", img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/dc/dc30194f-23c5-43fd-b486-e689e0f16d2d?rule=$_59.AUTO", category: "alle", sizes: ["Standard"], colors: ["Gold", "Rot", "Silber"] },
-
-            // Custom Service Option
-            { id: 99, title: "Individueller 3D-Druck Service", price: "Auf Anfrage", img: "", category: "neuheiten", sizes: ["Individuell"], colors: ["Alle Wunschfarben"], isCustom: true }
-        ];
-
-        // RENDER-FUNKTION FÜR CARDS
-        function renderProducts() {
-            const neuheitenGrid = document.getElementById('neuheitenGrid');
-            const alleProdukteGrid = document.getElementById('alleProdukteGrid');
-
-            neuheitenGrid.innerHTML = '';
-            alleProdukteGrid.innerHTML = '';
-
-            products.forEach(p => {
-                const cardHtml = createCardHtml(p);
-                
-                alleProdukteGrid.innerHTML += cardHtml;
-                
-                if (p.category === 'neuheiten') {
-                    neuheitenGrid.innerHTML += cardHtml;
-                }
-            });
-
-            document.getElementById('productCountBadge').innerText = products.length + " Artikel";
-        }
-
-        function createCardHtml(p) {
-            if (p.isCustom) {
-                return `
-                    <div class="card product-card">
-                        <div class="card-icon-box">🛠️</div>
-                        <div class="card-body">
-                            <h3 class="card-title">${p.title}</h3>
-                            <div class="price">${p.price}</div>
-                            <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Wunschgrößen, STL-Dateien, Reparaturteile oder Sonderfarben.</p>
-                            <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20eine%20Anfrage%20für%20einen%20individuellen%203D-Druck." target="_blank" class="btn-whatsapp" style="background: #0070ba; font-size: 0.9rem; padding: 0.7rem;">💬 Projekt per WhatsApp besprechen</a>
-                        </div>
-                    </div>
-                `;
-            }
-
-            const sizeOptions = p.sizes.map(s => `<option>${s}</option>`).join('');
-            const colorOptions = p.colors.map(c => `<option>${c}</option>`).join('');
-            const imgHtml = p.img ? `<img src="${p.img}" alt="${p.title}" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="card-icon-box" style="display: none;">📦</div>` : `<div class="card-icon-box">📦</div>`;
-
-            return `
-                <div class="card product-card">
-                    ${imgHtml}
-                    <div class="card-body">
-                        <h3 class="card-title">${p.title}</h3>
-                        <div class="price">${p.price}</div>
-                        
-                        <label class="select-label">Größe wählen:</label>
-                        <select class="opt-select size-select">${sizeOptions}</select>
-
-                        <label class="select-label">Farbe wählen:</label>
-                        <select class="opt-select color-select">${colorOptions}</select>
-
-                        <button class="btn-buy" onclick="openCheckout('${p.title}', '${p.price}', this)">🛒 Direkt bestellen</button>
-                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20eine%20Sonderanfrage%20zu:%20${encodeURIComponent(p.title)}" target="_blank" class="btn-whatsapp">💬 Sonderwunsch per WhatsApp</a>
-                    </div>
-                </div>
-            `;
-        }
-
-        window.onload = renderProducts;
-
-        var selectedProduct = "", selectedPrice = "", selectedColor = "", selectedSize = "";
-
-        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
-
-        function showCategory(categoryId, btn) {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('no-results').style.display = 'none';
-
-            var blocks = document.querySelectorAll('.section-block');
-            blocks.forEach(b => b.classList.remove('active'));
-            document.getElementById(categoryId).classList.add('active');
-
-            var buttons = document.querySelectorAll('.cat-btn, .nav-menu button');
-            buttons.forEach(b => b.classList.remove('active'));
-            if (btn) btn.classList.add('active');
-        }
-
-        function filterProducts() {
-            var input = document.getElementById('searchInput').value.toLowerCase();
-            var activeBlock = document.querySelector('.section-block.active');
-            var cards = activeBlock ? activeBlock.querySelectorAll('.product-card') : [];
-            var visibleCount = 0;
-
-            cards.forEach(card => {
-                var title = card.querySelector('.card-title').innerText.toLowerCase();
-                if (title.includes(input)) { card.style.display = 'flex'; visibleCount++; }
-                else { card.style.display = 'none'; }
-            });
-
-            document.getElementById('no-results').style.display = (visibleCount === 0 && input.trim() !== '') ? 'block' : 'none';
-        }
-
-        function openCheckout(productName, price, btnElement) {
-            selectedProduct = productName;
-            selectedPrice = price;
-            
-            var card = btnElement.closest('.card-body');
-            var colorSelect = card.querySelector('.color-select');
-            var sizeSelect = card.querySelector('.size-select');
-            
-            selectedColor = colorSelect ? colorSelect.value : 'Standard';
-            selectedSize = sizeSelect ? sizeSelect.value : 'Standard';
-
-            document.getElementById('modalProductDetails').innerText = selectedProduct + " | Größe: " + selectedSize + " | Farbe: " + selectedColor + " | " + selectedPrice;
-            document.getElementById('orderProduct').value = selectedProduct;
-            document.getElementById('orderPrice').value = selectedPrice;
-            document.getElementById('orderSize').value = selectedSize;
-            document.getElementById('orderColor').value = selectedColor;
-            document.getElementById('emailSubject').value = "Neue Bestellung: " + selectedProduct;
-
-            document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('successMessage').style.display = 'none';
-            document.getElementById('checkoutModal').style.display = 'flex';
-        }
-
-        function closeCheckout() { document.getElementById('checkoutModal').style.display = 'none'; }
-
-        function togglePaymentDetails() {
-            var method = document.getElementById('paymentMethod').value;
-            document.getElementById('paypalDetails').style.display = (method === 'PayPal') ? 'block' : 'none';
-            document.getElementById('bankDetails').style.display = (method === 'Überweisung') ? 'block' : 'none';
-        }
-
-        function submitOrder(event) {
-            event.preventDefault();
-            var form = event.target;
-            var submitBtn = document.getElementById('submitBtn');
-            var payment = document.getElementById('paymentMethod').value;
-
-            submitBtn.innerText = "Wird gesendet...";
-            submitBtn.disabled = true;
-
-            fetch(form.action, {
-                method: 'POST',
-                body: new FormData(form)
-            }).then(response => {
-                if (response.ok) {
-                    form.style.display = 'none';
-                    document.getElementById('successMessage').style.display = 'block';
-
-                    if (payment === 'PayPal') {
-                        setTimeout(function() {
-                            window.open("https://www.paypal.me/SefaDemir969", '_blank');
-                        }, 1500);
-                    }
-                } else {
-                    alert("Es gab ein Problem beim Absenden. Bitte versuche es erneut.");
-                }
-            }).catch(error => {
-                alert("Fehler bei der Verbindung. Bitte versuche es erneut.");
-            }).finally(() => {
-                submitBtn.innerText = "🛒 Verbindlich bestellen";
-                submitBtn.disabled = false;
-            });
-        }
-    </script>
-
+    // Produkte beim Laden der Seite anzeigen
+    document.addEventListener('DOMContentLoaded', () => renderProducts(products));
+  </script>
 </body>
 </html>
