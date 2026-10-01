@@ -112,618 +112,74 @@
 
   <script>
     const products = [
-      { 
-        id: 17, 
-        title: "Dekoratives Eichhörnchen Fuzzy Skin", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Braun", "Beige"] 
-      },
-      { 
-        id: 18, 
-        title: "Moderner Weihnachtswichtel / Gnom", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige"] 
-      },
-      { 
-        id: 19, 
-        title: "Japandi Vogel Deko (Geriffelt)", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f4/f4323c21-f3db-4e14-9988-fa03295dbbb7?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige", "Schwarz"] 
-      },
-      { 
-        id: 20, 
-        title: "Modernes Eichhörnchen Deko (Geriffelt)", 
-        price: "7,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/227181c4-ce52-4740-976d-dfbc3f2eb305?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Holz-Optik / Braun"] 
-      },
-      { 
-        id: 21, 
-        title: "Französische Bulldogge Schalen-Figur", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 22, 
-        title: "Moderne Kürbis Deko (Geriffelt)", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f8/f8e434d7-d716-4315-a7b2-0a1496a8497f?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige", "Orange", "Schwarz"] 
-      },
-      { 
-        id: 23, 
-        title: "Moderne Osterhasen Deko (Geriffelt)", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d3/d39c0fa4-89bd-49ce-ae97-aa6b23d537f8?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß", "Schwarz"] 
-      },
-      { 
-        id: 24, 
-        title: "Süßer Untersetzer mit Armen (Hug Coaster)", 
-        price: "4,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/1d/1d1326c2-0731-41e9-9be3-fcd34d3d3448?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Rosa", "Beige"] 
-      },
-      { 
-        id: 25, 
-        title: "Hirsch Teelichthalter Elegante Deko", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/1c/1c94d039-4d64-42ff-b485-eb99f6aa6883?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 26, 
-        title: "Elegante Erdmännchen Deko Figur", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/6b/6b9faed1-3d7f-4ca6-b8b8-084a92911b3d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß", "Holz-Optik", "Schwarz"] 
-      },
-      { 
-        id: 27, 
-        title: "Deko Dackel Figur mit Schale", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b2/b24888be-3773-40e1-8f83-e18e80ae4e68?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 28, 
-        title: "Gorilla Schlüsselbrett & Ablage Deko", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9c/9c551bc9-aa72-4bd5-b28e-eb97bd660d5b?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 29, 
-        title: "Moderne Deko-Rentiere Skandi-Stil", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/3f/3fe244a1-0941-4fb2-bd75-a831ef7ba1b9?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grau", "Weiß"] 
-      },
-      { 
-        id: 30, 
-        title: "Flavor / Sirup Flaschen Halter", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f3/f3764831-29be-4dc9-9833-dcb5fdf9e28f?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 31, 
-        title: "Akku-Schrauber Halterung Werkbank", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/56/563e41ee-1941-4560-afbf-6bc718dcdd4c?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 32, 
-        title: "Wunderschönes Tannenzapfen-Häuschen", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/73/732598be-8d6d-4950-843e-7901fb9eb841?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Braun", "Grün"] 
-      },
-      { 
-        id: 33, 
-        title: "Akustikpaneel Halterung / Haken Schwarz", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a07aef-9562-4144-8ea6-cddf9468e82a?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 34, 
-        title: "Dekorative Eichel / Aufbewahrungsdose", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e7/e7529452-f4fb-4b53-a7bb-cb147576a9aa?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Braun/Beige"] 
-      },
-      { 
-        id: 35, 
-        title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/13/13593cb8-a537-47b1-9eb0-e147e09710fa?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["3er-Set"], 
-        colors: ["Weiß", "Holz-Optik"] 
-      },
-      { 
-        id: 36, 
-        title: "Moderne Christbaumkugel Tanne", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a8/a8e5cf2e-c79c-4af4-afaa-646558712387?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grün", "Rot"] 
-      },
-      { 
-        id: 37, 
-        title: "UNO Kartenbox / Kartenetui", 
-        price: "7,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/27/273959ad-0a46-4a58-84d2-955794a0438a?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Blau", "Rot"] 
-      },
-      { 
-        id: 38, 
-        title: "Französische Bulldogge Dekoschale", 
-        price: "20,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/28/28f52a40-e477-4b7c-b514-ba5d7402ae60?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige", "Schwarz"] 
-      },
-      { 
-        id: 39, 
-        title: "Französische Bulldogge Figur Deko", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a2/a2b7606a-49dc-4a23-b4ee-10c7a324bda3?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß", "Schwarz"] 
-      },
-      { 
-        id: 40, 
-        title: "Design-Küchenrollenhalter Rillen-Look", 
-        price: "9,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/42/42f9e42e-13c5-430f-b258-29cf9a9a0ebc?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz", "Weiß"] 
-      },
-      { 
-        id: 41, 
-        title: "Dackel Ablageschale Deko-Hund Schwarz", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/29/29bfca62-3bdc-4c60-aee8-232a51f8b4a1?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 42, 
-        title: "Schönes Wandregal rund Metall-Regal Schwarz", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a0f76a-5431-419b-a010-fa20215093e3?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 43, 
-        title: "Stylische Katzen Deko Rillen-Design", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/e7/e7a2b00f-8c38-4e89-98e3-0c463fa70221?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß", "Beige", "Schwarz"] 
-      },
-      { 
-        id: 44, 
-        title: "Moderner Schneemann Deko mit Hut", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d3/d3f7e53f-a18a-4061-893d-4952be7b8ca5?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grün", "Weiß", "Grau"] 
-      },
-      { 
-        id: 45, 
-        title: "Moderne Rillen-Vase (15 cm)", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["15 cm"], 
-        colors: ["Beige", "Grün"] 
-      },
-      { 
-        id: 46, 
-        title: "Rentier mit Schlitten Schale Weihnachtsdeko", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/99/99a3cddf-6a7e-4db4-b250-999313ea59e5?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 47, 
-        title: "Süßer Blumentopf mit Herz-Händen Übertopf", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ca/cad21a5a-3507-42f7-ae86-cd07df6874bf?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 48, 
-        title: "PS5 Controller & Headset Halterung Standfuß", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/3011a00a-1a80-498c-8519-7d87bd427a1c?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 50, 
-        title: "Moderner Deko Kürbis Skandi / Japandi", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b2/b2d07675-01f2-4bd5-a1eb-ef2e635e16da?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Orange", "Weiß", "Beige"] 
-      },
-      { 
-        id: 51, 
-        title: "Dekorative Vasen im Beutel-Design", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/15/15777df4-3996-419b-a010-333e6ea058a9?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grün", "Beige", "Weiß"] 
-      },
-      { 
-        id: 52, 
-        title: "Deko Rentier / Weihnachtsdeko modern", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f3/f301d293-e4ff-4d1e-84b2-0a9117651a2d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grau", "Weiß"] 
-      },
-      { 
-        id: 53, 
-        title: "Universal Kartenspiel-Box Modular", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f9/f974146c-7ff4-4f44-8318-5a00f9bdc0a1?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grau", "Schwarz"] 
-      },
-      { 
-        id: 57, 
-        title: "Universal Fahrrad Flaschenhalter", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/40/40d321b4-9b98-4c61-93a7-28662ad59af8?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Blau", "Schwarz"] 
-      },
-      { 
-        id: 58, 
-        title: "Einhänge-Bett-Organizer Nachttisch", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d7/d73f252c-f7b8-4447-813f-a39094695f61?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 59, 
-        title: "Ovales Kerzentablett Rillen-Design", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/37/37bb91d9-99b6-4b9b-a8bc-aa93e3495b8e?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige", "Weiß"] 
-      },
-      { 
-        id: 60, 
-        title: "Chipsdosen Lifter (Pringles Schiene)", 
-        price: "4,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c7/c733e83f-c59d-4968-860e-bdb8d4408baa?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz", "Beige"] 
-      },
-      { 
-        id: 61, 
-        title: "Wandhalterung für Schaufeln & Besen", 
-        price: "4,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/89/8917c9da-8831-43fd-97dd-02ad2bc1697e?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 62, 
-        title: "Kabelbinder Halter / Dispenser Organizer", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/78/7888620d-521b-412a-bd7d-5832ae1de009?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz", "Grau"] 
-      },
-      { 
-        id: 63, 
-        title: "Praktischer Folienhalter für Schranktür", 
-        price: "4,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/63/630144b7-16bc-4ea0-9d5b-c35474b8eaa3?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 64, 
-        title: "Moderner Pflanztopf Bogen-Muster Boho", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/79/79508466-f1bf-4b37-8e0e-968f4f0bcaf8?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Beige", "Weiß"] 
-      },
-      { 
-        id: 65, 
-        title: "Schrankeinsatz / Regaleinsatz Tellerregal", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ce/ce80dced-4e20-4ae6-98ba-34904788e306?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 66, 
-        title: "Gehörschutz Wandhalterung Werkstatt", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/30/300aad95-2e8b-4cef-9457-f66a4434d315?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 67, 
-        title: "Maulschlüssel Halter Wand Werkstatt", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/ee/eee08fee-f932-4d3b-a801-788b21251d3d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Lila", "Schwarz"] 
-      },
-      { 
-        id: 68, 
-        title: "Spraydosenhalter 3er Set Wandhalterung", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/8e/8e6a3a67-727f-471a-bf75-a4ee42d59c92?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 69, 
-        title: "Spülmaschinentabs Halter Schranktür Box", 
-        price: "14,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b5/b5c15152-eaf3-4d19-9b6f-f7cbb3a39819?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 70, 
-        title: "Eier Spender / Eierhalter Kühlschrank", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b8/b81021ef-af3f-4faf-ae29-f85bbac0cea8?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz", "Blau", "Rot"] 
-      },
-      { 
-        id: 71, 
-        title: "Schleifscheiben-Halter Lochwand", 
-        price: "11,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/f0/f0cc8f72-9cd2-4988-b8b2-7dedc480422d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 72, 
-        title: "Akku Gartenwerkzeug Wandhaken 3er-Set", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/c4/c4e470a6-ba8b-4573-95a0-7b708be6d0ea?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 73, 
-        title: "Moderne Weihnachtsglocken Anhänger", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/22197626-d621-4f1d-b6a3-c5b16e45aa98?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grün", "Beige", "Rot"] 
-      },
-      { 
-        id: 74, 
-        title: "Silikonkartuschen Halter Stapelbar", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/24/242f86ea-f6ff-4f3e-ba23-26b04e73715d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Grau"] 
-      },
-      { 
-        id: 75, 
-        title: "Tütchen Halter / Gewürzpulver-Spender", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/01/01a01686-7d34-4679-91fc-6f5866554550?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 76, 
-        title: "Dosen Spender / Dosenhalter Stapelbar", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a5/a54a069c-0fb9-4642-aab1-ca3aaff4011f?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 77, 
-        title: "Winkelschleifer Wandhalterung / Flex Halterung", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/bc/bcdf38ff-281e-4352-9445-ff9cbdb48e50?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 78, 
-        title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", 
-        price: "15,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/16/162c6d36-4dff-4f2b-9a70-cd2decaa8897?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Set (3 Größen)"], 
-        colors: ["Weiß"] 
-      },
-      { 
-        id: 79, 
-        title: "Toilettenpapierhalter mit Smartphone-Ablage", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b7/b7fdb4c9-d6a4-4635-a955-21ae586ec70e?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Orange", "Schwarz", "Weiß"] 
-      },
-      { 
-        id: 80, 
-        title: "Makita 18V Akku Halterung für 3 Akkus", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cf/cf865676-451a-4a19-9552-4f4b3dd2f4e4?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["3 Akkus"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 81, 
-        title: "Einzigartiger Geweih Kerzenständer", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/a4/a4c86ea8-0794-4d8c-9213-2fefb73e0682?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Braun / Holz-Optik"] 
-      },
-      { 
-        id: 82, 
-        title: "Planeten / Todesstern Christbaumkugeln", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/b1/b15c508a-e52d-4a7d-8a95-0be0fe80f3eb?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Gold", "Silber", "Blau"] 
-      },
-      { 
-        id: 83, 
-        title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/cb/cbd5e355-9b10-4d1e-b416-85cee4474ff8?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Weiß", "Grau"] 
-      },
-      { 
-        id: 84, 
-        title: "Moderner Nussknacker Advents-Soldat", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/64/64bc0eb0-e7f0-41ed-9db3-7dc4b9b91754?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Rot", "Grün", "Grau"] 
-      },
-      { 
-        id: 85, 
-        title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", 
-        price: "8,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/3d/3d97d6df-141b-4b8a-8b10-fad7794ba6cf?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz", "Weiß"] 
-      },
-      { 
-        id: 86, 
-        title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", 
-        price: "10,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/07/07a9be7f-cadc-4c5f-a29b-75cbd6867f35?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz"] 
-      },
-      { 
-        id: 87, 
-        title: "Klopapierhalter Schaf", 
-        price: "5,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/5e/5ec6321e-de70-445a-b3f9-62b2bde234ad?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Schwarz/Weiß"] 
-      },
-      { 
-        id: 88, 
-        title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", 
-        price: "6,00 €", 
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/dc/dc30194f-23c5-43fd-b486-e689e0f16d2d?rule=$_59.AUTO", 
-        category: "alle", 
-        sizes: ["Standard"], 
-        colors: ["Gold", "Rot", "Silber"] 
-      }
+      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Braun", "Beige"] },
+      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige"] },
+      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
+      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: "7,00 €", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik / Braun"] },
+      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige", "Orange", "Schwarz"] },
+      { id: 23, title: "Moderne Osterhasen Deko (Geriffelt)", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+      { id: 24, title: "Süßer Untersetzer mit Armen (Hug Coaster)", price: "4,00 €", category: "alle", sizes: ["Standard"], colors: ["Rosa", "Beige"] },
+      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 26, title: "Elegante Erdmännchen Deko Figur", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Holz-Optik", "Schwarz"] },
+      { id: 27, title: "Deko Dackel Figur mit Schale", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 29, title: "Moderne Deko-Rentiere Skandi-Stil", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
+      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 32, title: "Wunderschönes Tannenzapfen-Häuschen", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Braun", "Grün"] },
+      { id: 33, title: "Akustikpaneel Halterung / Haken Schwarz", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 34, title: "Dekorative Eichel / Aufbewahrungsdose", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Braun/Beige"] },
+      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: "5,00 €", category: "alle", sizes: ["3er-Set"], colors: ["Weiß", "Holz-Optik"] },
+      { id: 36, title: "Moderne Christbaumkugel Tanne", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Grün", "Rot"] },
+      { id: 37, title: "UNO Kartenbox / Kartenetui", price: "7,00 €", category: "alle", sizes: ["Standard"], colors: ["Blau", "Rot"] },
+      { id: 38, title: "Französische Bulldogge Dekoschale", price: "20,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
+      { id: 39, title: "Französische Bulldogge Figur Deko", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+      { id: 40, title: "Design-Küchenrollenhalter Rillen-Look", price: "9,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+      { id: 41, title: "Dackel Ablageschale Deko-Hund Schwarz", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 42, title: "Schönes Wandregal rund Metall-Regal Schwarz", price: "15,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 43, title: "Stylische Katzen Deko Rillen-Design", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Beige", "Schwarz"] },
+      { id: 44, title: "Moderner Schneemann Deko mit Hut", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Grün", "Weiß", "Grau"] },
+      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: "10,00 €", category: "alle", sizes: ["15 cm"], colors: ["Beige", "Grün"] },
+      { id: 46, title: "Rentier mit Schlitten Schale Weihnachtsdeko", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 47, title: "Süßer Blumentopf mit Herz-Händen Übertopf", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 50, title: "Moderner Deko Kürbis Skandi / Japandi", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Orange", "Weiß", "Beige"] },
+      { id: 51, title: "Dekorative Vasen im Beutel-Design", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Grün", "Beige", "Weiß"] },
+      { id: 52, title: "Deko Rentier / Weihnachtsdeko modern", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
+      { id: 53, title: "Universal Kartenspiel-Box Modular", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
+      { id: 57, title: "Universal Fahrrad Flaschenhalter", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Blau", "Schwarz"] },
+      { id: 58, title: "Einhänge-Bett-Organizer Nachttisch", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 59, title: "Ovales Kerzentablett Rillen-Design", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
+      { id: 60, title: "Chipsdosen Lifter (Pringles Schiene)", price: "4,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Beige"] },
+      { id: 61, title: "Wandhalterung für Schaufeln & Besen", price: "4,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 62, title: "Kabelbinder Halter / Dispenser Organizer", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
+      { id: 63, title: "Praktischer Folienhalter für Schranktür", price: "4,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 64, title: "Moderner Pflanztopf Bogen-Muster Boho", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
+      { id: 65, title: "Schrankeinsatz / Regaleinsatz Tellerregal", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 66, title: "Gehörschutz Wandhalterung Werkstatt", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 67, title: "Maulschlüssel Halter Wand Werkstatt", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Lila", "Schwarz"] },
+      { id: 68, title: "Spraydosenhalter 3er Set Wandhalterung", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 69, title: "Spülmaschinentabs Halter Schranktür Box", price: "14,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 70, title: "Eier Spender / Eierhalter Kühlschrank", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Blau", "Rot"] },
+      { id: 71, title: "Schleifscheiben-Halter Lochwand", price: "11,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 72, title: "Akku Gartenwerkzeug Wandhaken 3er-Set", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 73, title: "Moderne Weihnachtsglocken Anhänger", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Grün", "Beige", "Rot"] },
+      { id: 74, title: "Silikonkartuschen Halter Stapelbar", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Grau"] },
+      { id: 75, title: "Tütchen Halter / Gewürzpulver-Spender", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 76, title: "Dosen Spender / Dosenhalter Stapelbar", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 78, title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", price: "15,00 €", category: "alle", sizes: ["Set (3 Größen)"], colors: ["Weiß"] },
+      { id: 79, title: "Toilettenpapierhalter mit Smartphone-Ablage", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
+      { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: "5,00 €", category: "alle", sizes: ["3 Akkus"], colors: ["Schwarz"] },
+      { id: 81, title: "Einzigartiger Geweih Kerzenständer", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Braun / Holz-Optik"] },
+      { id: 82, title: "Planeten / Todesstern Christbaumkugeln", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Gold", "Silber", "Blau"] },
+      { id: 83, title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
+      { id: 84, title: "Moderner Nussknacker Advents-Soldat", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Rot", "Grün", "Grau"] },
+      { id: 85, title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", price: "8,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+      { id: 86, title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", price: "10,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 87, title: "Klopapierhalter Schaf", price: "5,00 €", category: "alle", sizes: ["Standard"], colors: ["Schwarz/Weiß"] },
+      { id: 88, title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", price: "6,00 €", category: "alle", sizes: ["Standard"], colors: ["Gold", "Rot", "Silber"] }
     ];
 
     function renderProducts(items) {
@@ -737,8 +193,11 @@
         const colorsBadges = product.colors.map(c => `<span class="badge">${c}</span>`).join('');
         const sizesBadges = product.sizes.map(s => `<span class="badge">${s}</span>`).join('');
 
+        // Generiert automatisch ein sauberes Platzhalter-Bild mit Produktname
+        const autoImg = `https://placehold.co/400x300/2c3e50/ffffff?text=${encodeURIComponent(product.title)}`;
+
         card.innerHTML = `
-          <img class="product-image" src="${product.img}" alt="${product.title}" loading="lazy">
+          <img class="product-image" src="${autoImg}" alt="${product.title}" loading="lazy">
           <div class="product-info">
             <h2 class="product-title">${product.title}</h2>
             <div class="product-price">${product.price}</div>
@@ -753,7 +212,6 @@
       });
     }
 
-    // Produkte beim Laden der Seite anzeigen
     document.addEventListener('DOMContentLoaded', () => renderProducts(products));
   </script>
 </body>
