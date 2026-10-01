@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sefas3DShop - Custom 3D-Drucke &amp; Design</title>
+  <title>Sefas3DShop - Custom 3D-Drucke & Design</title>
   <style>
     :root {
       --bg-dark: #121214;
@@ -31,6 +31,7 @@
       flex-direction: column;
     }
 
+    /* Top Utility Bar */
     .top-bar {
       background-color: #0b0b0d;
       border-bottom: 1px solid var(--border-color);
@@ -41,6 +42,7 @@
       color: var(--text-muted);
     }
 
+    /* Header */
     header {
       background-color: #1a1a20;
       border-bottom: 1px solid var(--border-color);
@@ -90,6 +92,10 @@
       outline: none;
     }
 
+    .search-bar input:focus {
+      border-color: var(--accent);
+    }
+
     .search-bar button {
       background-color: var(--accent);
       color: white;
@@ -98,6 +104,11 @@
       border-radius: 0 20px 20px 0;
       cursor: pointer;
       font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    .search-bar button:hover {
+      background-color: var(--accent-hover);
     }
 
     .cart-btn {
@@ -111,6 +122,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .cart-btn:hover {
+      background-color: var(--card-hover);
+      transform: scale(1.03);
     }
 
     .cart-badge {
@@ -121,6 +138,7 @@
       font-size: 0.85rem;
     }
 
+    /* Hauptnavigation */
     nav {
       background-color: #16161a;
       border-bottom: 1px solid var(--border-color);
@@ -145,6 +163,7 @@
       font-weight: 600;
       font-size: 0.95rem;
       cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .nav-link:hover, .nav-link.active {
@@ -152,6 +171,7 @@
       color: var(--accent);
     }
 
+    /* Dropdown Menü */
     .dropdown {
       display: none;
       position: absolute;
@@ -173,6 +193,7 @@
       font-size: 0.9rem;
       border-bottom: 1px solid var(--border-color);
       cursor: pointer;
+      transition: background-color 0.2s, color 0.2s;
     }
 
     .dropdown a:hover {
@@ -184,6 +205,7 @@
       display: block;
     }
 
+    /* Main Container */
     .main-container {
       max-width: 1200px;
       margin: 25px auto;
@@ -200,6 +222,7 @@
       color: var(--text-main);
     }
 
+    /* Produkt-Grid */
     .product-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -213,6 +236,13 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      background-color: var(--card-hover);
     }
 
     .product-img {
@@ -245,22 +275,34 @@
       margin-bottom: 12px;
     }
 
-    .product-details {
-      font-size: 0.85rem;
-      color: var(--text-muted);
+    /* Steuerelemente für Farbe & Details */
+    .product-options {
       margin-bottom: 15px;
       display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
+      flex-direction: column;
+      gap: 8px;
     }
 
-    .badge {
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
+    .option-label {
+      font-size: 0.85rem;
       color: var(--text-muted);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    .color-select {
+      width: 100%;
+      padding: 8px 12px;
+      background-color: #121214;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      border-radius: 6px;
+      outline: none;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .color-select:focus {
+      border-color: var(--accent);
     }
 
     .add-btn {
@@ -272,13 +314,29 @@
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
+      transition: background-color 0.2s;
     }
 
     .add-btn:hover {
       background-color: var(--accent-hover);
     }
 
-    /* Modal / Popup */
+    /* Impressum Bereich */
+    .impressum-box {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
+    }
+
+    .impressum-box h3 {
+      margin-top: 18px;
+      margin-bottom: 6px;
+      color: var(--accent);
+    }
+
+    /* Modal / Popup für Warenkorb */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -286,7 +344,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(0, 0, 0, 0.75);
+      background-color: rgba(0, 0, 0, 0.7);
       z-index: 1000;
       justify-content: center;
       align-items: center;
@@ -301,14 +359,13 @@
       border: 1px solid var(--border-color);
       color: var(--text-main);
       width: 90%;
-      max-width: 550px;
+      max-width: 500px;
       border-radius: 12px;
-      padding: 24px;
+      padding: 20px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      max-height: 85vh;
+      max-height: 80vh;
       display: flex;
       flex-direction: column;
-      overflow-y: auto;
     }
 
     .modal-header {
@@ -333,6 +390,10 @@
       color: var(--text-muted);
     }
 
+    .close-btn:hover {
+      color: var(--text-main);
+    }
+
     .cart-items {
       overflow-y: auto;
       flex: 1;
@@ -351,6 +412,12 @@
       font-weight: 600;
       font-size: 0.95rem;
       max-width: 240px;
+    }
+
+    .cart-item-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
     }
 
     .cart-item-price {
@@ -391,64 +458,14 @@
       border-radius: 8px;
       font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.2s;
     }
 
-    /* Checkout Formular Styles */
-    .form-group {
-      margin-bottom: 15px;
+    .checkout-btn:hover {
+      background-color: var(--accent-hover);
     }
 
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      margin-bottom: 5px;
-      color: var(--text-muted);
-    }
-
-    .form-group input, .form-group select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid var(--border-color);
-      background-color: #121214;
-      color: var(--text-main);
-      outline: none;
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .order-summary {
-      background-color: #121214;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      border: 1px solid var(--border-color);
-    }
-
-    .order-summary div {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-      font-size: 0.9rem;
-    }
-
-    .impressum-box {
-      background-color: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      line-height: 1.6;
-    }
-
-    .impressum-box h3 {
-      margin-top: 18px;
-      margin-bottom: 6px;
-      color: var(--accent);
-    }
-
+    /* Footer */
     footer {
       background-color: #1a1a20;
       border-top: 1px solid var(--border-color);
@@ -462,11 +479,13 @@
 </head>
 <body>
 
+  <!-- Top Bar -->
   <div class="top-bar">
     <span>Kostenlose Lieferung ab 49 €</span>
     <span>Präzise 3D-Drucke &amp; Schneller Versand aus Deutschland</span>
   </div>
 
+  <!-- Header -->
   <header>
     <div class="header-main">
       <div class="logo" onclick="showPage('all')">Sefas3D<span>Shop</span></div>
@@ -474,12 +493,13 @@
         <input type="text" id="searchInput" placeholder="Produkt oder Kategorie suchen..." oninput="handleSearch()">
         <button onclick="handleSearch()">Suchen</button>
       </div>
-      <button class="cart-btn" onclick="openCartModal()">
+      <button class="cart-btn" onclick="toggleCartModal()">
         🛒 Warenkorb <span class="cart-badge" id="cartBadge">0</span>
       </button>
     </div>
   </header>
 
+  <!-- Navigation -->
   <nav>
     <ul class="nav-container">
       <li class="nav-item">
@@ -500,13 +520,16 @@
     </ul>
   </nav>
 
+  <!-- Hauptinhalt -->
   <div class="main-container">
     
+    <!-- Produkte Bereich -->
     <div id="shopSection">
       <h2 class="section-title" id="sectionTitle">Alle Produkte</h2>
       <div class="product-grid" id="productGrid"></div>
     </div>
 
+    <!-- Impressum Bereich -->
     <div id="impressumSection" style="display: none;">
       <h2 class="section-title">Impressum</h2>
       <div class="impressum-box">
@@ -518,133 +541,86 @@
         Deutschland</p>
 
         <h3>Kontakt</h3>
-        <p>E-Mail: sefad.sd@gmail.com</p>
+        <p>E-Mail: info@sefas3dshop.de</p>
 
         <h3>Umsatzsteuer-ID</h3>
         <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: Kleinunternehmer nach § 19 UStG</p>
+
+        <h3>Haftung für Inhalte</h3>
+        <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
       </div>
     </div>
 
   </div>
 
-  <!-- Modal (Warenkorb / Checkout / Bestätigung) -->
+  <!-- Warenkorb Modal (Popup) -->
   <div class="modal-overlay" id="cartModal">
     <div class="modal-content">
-      
-      <!-- Schritt 1: Warenkorb Übersicht -->
-      <div id="stepCart">
-        <div class="modal-header">
-          <h2>Dein Warenkorb</h2>
-          <button class="close-btn" onclick="closeCartModal()">&times;</button>
-        </div>
-        <div class="cart-items" id="cartItems">
-          <p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>
-        </div>
-        <div class="cart-footer">
-          <div class="cart-total">Gesamt: <span id="cartTotal">0,00 €</span></div>
-          <button class="checkout-btn" onclick="goToCheckout()">Zur Kasse</button>
-        </div>
+      <div class="modal-header">
+        <h2>Dein Warenkorb</h2>
+        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
       </div>
-
-      <!-- Schritt 2: Kasse / Lieferadresse -->
-      <div id="stepCheckout" style="display: none;">
-        <div class="modal-header">
-          <h2>Kasse &amp; Lieferadresse</h2>
-          <button class="close-btn" onclick="closeCartModal()">&times;</button>
-        </div>
-        <form onsubmit="submitOrder(event)">
-          <div class="form-row">
-            <div class="form-group" style="flex: 1;">
-              <label>Vorname *</label>
-              <input type="text" id="custFirstName" required placeholder="Sefa">
-            </div>
-            <div class="form-group" style="flex: 1;">
-              <label>Nachname *</label>
-              <input type="text" id="custLastName" required placeholder="Demir">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>E-Mail-Adresse *</label>
-            <input type="email" id="custEmail" required placeholder="deine-email@beispiel.de">
-          </div>
-          <div class="form-row">
-            <div class="form-group" style="flex: 3;">
-              <label>Straße &amp; Hausnummer *</label>
-              <input type="text" id="custStreet" required placeholder="Neuer Weg 42">
-            </div>
-            <div class="form-group" style="flex: 1.5;">
-              <label>PLZ *</label>
-              <input type="text" id="custZip" required placeholder="32369">
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Zahlungsart *</label>
-            <select id="custPayment">
-              <option value="PayPal">PayPal</option>
-              <option value="Überweisung (Revolut)">Überweisung (Revolut)</option>
-            </select>
-          </div>
-
-          <div class="order-summary">
-            <div><span>Zwischensumme:</span><span id="checkoutSubtotal">0,00 €</span></div>
-            <div><span>Versandkosten:</span><span>3,90 €</span></div>
-            <div style="font-weight: bold; font-size: 1rem; margin-top: 5px; color: var(--accent);">
-              <span>Gesamtsumme:</span><span id="checkoutTotal">0,00 €</span>
-            </div>
-          </div>
-
-          <div style="display: flex; gap: 10px;">
-            <button type="button" class="add-btn" style="background-color: #333;" onclick="backToCart()">Zurück</button>
-            <button type="submit" class="checkout-btn" style="flex: 1;">Kostenpflichtig bestellen</button>
-          </div>
-        </form>
+      <div class="cart-items" id="cartItems">
+        <p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>
       </div>
-
-      <!-- Schritt 3: Bestellbestätigung -->
-      <div id="stepConfirmation" style="display: none; text-align: center; padding: 10px 0;">
-        <div style="font-size: 3rem; color: #27ae60; margin-bottom: 10px;">✓</div>
-        <h2 style="color: var(--accent); margin-bottom: 10px;">Vielen Dank für deine Bestellung!</h2>
-        <p style="color: var(--text-muted); margin-bottom: 15px;">Eine Bestätigung mit deinen Zahlungsdaten wurde an deine E-Mail-Adresse gesendet.</p>
-        
-        <div class="order-summary" style="text-align: left;">
-          <div><strong>Bestellnummer:</strong> <span id="confOrderNum" style="color: var(--accent);">#1001</span></div>
-          <div><strong>Name:</strong> <span id="confName"></span></div>
-          <div><strong>Lieferadresse:</strong> <span id="confAddress"></span></div>
-          <div><strong>E-Mail:</strong> <span id="confEmail"></span></div>
-          <div><strong>Zahlungsart:</strong> <span id="confPayment"></span></div>
-          <div style="font-weight: bold; margin-top: 8px; border-top: 1px solid var(--border-color); padding-top: 5px;">
-            <span>Gesamtbetrag:</span><span id="confTotal"></span>
-          </div>
-        </div>
-
-        <div id="paymentDetailsBox"></div>
-
-        <button class="checkout-btn" style="width: 100%; margin-top: 15px;" onclick="finishOrder()">Zurück zum Shop</button>
+      <div class="cart-footer">
+        <div class="cart-total">Gesamt: <span id="cartTotal">0,00 €</span></div>
+        <button class="checkout-btn" onclick="checkout()">Zur Kasse</button>
       </div>
-
     </div>
   </div>
 
+  <!-- Footer -->
   <footer>
     &copy; 2026 Sefas3DShop — Alle Rechte vorbehalten.
   </footer>
 
   <script>
+    // Alle verfügbaren Filamentfarben aus den Fotos
+    const availableColors = [
+      "Schwarz", "Weiß / Hellgrau", "Blau", "Grün", "Rot", 
+      "Orange", "Braun / Holz-Optik", "Beige", "Rosa", 
+      "Magenta / Pink", "Gold / Bronze", "Silber"
+    ];
+
     const products = [
-      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true, sizes: [], colors: ["Braun", "Beige"] },
-      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true, sizes: [], colors: ["Beige"] },
-      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false, sizes: [], colors: ["Beige", "Schwarz"] },
-      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false, sizes: [], colors: ["Holz-Optik"] },
-      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true, sizes: [], colors: ["Schwarz"] },
-      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false, sizes: [], colors: ["Orange", "Beige"] },
-      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true, sizes: [], colors: ["Weiß"] },
-      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false, sizes: [], colors: ["Schwarz"] },
-      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] },
-      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] },
-      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["3er-Set"], colors: ["Weiß"] },
-      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false, sizes: [], colors: ["Beige"] },
-      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: 10.00, category: "Deko", isNew: false, sizes: ["15 cm"], colors: ["Beige"] },
-      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false, sizes: [], colors: ["Schwarz"] }
+      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true },
+      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true },
+      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false },
+      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false },
+      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true },
+      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false },
+      { id: 23, title: "Moderne Osterhasen Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false },
+      { id: 24, title: "Süßer Untersetzer mit Armen (Hug Coaster)", price: 4.00, category: "Deko", isNew: false },
+      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true },
+      { id: 26, title: "Elegante Erdmännchen Deko Figur", price: 8.00, category: "Deko", isNew: false },
+      { id: 27, title: "Deko Dackel Figur mit Schale", price: 15.00, category: "Deko", isNew: false },
+      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false },
+      { id: 29, title: "Moderne Deko-Rentiere Skandi-Stil", price: 5.00, category: "Weihnachten", isNew: true },
+      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false },
+      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false },
+      { id: 32, title: "Wunderschönes Tannenzapfen-Häuschen", price: 6.00, category: "Weihnachten", isNew: true },
+      { id: 33, title: "Akustikpaneel Halterung / Haken Schwarz", price: 5.00, category: "Werkstatt", isNew: false },
+      { id: 34, title: "Dekorative Eichel / Aufbewahrungsdose", price: 15.00, category: "Deko", isNew: false },
+      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: 5.00, category: "Weihnachten", isNew: true },
+      { id: 36, title: "Moderne Christbaumkugel Tanne", price: 5.00, category: "Weihnachten", isNew: false },
+      { id: 37, title: "UNO Kartenbox / Kartenetui", price: 7.00, category: "Deko", isNew: false },
+      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false },
+      { id: 39, title: "Französische Bulldogge Figur Deko", price: 15.00, category: "Deko", isNew: false },
+      { id: 40, title: "Design-Küchenrollenhalter Rillen-Look", price: 9.00, category: "Werkstatt", isNew: false },
+      { id: 41, title: "Dackel Ablageschale Deko-Hund Schwarz", price: 15.00, category: "Deko", isNew: false },
+      { id: 42, title: "Schönes Wandregal rund Metall-Regal Schwarz", price: 15.00, category: "Deko", isNew: false },
+      { id: 43, title: "Stylische Katzen Deko Rillen-Design", price: 5.00, category: "Deko", isNew: false },
+      { id: 44, title: "Moderner Schneemann Deko mit Hut", price: 5.00, category: "Weihnachten", isNew: true },
+      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: 10.00, category: "Deko", isNew: false },
+      { id: 46, title: "Rentier mit Schlitten Schale Weihnachtsdeko", price: 10.00, category: "Weihnachten", isNew: true },
+      { id: 47, title: "Süßer Blumentopf mit Herz-Händen Übertopf", price: 10.00, category: "Deko", isNew: false },
+      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false },
+      { id: 50, title: "Moderner Deko Kürbis Skandi / Japandi", price: 5.00, category: "Deko", isNew: false },
+      { id: 51, title: "Dekorative Vasen im Beutel-Design", price: 6.00, category: "Deko", isNew: false },
+      { id: 52, title: "Deko Rentier / Weihnachtsdeko modern", price: 6.00, category: "Weihnachten", isNew: true },
+      { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: 5.00, category: "Werkstatt", isNew: false },
+      { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: 5.00, category: "Werkstatt", isNew: false }
     ];
 
     let cart = [];
@@ -662,20 +638,25 @@
       items.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
+
         const imgUrl = `https://placehold.co/400x300/1e1e24/ff6b00?text=${encodeURIComponent(p.title)}`;
 
-        const sizeBadges = p.sizes.filter(s => s !== "Standard").map(s => `<span class="badge">${s}</span>`).join('');
-        const colorBadges = p.colors.map(c => `<span class="badge">${c}</span>`).join('');
+        // Erstelle Optionen für das Farbauswahl-Dropdown
+        const colorOptionsHtml = availableColors.map(color => `<option value="${color}">${color}</option>`).join('');
 
         card.innerHTML = `
           <img class="product-img" src="${imgUrl}" alt="${p.title}" loading="lazy">
           <div class="product-info">
             <div class="product-title">${p.title}</div>
             <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
-            <div class="product-details">
-              ${colorBadges}
-              ${sizeBadges}
+            
+            <div class="product-options">
+              <label class="option-label" for="color-${p.id}">Farbe wählen:</label>
+              <select class="color-select" id="color-${p.id}">
+                ${colorOptionsHtml}
+              </select>
             </div>
+
             <button class="add-btn" onclick="addToCart(${p.id})">In den Warenkorb</button>
           </div>
         `;
@@ -699,7 +680,8 @@
       } else if (page === 'new') {
         document.getElementById('navNew').classList.add('active');
         document.getElementById('sectionTitle').innerText = 'Neuheiten';
-        renderProducts(products.filter(p => p.isNew));
+        const newProducts = products.filter(p => p.isNew);
+        renderProducts(newProducts);
       } else if (page === 'impressum') {
         document.getElementById('navImpressum').classList.add('active');
         document.getElementById('shopSection').style.display = 'none';
@@ -710,36 +692,51 @@
     function filterCategory(cat) {
       showPage('all');
       document.getElementById('sectionTitle').innerText = cat === 'alle' ? 'Alle Produkte' : `Kategorie: ${cat}`;
-      renderProducts(cat === 'alle' ? products : products.filter(p => p.category === cat));
+      if (cat === 'alle') {
+        renderProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category === cat);
+        renderProducts(filtered);
+      }
     }
 
     function handleSearch() {
       const query = document.getElementById('searchInput').value.toLowerCase();
       if (currentPage === 'impressum') showPage('all');
+
+      const filtered = products.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
       document.getElementById('sectionTitle').innerText = `Suchergebnisse für "${query}"`;
-      renderProducts(products.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query)));
+      renderProducts(filtered);
     }
 
+    /* Warenkorb-Funktionen */
     function addToCart(productId) {
       const product = products.find(p => p.id === productId);
-      const existing = cart.find(item => item.id === productId);
+      const colorSelect = document.getElementById(`color-${productId}`);
+      const selectedColor = colorSelect ? colorSelect.value : "Schwarz";
+
+      // Unterscheide Artikel im Warenkorb auch nach der ausgewählten Farbe
+      const existing = cart.find(item => item.id === productId && item.selectedColor === selectedColor);
 
       if (existing) {
         existing.quantity += 1;
       } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push({ ...product, selectedColor: selectedColor, quantity: 1 });
       }
 
       updateCartUI();
     }
 
-    function removeFromCart(productId) {
-      cart = cart.filter(item => item.id !== productId);
+    function removeFromCart(productId, color) {
+      cart = cart.filter(item => !(item.id === productId && item.selectedColor === color));
       updateCartUI();
     }
 
     function updateCartUI() {
-      document.getElementById('cartBadge').innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+      const badge = document.getElementById('cartBadge');
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      badge.innerText = totalItems;
+
       const cartItemsContainer = document.getElementById('cartItems');
       const cartTotal = document.getElementById('cartTotal');
 
@@ -761,11 +758,11 @@
         div.innerHTML = `
           <div>
             <div class="cart-item-title">${item.title}</div>
-            <small style="color: var(--text-muted);">${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</small>
+            <div class="cart-item-meta">Farbe: ${item.selectedColor} | ${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</div>
           </div>
           <div>
             <span class="cart-item-price">${itemTotal.toFixed(2).replace('.', ',')} €</span>
-            <span class="remove-item" onclick="removeFromCart(${item.id})">&times;</span>
+            <span class="remove-item" onclick="removeFromCart(${item.id}, '${item.selectedColor}')">&times;</span>
           </div>
         `;
         cartItemsContainer.appendChild(div);
@@ -774,134 +771,23 @@
       cartTotal.innerText = `${total.toFixed(2).replace('.', ',')} €`;
     }
 
-    function openCartModal() {
-      document.getElementById('stepCart').style.display = 'block';
-      document.getElementById('stepCheckout').style.display = 'none';
-      document.getElementById('stepConfirmation').style.display = 'none';
-      document.getElementById('cartModal').classList.add('active');
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.toggle('active');
     }
 
-    function closeCartModal() {
-      document.getElementById('cartModal').classList.remove('active');
-    }
-
-    function goToCheckout() {
+    function checkout() {
       if (cart.length === 0) {
         alert('Dein Warenkorb ist leer!');
         return;
       }
-
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const shipping = 3.90;
-      const total = subtotal + shipping;
-
-      document.getElementById('checkoutSubtotal').innerText = `${subtotal.toFixed(2).replace('.', ',')} €`;
-      document.getElementById('checkoutTotal').innerText = `${total.toFixed(2).replace('.', ',')} €`;
-
-      document.getElementById('stepCart').style.display = 'none';
-      document.getElementById('stepCheckout').style.display = 'block';
-    }
-
-    function backToCart() {
-      document.getElementById('stepCheckout').style.display = 'none';
-      document.getElementById('stepCart').style.display = 'block';
-    }
-
-    async function submitOrder(event) {
-      event.preventDefault();
-
-      const firstName = document.getElementById('custFirstName').value;
-      const lastName = document.getElementById('custLastName').value;
-      const email = document.getElementById('custEmail').value;
-      const street = document.getElementById('custStreet').value;
-      const zip = document.getElementById('custZip').value;
-      const payment = document.getElementById('custPayment').value;
-
-      const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const total = subtotal + 3.90;
-      const orderNum = Math.floor(10000 + Math.random() * 90000);
-
-      const itemsList = cart.map(i => `${i.quantity}x ${i.title} (${(i.price * i.quantity).toFixed(2)} €)`).join('\n');
-
-      // Automatische Antwort-E-Mail für den Kunden mit Bankdaten / PayPal-Daten
-      let autoResponseText = "";
-      if (payment === 'PayPal') {
-        autoResponseText = `Hallo ${firstName},\n\nvielen Dank für deine Bestellung #${orderNum} bei Sefas3DShop!\n\nBitte überweise den Betrag von ${total.toFixed(2).replace('.', ',')} € per PayPal an:\npaypal@sefas3dshop.de\n\nVerwendungszweck: #${orderNum}\n\nSobald die Zahlung eingegangen ist, starten wir mit dem 3D-Druck deiner Artikel.\n\nViele Grüße,\nSefas3DShop`;
-      } else {
-        autoResponseText = `Hallo ${firstName},\n\nvielen Dank für deine Bestellung #${orderNum} bei Sefas3DShop!\n\nBitte überweise den Gesamtbetrag von ${total.toFixed(2).replace('.', ',')} € auf folgendes Bankkonto:\n\nEmpfänger: Sefa Demir (Sefas3DShop)\nBank: Revolut Bank\nIBAN: DE12 3456 7890 1234 5678 90\nBIC: REVODE21XXX\nVerwendungszweck: #${orderNum}\n\nSobald die Zahlung eingegangen ist, starten wir mit dem 3D-Druck deiner Artikel.\n\nViele Grüße,\nSefas3DShop`;
-      }
-
-      // 1. E-Mail senden (An dich + automatische Bestätigung an den Kunden)
-      try {
-        fetch("https://formsubmit.co/ajax/sefad.sd@gmail.com", {
-          method: "POST",
-          headers: { 
-            'Content-Type': 'application/json',
-            'Accept': 'application/json'
-          },
-          body: JSON.stringify({
-            _subject: `Neue Bestellung #${orderNum} bei Sefas3DShop!`,
-            _replyto: email,
-            email: email,
-            _autoresponse: autoResponseText,
-            Bestellnummer: `#${orderNum}`,
-            Kunde: `${firstName} ${lastName}`,
-            Email: email,
-            Adresse: `${street}, ${zip}`,
-            Zahlungsart: payment,
-            Gesamtsumme: `${total.toFixed(2).replace('.', ',')} €`,
-            Bestellte_Artikel: itemsList
-          })
-        });
-      } catch (err) {
-        console.error("Fehler beim Senden der E-Mail:", err);
-      }
-
-      // 2. Kunden-Bestätigung im Shop anzeigen
-      document.getElementById('confOrderNum').innerText = `#${orderNum}`;
-      document.getElementById('confName').innerText = `${firstName} ${lastName}`;
-      document.getElementById('confAddress').innerText = `${street}, ${zip}`;
-      document.getElementById('confEmail').innerText = email;
-      document.getElementById('confPayment').innerText = payment;
-      document.getElementById('confTotal').innerText = `${total.toFixed(2).replace('.', ',')} €`;
-
-      const paymentBox = document.getElementById('paymentDetailsBox');
-      if (payment === 'PayPal') {
-        paymentBox.innerHTML = `
-          <div style="background-color: #121214; padding: 15px; border-radius: 8px; border: 1px solid var(--accent); margin-top: 15px; text-align: left;">
-            <h4 style="color: var(--accent); margin-bottom: 8px;">💳 Zahlung per PayPal</h4>
-            <p style="font-size: 0.85rem; color: var(--text-main);">Bitte sende <strong>${total.toFixed(2).replace('.', ',')} €</strong> an folgende PayPal-Adresse:</p>
-            <p style="font-size: 1rem; font-weight: bold; color: var(--accent); margin: 6px 0;">paypal@sefas3dshop.de</p>
-            <p style="font-size: 0.8rem; color: var(--text-muted);">Verwendungszweck: <strong>#${orderNum}</strong></p>
-          </div>
-        `;
-      } else {
-        paymentBox.innerHTML = `
-          <div style="background-color: #121214; padding: 15px; border-radius: 8px; border: 1px solid var(--accent); margin-top: 15px; text-align: left;">
-            <h4 style="color: var(--accent); margin-bottom: 8px;">🏦 Überweisung (Revolut Bank)</h4>
-            <p style="font-size: 0.85rem; color: var(--text-main);">Bitte überweise <strong>${total.toFixed(2).replace('.', ',')} €</strong> auf folgendes Konto:</p>
-            <div style="font-size: 0.85rem; color: var(--text-main); margin-top: 8px; line-height: 1.5;">
-              <div><strong>Empfänger:</strong> Sefa Demir (Sefas3DShop)</div>
-              <div><strong>Bank:</strong> Revolut Bank</div>
-              <div><strong>IBAN:</strong> DE12 3456 7890 1234 5678 90</div>
-              <div><strong>BIC / SWIFT:</strong> REVODE21XXX</div>
-              <div><strong>Verwendungszweck:</strong> #${orderNum}</div>
-            </div>
-          </div>
-        `;
-      }
-
-      document.getElementById('stepCheckout').style.display = 'none';
-      document.getElementById('stepConfirmation').style.display = 'block';
-
+      alert('Vielen Dank für deine Bestellung bei Sefas3DShop!');
       cart = [];
       updateCartUI();
+      toggleCartModal();
     }
 
-    function finishOrder() {
-      closeCartModal();
-    }
-
+    // Beim Laden der Seite
     document.addEventListener('DOMContentLoaded', () => {
       renderProducts(products);
     });
