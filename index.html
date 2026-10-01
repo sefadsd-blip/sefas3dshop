@@ -3,418 +3,735 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sefas3DShop - Custom 3D-Drucke &amp; Design</title>
+  <title>Sefas3DShop - Mein Online-Shop</title>
   <style>
     :root {
-      --bg-dark: #121214;
-      --card-bg: #1e1e24;
-      --card-hover: #262630;
-      --accent: #ff6b00;
-      --accent-hover: #e05d00;
-      --text-main: #f0f0f5;
-      --text-muted: #a0a0b0;
-      --border-color: #2e2e38;
+      --rossmann-red: #d0021b;
+      --rossmann-dark-red: #a80014;
+      --bg-gray: #f4f4f4;
+      --text-color: #333333;
+      --border-color: #e0e0e0;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--bg-gray);
+      color: var(--text-color);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
 
-    /* Header & Navigation */
-    header {
-      background-color: #1a1a20;
+    /* Top Utility Bar */
+    .top-bar {
+      background-color: #ffffff;
       border-bottom: 1px solid var(--border-color);
+      padding: 8px 30px;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      color: #666;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--rossmann-red);
+      color: white;
       padding: 15px 30px;
+      sticky: top;
       position: sticky;
       top: 0;
       z-index: 100;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .header-main {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
+      gap: 20px;
       flex-wrap: wrap;
-      gap: 15px;
     }
 
     .logo {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 1px;
+      font-size: 1.8rem;
+      font-weight: bold;
+      letter-spacing: -0.5px;
+      cursor: pointer;
     }
 
     .logo span {
-      color: var(--text-main);
+      background-color: white;
+      color: var(--rossmann-red);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 4px;
     }
 
     .search-bar {
       flex: 1;
-      max-width: 400px;
-      position: relative;
+      max-width: 500px;
+      display: flex;
     }
 
     .search-bar input {
       width: 100%;
       padding: 10px 15px;
-      border-radius: 20px;
-      border: 1px solid var(--border-color);
-      background-color: #121214;
-      color: var(--text-main);
+      border: none;
+      border-radius: 4px 0 0 4px;
+      font-size: 0.95rem;
       outline: none;
-      transition: border 0.2s;
     }
 
-    .search-bar input:focus {
-      border-color: var(--accent);
+    .search-bar button {
+      background-color: #333;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: bold;
     }
 
     .cart-btn {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
+      background-color: white;
+      color: var(--rossmann-red);
+      border: none;
       padding: 10px 18px;
       border-radius: 20px;
+      font-weight: bold;
       cursor: pointer;
-      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: background 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.1s, background-color 0.2s;
     }
 
     .cart-btn:hover {
-      background-color: var(--card-hover);
+      background-color: #f8f8f8;
+      transform: scale(1.03);
     }
 
-    .cart-count {
-      background-color: var(--accent);
-      color: #fff;
-      font-size: 0.8rem;
-      padding: 2px 7px;
-      border-radius: 10px;
+    .cart-badge {
+      background-color: var(--rossmann-red);
+      color: white;
+      border-radius: 50%;
+      padding: 2px 8px;
+      font-size: 0.85rem;
     }
 
-    /* Container & Layout */
-    .container {
-      max-width: 1300px;
+    /* Hauptnavigation */
+    nav {
+      background-color: var(--rossmann-dark-red);
+    }
+
+    .nav-container {
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 30px 20px;
-      width: 100%;
-      flex: 1;
-    }
-
-    /* Filter & Kategorien */
-    .filter-bar {
       display: flex;
-      gap: 10px;
-      overflow-x: auto;
-      padding-bottom: 15px;
-      margin-bottom: 25px;
+      list-style: none;
     }
 
-    .filter-btn {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 8px 18px;
-      border-radius: 15px;
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      display: block;
+      font-weight: bold;
+      font-size: 0.95rem;
       cursor: pointer;
-      white-space: nowrap;
-      transition: all 0.2s;
+      transition: background-color 0.2s;
     }
 
-    .filter-btn:hover, .filter-btn.active {
-      background-color: var(--accent);
-      color: #fff;
-      border-color: var(--accent);
+    .nav-link:hover, .nav-link.active {
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* Dropdown Menü für Produkte */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      min-width: 220px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      border-radius: 0 0 4px 4px;
+      z-index: 200;
+    }
+
+    .dropdown a {
+      color: var(--text-color);
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 0.9rem;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .dropdown a:hover {
+      background-color: var(--bg-gray);
+      color: var(--rossmann-red);
+      font-weight: bold;
+    }
+
+    .nav-item:hover .dropdown {
+      display: block;
+    }
+
+    /* Main Container */
+    .main-container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 0 20px;
+      flex: 1;
+      width: 100%;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--rossmann-red);
+      padding-bottom: 8px;
+      color: var(--rossmann-red);
     }
 
     /* Produkt-Grid */
     .product-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 25px;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
     }
 
     .product-card {
-      background-color: var(--card-bg);
+      background-color: white;
       border: 1px solid var(--border-color);
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
     .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      background-color: var(--card-hover);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transform: translateY(-3px);
     }
 
-    .img-container {
+    .product-img {
       width: 100%;
-      height: 220px;
-      background-color: #121214;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .product-image {
-      width: 100%;
-      height: 100%;
+      height: 200px;
       object-fit: cover;
+      background-color: #f9f9f9;
     }
 
     .product-info {
-      padding: 18px;
+      padding: 15px;
       display: flex;
       flex-direction: column;
       flex: 1;
     }
 
     .product-title {
-      font-size: 1.05rem;
-      font-weight: 600;
+      font-size: 1rem;
+      font-weight: bold;
       margin-bottom: 8px;
-      line-height: 1.3;
+      height: 2.6em;
+      overflow: hidden;
     }
 
     .product-price {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--accent);
+      font-size: 1.25rem;
+      color: var(--rossmann-red);
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .product-details {
+      font-size: 0.8rem;
+      color: #666;
       margin-bottom: 12px;
     }
 
-    .product-meta {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-top: auto;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .badge-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
     .badge {
-      background-color: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 2px 8px;
-      border-radius: 4px;
-      font-size: 0.75rem;
+      display: inline-block;
+      background-color: #eee;
+      padding: 2px 6px;
+      border-radius: 3px;
+      margin-right: 4px;
+      margin-bottom: 4px;
     }
 
-    .add-to-cart-btn {
-      margin-top: 15px;
-      width: 100%;
-      background-color: var(--accent);
-      color: #fff;
+    .add-btn {
+      margin-top: auto;
+      background-color: var(--rossmann-red);
+      color: white;
       border: none;
       padding: 10px;
-      border-radius: 8px;
-      font-weight: 600;
+      border-radius: 4px;
+      font-weight: bold;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background-color 0.2s;
     }
 
-    .add-to-cart-btn:hover {
-      background-color: var(--accent-hover);
+    .add-btn:hover {
+      background-color: var(--rossmann-dark-red);
+    }
+
+    /* Impressum Bereich */
+    .impressum-box {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      line-height: 1.6;
+    }
+
+    .impressum-box h3 {
+      margin-top: 15px;
+      margin-bottom: 5px;
+      color: var(--rossmann-red);
+    }
+
+    /* Modal / Popup für Warenkorb */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background-color: white;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .modal-header h2 {
+      color: var(--rossmann-red);
+      font-size: 1.3rem;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .cart-items {
+      overflow-y: auto;
+      flex: 1;
+      margin-bottom: 15px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .cart-item-title {
+      font-weight: bold;
+      font-size: 0.9rem;
+      max-width: 250px;
+    }
+
+    .cart-item-price {
+      color: var(--rossmann-red);
+      font-weight: bold;
+    }
+
+    .remove-item {
+      color: #999;
+      cursor: pointer;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .remove-item:hover {
+      color: var(--rossmann-red);
+    }
+
+    .cart-footer {
+      border-top: 1px solid var(--border-color);
+      padding-top: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-total {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    .checkout-btn {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .checkout-btn:hover {
+      background-color: #219653;
     }
 
     /* Footer */
     footer {
-      background-color: #1a1a20;
-      border-top: 1px solid var(--border-color);
+      background-color: #333;
+      color: white;
       text-align: center;
       padding: 20px;
-      color: var(--text-muted);
-      font-size: 0.9rem;
       margin-top: 40px;
+      font-size: 0.85rem;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Sefas3D<span>Shop</span></div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Produkt suchen..." oninput="filterProducts()">
-    </div>
-    <button class="cart-btn">
-      🛒 Warenkorb <span class="cart-count" id="cartCount">0</span>
-    </button>
-  </header>
-
-  <div class="container">
-    <div class="filter-bar">
-      <button class="filter-btn active" onclick="setCategory('alle', this)">Alle</button>
-      <button class="filter-btn" onclick="setCategory('Deko', this)">Deko</button>
-      <button class="filter-btn" onclick="setCategory('Werkstatt', this)">Werkstatt &amp; Haushalt</button>
-      <button class="filter-btn" onclick="setCategory('Weihnachten', this)">Weihnachten</button>
-    </div>
-
-    <div id="productContainer" class="product-grid"></div>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <span>Kostenlose Lieferung ab 49 €</span>
+    <span>Schneller 3D-Druck & Versand aus Deutschland</span>
   </div>
 
+  <!-- Header -->
+  <header>
+    <div class="header-main">
+      <div class="logo" onclick="showPage('all')">Sefas3D<span>Shop</span></div>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Produkt oder Kategorie suchen..." oninput="handleSearch()">
+        <button>Suchen</button>
+      </div>
+      <!-- Klickbarer Warenkorb Button -->
+      <button class="cart-btn" onclick="toggleCartModal()">
+        🛒 Warenkorb <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Navigation -->
+  <nav>
+    <ul class="nav-container">
+      <li class="nav-item">
+        <span class="nav-link active" id="navAll" onclick="showPage('all')">Alle Produkte ▾</span>
+        <div class="dropdown">
+          <a onclick="filterCategory('alle')">Alle Kategorien</a>
+          <a onclick="filterCategory('Deko')">Deko</a>
+          <a onclick="filterCategory('Werkstatt')">Werkstatt & Haushalt</a>
+          <a onclick="filterCategory('Weihnachten')">Weihnachten</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link" id="navNew" onclick="showPage('new')">Neuheiten</span>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link" id="navImpressum" onclick="showPage('impressum')">Impressum</span>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Hauptinhalt -->
+  <div class="main-container">
+    
+    <!-- Produkte Bereich -->
+    <div id="shopSection">
+      <h2 class="section-title" id="sectionTitle">Alle Produkte</h2>
+      <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- Impressum Bereich -->
+    <div id="impressumSection" style="display: none;">
+      <h2 class="section-title">Impressum</h2>
+      <div class="impressum-box">
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <p><strong>Sefas3DShop</strong><br>
+        Inhaber: Sefa Demir<br>
+        Neuer Weg 42<br>
+        32369 Rahden<br>
+        Deutschland</p>
+
+        <h3>Kontakt</h3>
+        <p>E-Mail: info@sefas3dshop.de</p>
+
+        <h3>Umsatzsteuer-ID</h3>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: Kleinunternehmer nach § 19 UStG</p>
+
+        <h3>Haftung für Inhalte</h3>
+        <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Warenkorb Modal (Popup) -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Dein Warenkorb</h2>
+        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p style="text-align: center; color: #777; padding: 20px;">Dein Warenkorb ist leer.</p>
+      </div>
+      <div class="cart-footer">
+        <div class="cart-total">Gesamt: <span id="cartTotal">0,00 €</span></div>
+        <button class="checkout-btn" onclick="checkout()">Zur Kasse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
   <footer>
-    &copy; 2026 Sefas3DShop — Präzise 3D-Drucke &amp; Custom Designs
+    &copy; 2026 Sefas3DShop — Alle Rechte vorbehalten.
   </footer>
 
   <script>
     const products = [
-      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: "6,00 €", category: "Deko", sizes: ["Standard"], colors: ["Braun", "Beige"] },
-      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: "6,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Beige"] },
-      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: "5,00 €", category: "Deko", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
-      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: "7,00 €", category: "Deko", sizes: ["Standard"], colors: ["Holz-Optik / Braun"] },
-      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: "6,00 €", category: "Deko", sizes: ["Standard"], colors: ["Beige", "Orange", "Schwarz"] },
-      { id: 23, title: "Moderne Osterhasen Deko (Geriffelt)", price: "5,00 €", category: "Deko", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-      { id: 24, title: "Süßer Untersetzer mit Armen (Hug Coaster)", price: "4,00 €", category: "Deko", sizes: ["Standard"], colors: ["Rosa", "Beige"] },
-      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 26, title: "Elegante Erdmännchen Deko Figur", price: "8,00 €", category: "Deko", sizes: ["Standard"], colors: ["Weiß", "Holz-Optik", "Schwarz"] },
-      { id: 27, title: "Deko Dackel Figur mit Schale", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: "10,00 €", category: "Deko", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 29, title: "Moderne Deko-Rentiere Skandi-Stil", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
-      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 32, title: "Wunderschönes Tannenzapfen-Häuschen", price: "6,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Braun", "Grün"] },
-      { id: 33, title: "Akustikpaneel Halterung / Haken Schwarz", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 34, title: "Dekorative Eichel / Aufbewahrungsdose", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Braun/Beige"] },
-      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: "5,00 €", category: "Weihnachten", sizes: ["3er-Set"], colors: ["Weiß", "Holz-Optik"] },
-      { id: 36, title: "Moderne Christbaumkugel Tanne", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Grün", "Rot"] },
-      { id: 37, title: "UNO Kartenbox / Kartenetui", price: "7,00 €", category: "Deko", sizes: ["Standard"], colors: ["Blau", "Rot"] },
-      { id: 38, title: "Französische Bulldogge Dekoschale", price: "20,00 €", category: "Deko", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
-      { id: 39, title: "Französische Bulldogge Figur Deko", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
-      { id: 40, title: "Design-Küchenrollenhalter Rillen-Look", price: "9,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-      { id: 41, title: "Dackel Ablageschale Deko-Hund Schwarz", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 42, title: "Schönes Wandregal rund Metall-Regal Schwarz", price: "15,00 €", category: "Deko", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 43, title: "Stylische Katzen Deko Rillen-Design", price: "5,00 €", category: "Deko", sizes: ["Standard"], colors: ["Weiß", "Beige", "Schwarz"] },
-      { id: 44, title: "Moderner Schneemann Deko mit Hut", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Grün", "Weiß", "Grau"] },
-      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: "10,00 €", category: "Deko", sizes: ["15 cm"], colors: ["Beige", "Grün"] },
-      { id: 46, title: "Rentier mit Schlitten Schale Weihnachtsdeko", price: "10,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 47, title: "Süßer Blumentopf mit Herz-Händen Übertopf", price: "10,00 €", category: "Deko", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: "10,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 50, title: "Moderner Deko Kürbis Skandi / Japandi", price: "5,00 €", category: "Deko", sizes: ["Standard"], colors: ["Orange", "Weiß", "Beige"] },
-      { id: 51, title: "Dekorative Vasen im Beutel-Design", price: "6,00 €", category: "Deko", sizes: ["Standard"], colors: ["Grün", "Beige", "Weiß"] },
-      { id: 52, title: "Deko Rentier / Weihnachtsdeko modern", price: "6,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
-      { id: 53, title: "Universal Kartenspiel-Box Modular", price: "6,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
-      { id: 57, title: "Universal Fahrrad Flaschenhalter", price: "8,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Blau", "Schwarz"] },
-      { id: 58, title: "Einhänge-Bett-Organizer Nachttisch", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 59, title: "Ovales Kerzentablett Rillen-Design", price: "8,00 €", category: "Deko", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
-      { id: 60, title: "Chipsdosen Lifter (Pringles Schiene)", price: "4,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz", "Beige"] },
-      { id: 61, title: "Wandhalterung für Schaufeln & Besen", price: "4,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 62, title: "Kabelbinder Halter / Dispenser Organizer", price: "10,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
-      { id: 63, title: "Praktischer Folienhalter für Schranktür", price: "4,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 64, title: "Moderner Pflanztopf Bogen-Muster Boho", price: "10,00 €", category: "Deko", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
-      { id: 65, title: "Schrankeinsatz / Regaleinsatz Tellerregal", price: "6,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 66, title: "Gehörschutz Wandhalterung Werkstatt", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 67, title: "Maulschlüssel Halter Wand Werkstatt", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Lila", "Schwarz"] },
-      { id: 68, title: "Spraydosenhalter 3er Set Wandhalterung", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 69, title: "Spülmaschinentabs Halter Schranktür Box", price: "14,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 70, title: "Eier Spender / Eierhalter Kühlschrank", price: "8,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz", "Blau", "Rot"] },
-      { id: 71, title: "Schleifscheiben-Halter Lochwand", price: "11,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 72, title: "Akku Gartenwerkzeug Wandhaken 3er-Set", price: "8,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 73, title: "Moderne Weihnachtsglocken Anhänger", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Grün", "Beige", "Rot"] },
-      { id: 74, title: "Silikonkartuschen Halter Stapelbar", price: "6,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Grau"] },
-      { id: 75, title: "Tütchen Halter / Gewürzpulver-Spender", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 76, title: "Dosen Spender / Dosenhalter Stapelbar", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Weiß"] },
-      { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 78, title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", price: "15,00 €", category: "Weihnachten", sizes: ["Set (3 Größen)"], colors: ["Weiß"] },
-      { id: 79, title: "Toilettenpapierhalter mit Smartphone-Ablage", price: "8,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
-      { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: "5,00 €", category: "Werkstatt", sizes: ["3 Akkus"], colors: ["Schwarz"] },
-      { id: 81, title: "Einzigartiger Geweih Kerzenständer", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Braun / Holz-Optik"] },
-      { id: 82, title: "Planeten / Todesstern Christbaumkugeln", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Gold", "Silber", "Blau"] },
-      { id: 83, title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", price: "10,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
-      { id: 84, title: "Moderner Nussknacker Advents-Soldat", price: "5,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Rot", "Grün", "Grau"] },
-      { id: 85, title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", price: "8,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
-      { id: 86, title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", price: "10,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz"] },
-      { id: 87, title: "Klopapierhalter Schaf", price: "5,00 €", category: "Werkstatt", sizes: ["Standard"], colors: ["Schwarz/Weiß"] },
-      { id: 88, title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", price: "6,00 €", category: "Weihnachten", sizes: ["Standard"], colors: ["Gold", "Rot", "Silber"] }
+      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true, sizes: ["Standard"], colors: ["Braun", "Beige"] },
+      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Beige"] },
+      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
+      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Holz-Optik"] },
+      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Orange", "Beige"] },
+      { id: 23, title: "Moderne Osterhasen Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 24, title: "Süßer Untersetzer mit Armen (Hug Coaster)", price: 4.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Rosa"] },
+      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 26, title: "Elegante Erdmännchen Deko Figur", price: 8.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+      { id: 27, title: "Deko Dackel Figur mit Schale", price: 15.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 29, title: "Moderne Deko-Rentiere Skandi-Stil", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Grau", "Weiß"] },
+      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 32, title: "Wunderschönes Tannenzapfen-Häuschen", price: 6.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Braun"] },
+      { id: 33, title: "Akustikpaneel Halterung / Haken Schwarz", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 34, title: "Dekorative Eichel / Aufbewahrungsdose", price: 15.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Braun"] },
+      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["3er-Set"], colors: ["Weiß"] },
+      { id: 36, title: "Moderne Christbaumkugel Tanne", price: 5.00, category: "Weihnachten", isNew: false, sizes: ["Standard"], colors: ["Grün"] },
+      { id: 37, title: "UNO Kartenbox / Kartenetui", price: 7.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Blau"] },
+      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Beige"] },
+      { id: 39, title: "Französische Bulldogge Figur Deko", price: 15.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 40, title: "Design-Küchenrollenhalter Rillen-Look", price: 9.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 41, title: "Dackel Ablageschale Deko-Hund Schwarz", price: 15.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 42, title: "Schönes Wandregal rund Metall-Regal Schwarz", price: 15.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 43, title: "Stylische Katzen Deko Rillen-Design", price: 5.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 44, title: "Moderner Schneemann Deko mit Hut", price: 5.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: 10.00, category: "Deko", isNew: false, sizes: ["15 cm"], colors: ["Beige"] },
+      { id: 46, title: "Rentier mit Schlitten Schale Weihnachtsdeko", price: 10.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 47, title: "Süßer Blumentopf mit Herz-Händen Übertopf", price: 10.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Weiß"] },
+      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 50, title: "Moderner Deko Kürbis Skandi / Japandi", price: 5.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Orange"] },
+      { id: 51, title: "Dekorative Vasen im Beutel-Design", price: 6.00, category: "Deko", isNew: false, sizes: ["Standard"], colors: ["Grün"] },
+      { id: 52, title: "Deko Rentier / Weihnachtsdeko modern", price: 6.00, category: "Weihnachten", isNew: true, sizes: ["Standard"], colors: ["Grau"] },
+      { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["Standard"], colors: ["Schwarz"] },
+      { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: 5.00, category: "Werkstatt", isNew: false, sizes: ["3 Akkus"], colors: ["Schwarz"] }
     ];
 
-    let currentCategory = 'alle';
-    let cartCount = 0;
+    let cart = [];
+    let currentPage = 'all';
+    let currentCategoryFilter = 'alle';
 
     function renderProducts(items) {
-      const container = document.getElementById('productContainer');
-      container.innerHTML = '';
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
 
       if (items.length === 0) {
-        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Keine Produkte gefunden.</p>';
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #888; padding: 40px;">Keine Produkte gefunden.</p>';
         return;
       }
 
-      items.forEach(product => {
+      items.forEach(p => {
         const card = document.createElement('div');
         card.className = 'product-card';
 
-        const colorBadges = product.colors.map(c => `<span class="badge">${c}</span>`).join('');
-        const sizeBadges = product.sizes.map(s => `<span class="badge">${s}</span>`).join('');
-
-        // Generiert ein Platzhalter-Bild
-        const imgUrl = `https://placehold.co/400x300/1e1e24/ff6b00?text=${encodeURIComponent(product.title)}`;
+        const imgUrl = `https://placehold.co/400x300/f8f8f8/d0021b?text=${encodeURIComponent(p.title)}`;
 
         card.innerHTML = `
-          <div class="img-container">
-            <img class="product-image" src="${imgUrl}" alt="${product.title}" loading="lazy">
-          </div>
+          <img class="product-img" src="${imgUrl}" alt="${p.title}" loading="lazy">
           <div class="product-info">
-            <h2 class="product-title">${product.title}</h2>
-            <div class="product-price">${product.price}</div>
-            <div class="product-meta">
-              <div><strong>Größe:</strong> <div class="badge-group">${sizeBadges}</div></div>
-              <div style="margin-top: 6px;"><strong>Farben:</strong> <div class="badge-group">${colorBadges}</div></div>
+            <div class="product-title">${p.title}</div>
+            <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
+            <div class="product-details">
+              ${p.colors.map(c => `<span class="badge">${c}</span>`).join('')}
+              ${p.sizes.map(s => `<span class="badge">${s}</span>`).join('')}
             </div>
-            <button class="add-to-cart-btn" onclick="addToCart()">In den Warenkorb</button>
+            <button class="add-btn" onclick="addToCart(${p.id})">In den Warenkorb</button>
           </div>
         `;
-
-        container.appendChild(card);
+        grid.appendChild(card);
       });
     }
 
-    function filterProducts() {
+    function showPage(page) {
+      currentPage = page;
+      document.getElementById('navAll').classList.remove('active');
+      document.getElementById('navNew').classList.remove('active');
+      document.getElementById('navImpressum').classList.remove('active');
+
+      document.getElementById('shopSection').style.display = 'block';
+      document.getElementById('impressumSection').style.display = 'none';
+
+      if (page === 'all') {
+        document.getElementById('navAll').classList.add('active');
+        document.getElementById('sectionTitle').innerText = 'Alle Produkte';
+        currentCategoryFilter = 'alle';
+        renderProducts(products);
+      } else if (page === 'new') {
+        document.getElementById('navNew').classList.add('active');
+        document.getElementById('sectionTitle').innerText = 'Neuheiten';
+        const newProducts = products.filter(p => p.isNew);
+        renderProducts(newProducts);
+      } else if (page === 'impressum') {
+        document.getElementById('navImpressum').classList.add('active');
+        document.getElementById('shopSection').style.display = 'none';
+        document.getElementById('impressumSection').style.display = 'block';
+      }
+    }
+
+    function filterCategory(cat) {
+      showPage('all');
+      currentCategoryFilter = cat;
+      document.getElementById('sectionTitle').innerText = cat === 'alle' ? 'Alle Produkte' : `Kategorie: ${cat}`;
+      if (cat === 'alle') {
+        renderProducts(products);
+      } else {
+        const filtered = products.filter(p => p.category === cat);
+        renderProducts(filtered);
+      }
+    }
+
+    function handleSearch() {
       const query = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = products.filter(p => {
-        const matchesCategory = currentCategory === 'alle' || p.category === currentCategory;
-        const matchesQuery = p.title.toLowerCase().includes(query);
-        return matchesCategory && matchesQuery;
-      });
+      if (currentPage === 'impressum') showPage('all');
+
+      const filtered = products.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+      document.getElementById('sectionTitle').innerText = `Suchergebnisse für "${query}"`;
       renderProducts(filtered);
     }
 
-    function setCategory(cat, btn) {
-      currentCategory = cat;
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      filterProducts();
+    /* Warenkorb-Funktionen */
+    function addToCart(productId) {
+      const product = products.find(p => p.id === productId);
+      const existing = cart.find(item => item.id === productId);
+
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...product, quantity: 1 });
+      }
+
+      updateCartUI();
     }
 
-    function addToCart() {
-      cartCount++;
-      document.getElementById('cartCount').innerText = cartCount;
+    function removeFromCart(productId) {
+      cart = cart.filter(item => item.id !== productId);
+      updateCartUI();
     }
 
-    document.addEventListener('DOMContentLoaded', () => renderProducts(products));
+    function updateCartUI() {
+      const badge = document.getElementById('cartBadge');
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      badge.innerText = totalItems;
+
+      const cartItemsContainer = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #777; padding: 20px;">Dein Warenkorb ist leer.</p>';
+        cartTotal.innerText = '0,00 €';
+        return;
+      }
+
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div>
+            <div class="cart-item-title">${item.title}</div>
+            <small>${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</small>
+          </div>
+          <div>
+            <span class="cart-item-price">${itemTotal.toFixed(2).replace('.', ',')} €</span>
+            <span class="remove-item" onclick="removeFromCart(${item.id})">&times;</span>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotal.innerText = `${total.toFixed(2).replace('.', ',')} €`;
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.toggle('active');
+    }
+
+    function checkout() {
+      if (cart.length === 0) {
+        alert('Dein Warenkorb ist leer!');
+        return;
+      }
+      alert('Vielen Dank für deine Bestellung bei Sefas3DShop!');
+      cart = [];
+      updateCartUI();
+      toggleCartModal();
+    }
+
+    // Beim Laden der Seite
+    document.addEventListener('DOMContentLoaded', () => {
+      renderProducts(products);
+    });
   </script>
 </body>
 </html>
