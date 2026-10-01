@@ -9,17 +9,9 @@
         body { background-color: #f4f6f8; color: #333; }
 
         header {
-            background: #1a1a1a;
-            color: #fff;
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            background: #1a1a1a; color: #fff; padding: 0.8rem 1.2rem;
+            display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+            position: sticky; top: 0; z-index: 200; box-shadow: 0 2px 10px rgba(0,0,0,0.15);
         }
 
         .header-left { display: flex; align-items: center; gap: 1rem; }
@@ -33,12 +25,8 @@
         .search-icon { position: absolute; left: 0.8rem; top: 50%; transform: translateY(-50%); color: #aaa; }
 
         .sidebar {
-            width: 260px;
-            background: #1a1a1a;
-            color: #fff;
-            padding: 2rem 1.5rem;
-            position: fixed;
-            top: 60px; bottom: 0; left: -260px;
+            width: 260px; background: #1a1a1a; color: #fff; padding: 2rem 1.5rem;
+            position: fixed; top: 60px; bottom: 0; left: -260px;
             display: flex; flex-direction: column; justify-content: space-between;
             z-index: 150; transition: left 0.3s ease;
         }
@@ -62,12 +50,13 @@
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
         .card { background: #fdfdfd; border: 1px solid #eee; border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
         .card-img { width: 100%; height: 180px; object-fit: cover; background: #eee; }
-        .card-icon-box { height: 180px; background: #222; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
+        .card-icon-box { height: 180px; background: #222; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 3.5rem; }
         .card-body { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .card-title { font-size: 1rem; font-weight: 600; color: #1a1a1a; margin-bottom: 0.5rem; }
         .price { font-size: 1.2rem; font-weight: bold; color: #ff9900; margin: 0.5rem 0; }
 
-        .color-select { width: 100%; padding: 0.5rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 0.8rem; font-size: 0.85rem; }
+        .select-label { font-size: 0.78rem; font-weight: 600; margin-top: 0.4rem; margin-bottom: 0.2rem; display: block; }
+        .opt-select { width: 100%; padding: 0.45rem; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 0.6rem; font-size: 0.85rem; }
         
         .btn-buy { background: #ff9900; color: #fff; border: none; padding: 0.7rem; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 0.5rem; }
         .btn-buy:hover { background: #e68a00; }
@@ -84,7 +73,6 @@
         .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.6rem; border: 1px solid #ccc; border-radius: 6px; font-size: 0.9rem; }
         
         .payment-info { background: #f8f9fa; border: 1px solid #e0e0e0; padding: 1rem; border-radius: 8px; margin-top: 1rem; font-size: 0.85rem; display: none; }
-        
         .success-message { display: none; text-align: center; padding: 1.5rem; background: #e8f5e9; border: 1px solid #c8e6c9; color: #2e7d32; border-radius: 8px; margin-top: 1rem; }
 
         #no-results { display: none; text-align: center; padding: 2rem; background: #fff; border-radius: 12px; }
@@ -128,131 +116,17 @@
                 <span>✨ Neuheiten der Woche</span>
                 <span class="badge">Frisch gedruckt</span>
             </div>
-
-            <div class="grid">
-                
-                <!-- Produkt 1: Vase -->
-                <div class="card product-card">
-                    <img src="vase.jpg" alt="Moderne Rillen-Vase" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🏺</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Moderne Rillen-Vase (15 cm)</h3>
-                        <div class="price">10,00 €</div>
-                        
-                        <label style="font-size: 0.8rem; font-weight: 600;">Farbe wählen:</label>
-                        <select class="color-select">
-                            <option>Schwarz (Matt)</option>
-                            <option>Weiß (Seidenmatt)</option>
-                            <option>Marmor-Optik</option>
-                            <option>Anthrazit</option>
-                            <option>Gold</option>
-                            <option>Silber</option>
-                        </select>
-
-                        <button class="btn-buy" onclick="openCheckout('Moderne Rillen-Vase (15 cm)', '10,00 €', this)">🛒 Direkt bestellen</button>
-                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20einen%20Sonderwunsch%20/%20andere%20Größe%20für%20die%20Moderne%20Rillen-Vase." target="_blank" class="btn-whatsapp">💬 Sonderwunsch / Größe anfragen (WhatsApp)</a>
-                    </div>
-                </div>
-
-                <!-- Produkt 2: Kürbis -->
-                <div class="card product-card">
-                    <img src="kuerbis.jpg" alt="Moderner Deko Kürbis" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🎃</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Moderner Deko Kürbis (Skandi Style)</h3>
-                        <div class="price">5,00 €</div>
-                        
-                        <label style="font-size: 0.8rem; font-weight: 600;">Farbe wählen:</label>
-                        <select class="color-select">
-                            <option>Orange / Kürbis</option>
-                            <option>Weiß (Seidenmatt)</option>
-                            <option>Schwarz (Matt)</option>
-                            <option>Creme / Beige</option>
-                        </select>
-
-                        <button class="btn-buy" onclick="openCheckout('Moderner Deko Kürbis', '5,00 €', this)">🛒 Direkt bestellen</button>
-                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20einen%20Sonderwunsch%20/%20andere%20Größe%20für%20den%20Deko%20Kürbis." target="_blank" class="btn-whatsapp">💬 Sonderwunsch / Größe anfragen (WhatsApp)</a>
-                    </div>
-                </div>
-
-                <!-- Produkt 3: Eichhörnchen -->
-                <div class="card product-card">
-                    <img src="eichhoernchen.jpg" alt="Modernes Eichhörnchen Deko" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🐿️</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Modernes Eichhörnchen Deko</h3>
-                        <div class="price">5,00 €</div>
-                        
-                        <label style="font-size: 0.8rem; font-weight: 600;">Farbe wählen:</label>
-                        <select class="color-select">
-                            <option>Schwarz (Matt)</option>
-                            <option>Braun / Holz-Optik</option>
-                            <option>Weiß (Seidenmatt)</option>
-                            <option>Gold</option>
-                        </select>
-
-                        <button class="btn-buy" onclick="openCheckout('Modernes Eichhörnchen Deko', '5,00 €', this)">🛒 Direkt bestellen</button>
-                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20einen%20Sonderwunsch%20/%20andere%20Größe%20für%20das%20Eichhörnchen." target="_blank" class="btn-whatsapp">💬 Sonderwunsch / Größe anfragen (WhatsApp)</a>
-                    </div>
-                </div>
-
-                <!-- Custom Service -->
-                <div class="card product-card">
-                    <div class="card-icon-box">🛠️</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Individueller 3D-Druck Service</h3>
-                        <div class="price">Auf Anfrage</div>
-                        <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Sonderanfertigungen, STL-Dateien, Reparaturteile oder Wunschfarben.</p>
-                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20eine%20Anfrage%20für%20einen%20individuellen%203D-Druck." target="_blank" class="btn-whatsapp" style="background: #0070ba; font-size: 0.9rem; padding: 0.7rem;">💬 Sonderanfertigung per WhatsApp besprechen</a>
-                    </div>
-                </div>
-
-            </div>
+            <div class="grid" id="neuheitenGrid"></div>
         </section>
 
         <!-- ALLE PRODUKTE -->
         <section id="produkte" class="section-block">
             <div class="section-title">
                 <span>📦 Alle Produkte</span>
-                <span class="badge">Direktbestellung</span>
+                <span class="badge" id="productCountBadge">88 Artikel</span>
             </div>
-            <p style="color: #666; margin-bottom: 1.5rem;">Wähle dein gewünschtes Modell und deine Wunschfarbe aus und bestelle direkt ohne Umwege.</p>
-            
-            <div class="grid">
-                <div class="card product-card">
-                    <img src="vase.jpg" alt="Moderne Rillen-Vase" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🏺</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Moderne Rillen-Vase (15 cm)</h3>
-                        <div class="price">10,00 €</div>
-                        <select class="color-select">
-                            <option>Schwarz (Matt)</option>
-                            <option>Weiß (Seidenmatt)</option>
-                            <option>Marmor-Optik</option>
-                        </select>
-                        <button class="btn-buy" onclick="openCheckout('Moderne Rillen-Vase (15 cm)', '10,00 €', this)">🛒 Direkt bestellen</button>
-                    </div>
-                </div>
-
-                <div class="card product-card">
-                    <img src="kuerbis.jpg" alt="Moderner Deko Kürbis" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="card-icon-box" style="display: none;">🎃</div>
-                    <div class="card-body">
-                        <h3 class="card-title">Moderner Deko Kürbis (Skandi Style)</h3>
-                        <div class="price">5,00 €</div>
-                        <select class="color-select">
-                            <option>Orange / Kürbis</option>
-                            <option>Weiß (Seidenmatt)</option>
-                        </select>
-                        <button class="btn-buy" onclick="openCheckout('Moderner Deko Kürbis', '5,00 €', this)">🛒 Direkt bestellen</button>
-                    </div>
-                </div>
-            </div>
-
-            <div style="text-align: center; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px dashed #ddd;">
-                <p style="color: #666; font-size: 0.95rem;">Suchst du nach unseren 80+ weiteren Artikeln, Halterungen & Ersatzteilen?</p>
-                <a href="https://www.kleinanzeigen.de/s-bestandsliste.html?userId=150350959" target="_blank" style="background: #ff9900; color: #fff; padding: 0.8rem 1.5rem; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; margin-top: 0.8rem;">Gesamtes Sortiment auf Kleinanzeigen ↗</a>
-            </div>
+            <p style="color: #666; margin-bottom: 1.5rem;">Wähle dein gewünschtes Modell, die Größe und Farbe aus und bestelle direkt.</p>
+            <div class="grid" id="alleProdukteGrid"></div>
         </section>
 
         <!-- IMPRESSUM -->
@@ -269,8 +143,8 @@
         </section>
 
         <div id="no-results">
-            <h3>Keine direkten Treffer auf der Seite gefunden</h3>
-            <p style="color: #666; margin-top: 0.5rem;">Schau gerne in unserem Gesamtsortiment auf Kleinanzeigen vorbei!</p>
+            <h3>Keine Artikel mit diesem Namen gefunden</h3>
+            <p style="color: #666; margin-top: 0.5rem;">Überprüfe deinen Suchbegriff oder durchstöbere alle Kategorien.</p>
         </div>
 
     </main>
@@ -283,13 +157,13 @@
             <p id="modalProductDetails" style="color: #ff9900; font-weight: bold; margin-bottom: 1.5rem; font-size: 1.05rem;"></p>
 
             <form id="orderForm" action="https://api.web3forms.com/submit" method="POST" onsubmit="submitOrder(event)">
-                <!-- Dein persönlicher Web3Forms Access Key -->
                 <input type="hidden" name="access_key" value="f4673fc3-7e4a-4fe4-bfcb-397bbe06ba60">
                 <input type="hidden" name="subject" id="emailSubject" value="Neue Bestellung über Sefas3DShop">
                 <input type="hidden" name="from_name" value="Sefas3DShop Website">
 
                 <input type="hidden" name="Produkt" id="orderProduct">
                 <input type="hidden" name="Preis" id="orderPrice">
+                <input type="hidden" name="Gewaehlte_Groesse" id="orderSize">
                 <input type="hidden" name="Wunschfarbe" id="orderColor">
 
                 <div class="form-group">
@@ -339,13 +213,171 @@
     </div>
 
     <script>
-        var selectedProduct = "";
-        var selectedPrice = "";
-        var selectedColor = "";
+        // ==========================================
+        // DEINE 88 PRODUKTE (AUS DEINEN SCREENSHOTS)
+        // ==========================================
+        const products = [
+            // Neuheiten / Highlights
+            { id: 1, title: "Moderne Rillen-Vase (15 cm)", price: "10,00 €", img: "vase.jpg", category: "neuheiten", sizes: ["15 cm (Standard)", "20 cm", "25 cm"], colors: ["Schwarz (Matt)", "Weiß (Seidenmatt)", "Marmor-Optik", "Gold"] },
+            { id: 2, title: "Moderner Deko Kürbis (Skandi)", price: "5,00 €", img: "kuerbis.jpg", category: "neuheiten", sizes: ["Standard"], colors: ["Orange", "Weiß", "Schwarz", "Beige"] },
+            { id: 3, title: "Deko Rentier / Weihnachtsdeko", price: "6,00 €", img: "", category: "neuheiten", sizes: ["Standard"], colors: ["Schwarz", "Weiß", "Rot", "Grün"] },
+            { id: 4, title: "Dekorative Vasen im Beutel-Design", price: "6,00 €", img: "", category: "neuheiten", sizes: ["Standard"], colors: ["Weiß", "Beige", "Grau"] },
+            
+            // Alle Produkte
+            { id: 5, title: "Rentier mit Schlitten Schale", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz", "Gold"] },
+            { id: 6, title: "Süßer Blumentopf mit Herz-Händen", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+            { id: 7, title: "PS5 Controller & Headset Halterung", price: "11,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 8, title: "Design-Küchenrollenhalter (Rillen-Look)", price: "9,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 9, title: "Dackel Ablageschale / Deko-Hund", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Braun"] },
+            { id: 10, title: "Schönes Wandregal rund (Metall-Regal)", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 11, title: "Stylische Katzen Deko (Rillen-Design)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 12, title: "Moderner Schneemann Deko (Geriffelt)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Blau"] },
+            { id: 13, title: "Moderne Weihnachtsglocken (Baumschmuck)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Rot", "Grün", "Weiß"] },
+            { id: 14, title: "Moderner Nussknacker Deko (Soldat)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Rot", "Grün"] },
+            { id: 15, title: "Moderner Weihnachtswichtel (Gnom)", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
+            { id: 16, title: "Japandi Vogel Deko (Geriffelt)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grün"] },
+            { id: 17, title: "Modernes Eichhörnchen Deko", price: "7,00 €", img: "eichhoernchen.jpg", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik", "Schwarz"] },
+            { id: 18, title: "Französische Bulldogge Schalen-Figur", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 19, title: "Moderne Kürbis Deko (Geriffelt)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
+            { id: 20, title: "Moderne Osterhasen Deko (Geriffelt)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+            { id: 21, title: "Süßer Untersetzer mit Armen ('Hug Coaster')", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige", "Grau"] },
+            { id: 22, title: "Hirsch Teelichthalter", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+            { id: 23, title: "Elegante Erdmännchen Deko Figur", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+            { id: 24, title: "Deko Dackel Figur mit Schale", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 25, title: "Gorilla Schlüsselbrett & Ablage", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Silber", "Schwarz"] },
+            { id: 26, title: "Flexibler Oktopus Schlüsselanhänger", price: "3,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Bunt"] },
+            { id: 27, title: "Süße Deko-Schafe im modernen Design", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Beige"] },
+            { id: 28, title: "Moderne Deko-Rentiere (Skandi Stil)", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grau", "Weiß"] },
+            { id: 29, title: "Flavor / Sirup Flaschen Halter", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 30, title: "Akku-Schrauber Halterung für Werkbank", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Blau"] },
+            { id: 31, title: "Tannenzapfen-Häuschen Deko", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik"] },
+            { id: 32, title: "Akustikpaneel Halterung / Haken", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 33, title: "Dekorative Eichel / Aufbewahrungsdose", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige", "Braun"] },
+            { id: 34, title: "Dekoratives Eichhörnchen (Fuzzy Skin)", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Braun"] },
+            { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grün", "Weiß"] },
+            { id: 36, title: "Moderne Christbaumkugel Tanne", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grün", "Rot"] },
+            { id: 37, title: "UNO Kartenbox / Kartenetui", price: "7,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Blau", "Rot"] },
+            { id: 38, title: "Französische Bulldogge Dekoschale", price: "20,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige", "Schwarz"] },
+            { id: 39, title: "Französische Bulldogge Figur Deko", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Schwarz"] },
+            { id: 40, title: "Moderner Fernbedienungshalter (Lamellen)", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Braun"] },
+            { id: 41, title: "Handtuchhaken Badheizkörper 3er Set", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 42, title: "Deko-Schale 'Offene Hände'", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige / Stein", "Schwarz"] },
+            { id: 43, title: "Deko-Figuren-Set 'Die 3 Weisen Affen'", price: "20,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
+            { id: 44, title: "Smarter Lade-Organizer Steckdose", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 45, title: "Wand-Organizer mit Ablage & Haken", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
+            { id: 46, title: "Couch-Organizer für Snacks & Getränke", price: "15,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Beige"] },
+            { id: 47, title: "Automatischer Eierspender Kühlschrank", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 48, title: "Gewürzhalter 5er-Set Wand & Schrank", price: "9,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 49, title: "Kaffeekapselhalter Wandhalterung", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 50, title: "Modulärer Bad & Schreibtisch Organizer", price: "12,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 51, title: "Beweglicher Oktopus (Fidget Toy)", price: "14,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Gelb", "Bunt"] },
+            { id: 52, title: "Fensterstopper / Balkontürstopper Keil", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Holz-Optik", "Schwarz"] },
+            { id: 53, title: "Universal Kartenspiel-Box Modular", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
+            { id: 54, title: "Personalisierter Schlüsselanhänger Wunschname", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 55, title: "Professioneller Dart-Ständer / Halter", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 56, title: "3er Set Türstopper & Fensterkeil", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grau", "Schwarz"] },
+            { id: 57, title: "Universal Fahrrad Flaschenhalter", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Blau", "Schwarz"] },
+            { id: 58, title: "Einhänge-Bett-Organizer Nachttisch", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 59, title: "Ovales Kerzentablett Rillen-Design", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
+            { id: 60, title: "Chipsdosen Lifter (Pringles Schiene)", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Beige"] },
+            { id: 61, title: "Wandhalterung für Schaufeln & Besen", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 62, title: "Kabelbinder Halter / Dispenser Organizer", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Grau"] },
+            { id: 63, title: "Praktischer Folienhalter für Schranktür", price: "4,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 64, title: "Moderner Pflanztopf Bogen-Muster Boho", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Beige", "Weiß"] },
+            { id: 65, title: "Schrankeinsatz / Regaleinsatz Tellerregal", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 66, title: "Gehörschutz Wandhalterung Werkstatt", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 67, title: "Maulschlüssel Halter Wand Werkstatt", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Lila", "Schwarz"] },
+            { id: 68, title: "Spraydosenhalter 3er Set Wandhalterung", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 69, title: "Spülmaschinentabs Halter Schranktür Box", price: "14,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 70, title: "Eier Spender / Eierhalter Kühlschrank", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Blau", "Rot"] },
+            { id: 71, title: "Schleifscheiben-Halter Lochwand", price: "11,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 72, title: "Akku Gartenwerkzeug Wandhaken 3er-Set", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 73, title: "Weihnachtskugel Schale Süßigkeiten", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grün", "Rot"] },
+            { id: 74, title: "Silikonkartuschen Halter Stapelbar", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grau"] },
+            { id: 75, title: "Tütchen Halter / Gewürzpulver-Spender", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 76, title: "Dosen Spender / Dosenhalter Stapelbar", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß"] },
+            { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 78, title: "Deko Sterne Set (3 Größen) / Weihnachtsdeko", price: "15,00 €", img: "", category: "alle", sizes: ["Set (3 Größen)"], colors: ["Weiß"] },
+            { id: 79, title: "Toilettenpapierhalter mit Smartphone-Ablage", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Orange", "Schwarz", "Weiß"] },
+            { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: "5,00 €", img: "", category: "alle", sizes: ["3 Akkus"], colors: ["Schwarz"] },
+            { id: 81, title: "Einzigartiger Geweih Kerzenständer", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Braun / Holz-Optik"] },
+            { id: 82, title: "Planeten / Todesstern Christbaumkugeln", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Gold", "Silber", "Blau"] },
+            { id: 83, title: "Weihnachtswichtel / Wichtel Deko (Handgemacht)", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Weiß", "Grau"] },
+            { id: 84, title: "3D-Druck Tannenbaum mit Christbaumkugel-Halterung", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Grün", "Schwarz"] },
+            { id: 85, title: "Dekorativer Tannenbaum / Weihnachtsbaum modern", price: "8,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz", "Weiß"] },
+            { id: 86, title: "Hängender Duschkorb / Duschregal mit 2 Ebenen", price: "10,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz"] },
+            { id: 87, title: "Klopapierhalter Schaf", price: "5,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Schwarz/Weiß"] },
+            { id: 88, title: "Edle Deko-Rentiere mit Glitzer & Glöckchen", price: "6,00 €", img: "", category: "alle", sizes: ["Standard"], colors: ["Gold", "Rot", "Silber"] },
 
-        function toggleMenu() {
-            document.getElementById('sidebar').classList.toggle('active');
+            // Custom Service Option
+            { id: 99, title: "Individueller 3D-Druck Service", price: "Auf Anfrage", img: "", category: "neuheiten", sizes: ["Individuell"], colors: ["Alle Wunschfarben"], isCustom: true }
+        ];
+
+        // RENDER-FUNKTION FÜR CARDS
+        function renderProducts() {
+            const neuheitenGrid = document.getElementById('neuheitenGrid');
+            const alleProdukteGrid = document.getElementById('alleProdukteGrid');
+
+            neuheitenGrid.innerHTML = '';
+            alleProdukteGrid.innerHTML = '';
+
+            products.forEach(p => {
+                const cardHtml = createCardHtml(p);
+                
+                alleProdukteGrid.innerHTML += cardHtml;
+                
+                if (p.category === 'neuheiten') {
+                    neuheitenGrid.innerHTML += cardHtml;
+                }
+            });
+
+            document.getElementById('productCountBadge').innerText = products.length + " Artikel";
         }
+
+        function createCardHtml(p) {
+            if (p.isCustom) {
+                return `
+                    <div class="card product-card">
+                        <div class="card-icon-box">🛠️</div>
+                        <div class="card-body">
+                            <h3 class="card-title">${p.title}</h3>
+                            <div class="price">${p.price}</div>
+                            <p style="font-size: 0.85rem; color: #666; margin-bottom: 1rem;">Wunschgrößen, STL-Dateien, Reparaturteile oder Sonderfarben.</p>
+                            <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20eine%20Anfrage%20für%20einen%20individuellen%203D-Druck." target="_blank" class="btn-whatsapp" style="background: #0070ba; font-size: 0.9rem; padding: 0.7rem;">💬 Projekt per WhatsApp besprechen</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            const sizeOptions = p.sizes.map(s => `<option>${s}</option>`).join('');
+            const colorOptions = p.colors.map(c => `<option>${c}</option>`).join('');
+            const imgHtml = p.img ? `<img src="${p.img}" alt="${p.title}" class="card-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div class="card-icon-box" style="display: none;">📦</div>` : `<div class="card-icon-box">📦</div>`;
+
+            return `
+                <div class="card product-card">
+                    ${imgHtml}
+                    <div class="card-body">
+                        <h3 class="card-title">${p.title}</h3>
+                        <div class="price">${p.price}</div>
+                        
+                        <label class="select-label">Größe wählen:</label>
+                        <select class="opt-select size-select">${sizeOptions}</select>
+
+                        <label class="select-label">Farbe wählen:</label>
+                        <select class="opt-select color-select">${colorOptions}</select>
+
+                        <button class="btn-buy" onclick="openCheckout('${p.title}', '${p.price}', this)">🛒 Direkt bestellen</button>
+                        <a href="https://wa.me/491622580511?text=Hallo%20Sefa,%20ich%20habe%20eine%20Sonderanfrage%20zu:%20${encodeURIComponent(p.title)}" target="_blank" class="btn-whatsapp">💬 Sonderwunsch per WhatsApp</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.onload = renderProducts;
+
+        var selectedProduct = "", selectedPrice = "", selectedColor = "", selectedSize = "";
+
+        function toggleMenu() { document.getElementById('sidebar').classList.toggle('active'); }
 
         function showCategory(categoryId, btn) {
             document.getElementById('searchInput').value = '';
@@ -368,12 +400,8 @@
 
             cards.forEach(card => {
                 var title = card.querySelector('.card-title').innerText.toLowerCase();
-                if (title.includes(input)) {
-                    card.style.display = 'flex';
-                    visibleCount++;
-                } else {
-                    card.style.display = 'none';
-                }
+                if (title.includes(input)) { card.style.display = 'flex'; visibleCount++; }
+                else { card.style.display = 'none'; }
             });
 
             document.getElementById('no-results').style.display = (visibleCount === 0 && input.trim() !== '') ? 'block' : 'none';
@@ -385,11 +413,15 @@
             
             var card = btnElement.closest('.card-body');
             var colorSelect = card.querySelector('.color-select');
+            var sizeSelect = card.querySelector('.size-select');
+            
             selectedColor = colorSelect ? colorSelect.value : 'Standard';
+            selectedSize = sizeSelect ? sizeSelect.value : 'Standard';
 
-            document.getElementById('modalProductDetails').innerText = selectedProduct + " | Farbe: " + selectedColor + " | " + selectedPrice;
+            document.getElementById('modalProductDetails').innerText = selectedProduct + " | Größe: " + selectedSize + " | Farbe: " + selectedColor + " | " + selectedPrice;
             document.getElementById('orderProduct').value = selectedProduct;
             document.getElementById('orderPrice').value = selectedPrice;
+            document.getElementById('orderSize').value = selectedSize;
             document.getElementById('orderColor').value = selectedColor;
             document.getElementById('emailSubject').value = "Neue Bestellung: " + selectedProduct;
 
@@ -398,9 +430,7 @@
             document.getElementById('checkoutModal').style.display = 'flex';
         }
 
-        function closeCheckout() {
-            document.getElementById('checkoutModal').style.display = 'none';
-        }
+        function closeCheckout() { document.getElementById('checkoutModal').style.display = 'none'; }
 
         function togglePaymentDetails() {
             var method = document.getElementById('paymentMethod').value;
