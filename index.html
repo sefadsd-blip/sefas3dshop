@@ -24,7 +24,6 @@
 
         .header-left { display: flex; align-items: center; gap: 1.2rem; }
         
-        /* Hamburger Button (3 Striche oben links) */
         .menu-toggle {
             background: none;
             border: none;
@@ -46,7 +45,7 @@
             position: fixed;
             top: 60px;
             bottom: 0;
-            left: -260px; /* Standardmäßig versteckt */
+            left: -260px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -54,25 +53,53 @@
             transition: left 0.3s ease;
         }
 
-        /* Klasse zum Einblenden des Menüs */
         .sidebar.active { left: 0; }
 
         .nav-menu { list-style: none; }
         .nav-menu li { margin-bottom: 0.8rem; }
-        .nav-menu a {
+        .nav-menu button {
+            width: 100%;
             display: flex;
             align-items: center;
             gap: 0.8rem;
             color: #ddd;
-            text-decoration: none;
+            background: none;
+            border: none;
             padding: 0.8rem 1rem;
             border-radius: 8px;
+            font-size: 1rem;
             font-weight: 500;
+            cursor: pointer;
+            text-align: left;
             transition: all 0.2s ease;
         }
-        .nav-menu a:hover { background: #ff9900; color: #fff; }
+        .nav-menu button:hover, .nav-menu button.active { background: #ff9900; color: #fff; }
 
         .sidebar-footer { font-size: 0.8rem; color: #777; line-height: 1.4; border-top: 1px solid #333; padding-top: 1rem; }
+
+        /* --- KATEGORIEN-TABS OBEN --- */
+        .category-bar {
+            display: flex;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            overflow-x: auto;
+        }
+        .cat-btn {
+            background: #f0f0f0;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .cat-btn.active, .cat-btn:hover {
+            background: #ff9900;
+            color: #fff;
+        }
 
         /* --- HAUPTINHALT --- */
         .main-content {
@@ -86,9 +113,9 @@
             padding: 2rem;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 2.5rem;
-            scroll-margin-top: 80px;
+            display: none; /* Standardmäßig ausblenden */
         }
+        .section-block.active { display: block; } /* Nur aktive Kategorie anzeigen */
 
         .section-title {
             font-size: 1.5rem;
@@ -131,13 +158,20 @@
         </div>
     </header>
 
+    <!-- KATEGORIEN LEISTE OBEN -->
+    <div class="category-bar">
+        <button class="cat-btn active" onclick="showCategory('neuheiten', this)">✨ Neuheiten</button>
+        <button class="cat-btn" onclick="showCategory('produkte', this)">📦 Alle Produkte</button>
+        <button class="cat-btn" onclick="showCategory('impressum', this)">⚖️ Impressum</button>
+    </div>
+
     <!-- AUSKLAPPBARE SEITENLEISTE LINKS -->
     <aside class="sidebar" id="sidebar">
         <div>
             <ul class="nav-menu">
-                <li><a href="#neuheiten" onclick="toggleMenu()">✨ Neuheiten</a></li>
-                <li><a href="#produkte" onclick="toggleMenu()">📦 Alle Produkte</a></li>
-                <li><a href="#impressum" onclick="toggleMenu()">⚖️ Impressum</a></li>
+                <li><button class="active" onclick="showCategory('neuheiten', this); toggleMenu();">✨ Neuheiten</button></li>
+                <li><button onclick="showCategory('produkte', this); toggleMenu();">📦 Alle Produkte</button></li>
+                <li><button onclick="showCategory('impressum', this); toggleMenu();">⚖️ Impressum</button></li>
             </ul>
         </div>
 
@@ -150,10 +184,10 @@
     <!-- HAUPTINHALT -->
     <main class="main-content">
 
-        <!-- 1. NEUHEITEN DER WOCHE -->
-        <section id="neuheiten" class="section-block">
+        <!-- KATEGORIE 1: NEUHEITEN -->
+        <section id="neuheiten" class="section-block active">
             <div class="section-title">
-                <span>✨ Aktuelle Neuheiten</span>
+                <span>✨ Neuheiten der Woche</span>
                 <span class="badge">Frisch gedruckt</span>
             </div>
 
@@ -224,7 +258,7 @@
             </div>
         </section>
 
-        <!-- 2. ALLE PRODUKTE -->
+        <!-- KATEGORIE 2: ALLE PRODUKTE -->
         <section id="produkte" class="section-block">
             <div class="section-title">
                 <span>📦 Alle Produkte (80+ Artikel)</span>
@@ -237,7 +271,7 @@
             </a>
         </section>
 
-        <!-- 3. IMPRESSUM -->
+        <!-- KATEGORIE 3: IMPRESSUM -->
         <section id="impressum" class="section-block">
             <div class="section-title">
                 <span>⚖️ Impressum</span>
@@ -270,6 +304,26 @@
         function toggleMenu() {
             var sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');
+        }
+
+        function showCategory(categoryId, btn) {
+            // Alle Abschnitte verstecken
+            var blocks = document.querySelectorAll('.section-block');
+            blocks.forEach(function(block) {
+                block.classList.remove('active');
+            });
+
+            // Gewählten Abschnitt anzeigen
+            document.getElementById(categoryId).classList.add('active');
+
+            // Aktiven Button-Status aktualisieren
+            var buttons = document.querySelectorAll('.cat-btn, .nav-menu button');
+            buttons.forEach(function(b) {
+                b.classList.remove('active');
+            });
+            if (btn) {
+                btn.classList.add('active');
+            }
         }
     </script>
 
