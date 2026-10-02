@@ -3,635 +3,359 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sefas3DShop - Custom 3D-Drucke & Design</title>
+  <title>Sefas3DShop</title>
   <style>
     :root {
-      --bg-dark: #121214;
-      --card-bg: #1e1e24;
-      --card-hover: #262630;
-      --accent: #ff6b00;
-      --accent-hover: #e05d00;
-      --text-main: #f0f0f5;
-      --text-muted: #a0a0b0;
-      --border-color: #2e2e38;
+      --header-bg: #121212;
+      --page-bg: #f2f4f7;
+      --card-bg: #ffffff;
+      --orange: #ff9800;
+      --orange-hover: #e68a00;
+      --green: #25d366;
+      --green-hover: #1ebc57;
+      --text-dark: #1a1a1a;
+      --text-muted: #666666;
+      --border-light: #e0e0e0;
+      --pill-bg: #eef1f5;
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      background-color: var(--page-bg);
+      color: var(--text-dark);
+      padding-bottom: 40px;
     }
 
-    /* Top Utility Bar */
-    .top-bar {
-      background-color: #0b0b0d;
-      border-bottom: 1px solid var(--border-color);
-      padding: 8px 30px;
-      font-size: 0.85rem;
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-muted);
-    }
-
-    /* Header */
+    /* Top Navigation Header */
     header {
-      background-color: #1a1a20;
-      border-bottom: 1px solid var(--border-color);
-      padding: 15px 30px;
+      background-color: var(--header-bg);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
-    .header-main {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
+    .menu-icon {
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 1;
     }
 
     .logo {
-      font-size: 1.6rem;
+      font-size: 1.25rem;
       font-weight: 800;
-      color: var(--accent);
-      letter-spacing: 1px;
-      cursor: pointer;
+      color: var(--orange);
+      white-space: nowrap;
     }
 
-    .logo span {
-      color: var(--text-main);
-    }
-
-    .search-bar {
+    .search-box {
       flex: 1;
-      max-width: 450px;
-      display: flex;
-    }
-
-    .search-bar input {
-      width: 100%;
-      padding: 10px 15px;
-      border-radius: 20px 0 0 20px;
-      border: 1px solid var(--border-color);
-      border-right: none;
-      background-color: #121214;
-      color: var(--text-main);
-      outline: none;
-    }
-
-    .search-bar input:focus {
-      border-color: var(--accent);
-    }
-
-    .search-bar button {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 0 20px 20px 0;
-      cursor: pointer;
-      font-weight: bold;
-      transition: background-color 0.2s;
-    }
-
-    .search-bar button:hover {
-      background-color: var(--accent-hover);
-    }
-
-    .cart-btn {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      padding: 10px 18px;
-      border-radius: 20px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-
-    .cart-btn:hover {
-      background-color: var(--card-hover);
-      transform: scale(1.03);
-    }
-
-    .cart-badge {
-      background-color: var(--accent);
-      color: white;
-      border-radius: 50%;
-      padding: 2px 8px;
-      font-size: 0.85rem;
-    }
-
-    /* Hauptnavigation */
-    nav {
-      background-color: #16161a;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      list-style: none;
-    }
-
-    .nav-item {
+      max-width: 220px;
       position: relative;
     }
 
-    .nav-link {
-      color: var(--text-main);
-      text-decoration: none;
-      padding: 14px 20px;
-      display: block;
-      font-weight: 600;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .nav-link:hover, .nav-link.active {
-      background-color: var(--card-bg);
-      color: var(--accent);
-    }
-
-    /* Dropdown Menü */
-    .dropdown {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #1a1a20;
-      min-width: 220px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-      border: 1px solid var(--border-color);
-      border-radius: 0 0 8px 8px;
-      z-index: 200;
-    }
-
-    .dropdown a {
-      color: var(--text-muted);
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-      font-size: 0.9rem;
-      border-bottom: 1px solid var(--border-color);
-      cursor: pointer;
-      transition: background-color 0.2s, color 0.2s;
-    }
-
-    .dropdown a:hover {
-      background-color: var(--card-hover);
-      color: var(--accent);
-    }
-
-    .nav-item:hover .dropdown {
-      display: block;
-    }
-
-    /* Main Container */
-    .main-container {
-      max-width: 1200px;
-      margin: 25px auto;
-      padding: 0 20px;
-      flex: 1;
+    .search-box input {
       width: 100%;
+      background-color: #262626;
+      border: 1px solid #3d3d3d;
+      color: #ccc;
+      padding: 8px 12px 8px 32px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      outline: none;
     }
 
-    .section-title {
-      font-size: 1.5rem;
-      margin-bottom: 20px;
-      border-bottom: 2px solid var(--accent);
-      padding-bottom: 8px;
-      color: var(--text-main);
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.8rem;
     }
 
-    /* Produkt-Grid */
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 25px;
+    /* Category Navigation Pills */
+    .nav-pills {
+      display: flex;
+      gap: 10px;
+      padding: 14px 16px;
+      background-color: white;
+      border-bottom: 1px solid var(--border-light);
+      overflow-x: auto;
+      white-space: nowrap;
     }
 
+    .pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      background-color: var(--pill-bg);
+      color: var(--text-dark);
+      border: none;
+      transition: all 0.2s ease;
+    }
+
+    .pill.active {
+      background-color: var(--orange);
+      color: white;
+    }
+
+    /* Container & Layout */
+    .container {
+      max-width: 500px;
+      margin: 16px auto;
+      padding: 0 12px;
+    }
+
+    /* Product Card Component */
     .product-card {
       background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      margin-bottom: 20px;
     }
 
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-      background-color: var(--card-hover);
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .section-headline {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .tag-fresh {
+      background-color: var(--orange);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .divider {
+      height: 2px;
+      background-color: var(--orange);
+      opacity: 0.4;
+      margin-bottom: 16px;
+      border-radius: 2px;
     }
 
     .product-img {
       width: 100%;
-      height: 220px;
+      height: 240px;
       object-fit: cover;
-      background-color: #121214;
-    }
-
-    .product-info {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      flex: 1;
+      border-radius: 12px;
+      margin-bottom: 16px;
+      background-color: #eee;
     }
 
     .product-title {
-      font-size: 1.05rem;
-      font-weight: 600;
+      font-size: 1.1rem;
+      font-weight: 700;
       margin-bottom: 8px;
-      line-height: 1.3;
-      height: 2.6em;
-      overflow: hidden;
+      color: var(--text-dark);
     }
 
     .product-price {
       font-size: 1.3rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 12px;
+      font-weight: 800;
+      color: var(--orange);
+      margin-bottom: 16px;
     }
 
-    /* Steuerelemente für Farbe & Details */
-    .product-options {
-      margin-bottom: 15px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+    /* Dropdowns */
+    .form-group {
+      margin-bottom: 14px;
     }
 
-    .option-label {
+    .form-group label {
+      display: block;
       font-size: 0.85rem;
-      color: var(--text-muted);
       font-weight: 600;
-    }
-
-    .color-select {
-      width: 100%;
-      padding: 8px 12px;
-      background-color: #121214;
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      border-radius: 6px;
-      outline: none;
-      font-size: 0.9rem;
-      cursor: pointer;
-    }
-
-    .color-select:focus {
-      border-color: var(--accent);
-    }
-
-    .add-btn {
-      margin-top: auto;
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .add-btn:hover {
-      background-color: var(--accent-hover);
-    }
-
-    /* Impressum Bereich */
-    .impressum-box {
-      background-color: var(--card-bg);
-      padding: 30px;
-      border-radius: 12px;
-      border: 1px solid var(--border-color);
-      line-height: 1.6;
-    }
-
-    .impressum-box h3 {
-      margin-top: 18px;
+      color: var(--text-dark);
       margin-bottom: 6px;
-      color: var(--accent);
     }
 
-    /* Modal / Popup für Warenkorb */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
+    .form-control {
       width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.7);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border-color);
-      color: var(--text-main);
-      width: 90%;
-      max-width: 500px;
-      border-radius: 12px;
-      padding: 20px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-      max-height: 80vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      padding-bottom: 12px;
-      margin-bottom: 15px;
-    }
-
-    .modal-header h2 {
-      color: var(--accent);
-      font-size: 1.3rem;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: var(--text-muted);
-    }
-
-    .close-btn:hover {
-      color: var(--text-main);
-    }
-
-    .cart-items {
-      overflow-y: auto;
-      flex: 1;
-      margin-bottom: 15px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 0;
-      border-bottom: 1px solid var(--border-color);
-    }
-
-    .cart-item-title {
-      font-weight: 600;
-      font-size: 0.95rem;
-      max-width: 240px;
-    }
-
-    .cart-item-meta {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      margin-top: 2px;
-    }
-
-    .cart-item-price {
-      color: var(--accent);
-      font-weight: bold;
-    }
-
-    .remove-item {
-      color: var(--text-muted);
-      cursor: pointer;
-      margin-left: 12px;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .remove-item:hover {
-      color: #ff4d4d;
-    }
-
-    .cart-footer {
-      border-top: 1px solid var(--border-color);
-      padding-top: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .cart-total {
-      font-size: 1.2rem;
-      font-weight: bold;
-    }
-
-    .checkout-btn {
-      background-color: var(--accent);
-      color: white;
-      border: none;
-      padding: 10px 20px;
+      padding: 10px 14px;
+      border: 1px solid var(--border-light);
+      background-color: #f9f9f9;
       border-radius: 8px;
-      font-weight: bold;
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      outline: none;
       cursor: pointer;
-      transition: background-color 0.2s;
     }
 
-    .checkout-btn:hover {
-      background-color: var(--accent-hover);
+    .form-control:focus {
+      border-color: var(--orange);
     }
 
-    /* Footer */
-    footer {
-      background-color: #1a1a20;
-      border-top: 1px solid var(--border-color);
-      color: var(--text-muted);
-      text-align: center;
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-orange {
+      background-color: var(--orange);
+      color: white;
+    }
+
+    .btn-orange:hover {
+      background-color: var(--orange-hover);
+    }
+
+    .btn-green {
+      background-color: var(--green);
+      color: white;
+      margin-bottom: 0;
+    }
+
+    .btn-green:hover {
+      background-color: var(--green-hover);
+    }
+
+    /* Impressum Style */
+    .impressum-box {
+      background: white;
       padding: 20px;
-      margin-top: 40px;
-      font-size: 0.85rem;
+      border-radius: 16px;
+      line-height: 1.6;
     }
   </style>
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <span>Kostenlose Lieferung ab 49 €</span>
-    <span>Präzise 3D-Drucke &amp; Schneller Versand aus Deutschland</span>
-  </div>
-
-  <!-- Header -->
+  <!-- Top Header -->
   <header>
-    <div class="header-main">
-      <div class="logo" onclick="showPage('all')">Sefas3D<span>Shop</span></div>
-      <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Produkt oder Kategorie suchen..." oninput="handleSearch()">
-        <button onclick="handleSearch()">Suchen</button>
-      </div>
-      <button class="cart-btn" onclick="toggleCartModal()">
-        🛒 Warenkorb <span class="cart-badge" id="cartBadge">0</span>
-      </button>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div class="menu-icon">☰</div>
+      <div class="logo" onclick="showSection('all')">Sefas3DShop</div>
+    </div>
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Produkte suchen..." oninput="filterProducts()">
     </div>
   </header>
 
-  <!-- Navigation -->
-  <nav>
-    <ul class="nav-container">
-      <li class="nav-item">
-        <span class="nav-link active" id="navAll" onclick="showPage('all')">Alle Produkte ▾</span>
-        <div class="dropdown">
-          <a onclick="filterCategory('alle')">Alle Kategorien</a>
-          <a onclick="filterCategory('Deko')">Deko</a>
-          <a onclick="filterCategory('Werkstatt')">Werkstatt &amp; Haushalt</a>
-          <a onclick="filterCategory('Weihnachten')">Weihnachten</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <span class="nav-link" id="navNew" onclick="showPage('new')">Neuheiten</span>
-      </li>
-      <li class="nav-item">
-        <span class="nav-link" id="navImpressum" onclick="showPage('impressum')">Impressum</span>
-      </li>
-    </ul>
-  </nav>
+  <!-- Category Pills -->
+  <div class="nav-pills">
+    <button class="pill active" id="pillNew" onclick="showSection('new')">✨ Neuheiten</button>
+    <button class="pill" id="pillAll" onclick="showSection('all')">📦 Alle Produkte</button>
+    <button class="pill" id="pillImpressum" onclick="showSection('impressum')">⚖️ Impressum</button>
+  </div>
 
-  <!-- Hauptinhalt -->
-  <div class="main-container">
+  <div class="container">
     
-    <!-- Produkte Bereich -->
+    <!-- Hauptbereich Produkte -->
     <div id="shopSection">
-      <h2 class="section-title" id="sectionTitle">Alle Produkte</h2>
-      <div class="product-grid" id="productGrid"></div>
+      <div id="productGrid"></div>
     </div>
 
     <!-- Impressum Bereich -->
     <div id="impressumSection" style="display: none;">
-      <h2 class="section-title">Impressum</h2>
       <div class="impressum-box">
-        <h3>Angaben gemäß § 5 TMG</h3>
-        <p><strong>Sefas3DShop</strong><br>
-        Inhaber: Sefa Demir<br>
-        Neuer Weg 42<br>
-        32369 Rahden<br>
-        Deutschland</p>
-
-        <h3>Kontakt</h3>
+        <h2 style="margin-bottom: 12px; color: var(--orange);">Impressum</h2>
+        <p><strong>Sefas3DShop</strong></p>
+        <p>Inhaber: Sefa Demir</p>
+        <p>Neuer Weg 42</p>
+        <p>32369 Rahden</p>
+        <p>Deutschland</p>
+        <br>
+        <p><strong>Kontakt:</strong></p>
         <p>E-Mail: info@sefas3dshop.de</p>
-
-        <h3>Umsatzsteuer-ID</h3>
-        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: Kleinunternehmer nach § 19 UStG</p>
-
-        <h3>Haftung für Inhalte</h3>
-        <p>Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.</p>
       </div>
     </div>
 
   </div>
-
-  <!-- Warenkorb Modal (Popup) -->
-  <div class="modal-overlay" id="cartModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Dein Warenkorb</h2>
-        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
-      </div>
-      <div class="cart-items" id="cartItems">
-        <p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>
-      </div>
-      <div class="cart-footer">
-        <div class="cart-total">Gesamt: <span id="cartTotal">0,00 €</span></div>
-        <button class="checkout-btn" onclick="checkout()">Zur Kasse</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    &copy; 2026 Sefas3DShop — Alle Rechte vorbehalten.
-  </footer>
 
   <script>
-    // Alle verfügbaren Filamentfarben aus den Fotos
     const availableColors = [
-      "Schwarz", "Weiß / Hellgrau", "Blau", "Grün", "Rot", 
-      "Orange", "Braun / Holz-Optik", "Beige", "Rosa", 
-      "Magenta / Pink", "Gold / Bronze", "Silber"
+      "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
+      "Blau", "Rot", "Orange", "Braun / Holz-Optik", "Rosa", "Silber", "Gold"
     ];
 
     const products = [
-      { id: 17, title: "Dekoratives Eichhörnchen Fuzzy Skin", price: 6.00, category: "Deko", isNew: true },
-      { id: 18, title: "Moderner Weihnachtswichtel / Gnom", price: 6.00, category: "Weihnachten", isNew: true },
-      { id: 19, title: "Japandi Vogel Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false },
-      { id: 20, title: "Modernes Eichhörnchen Deko (Geriffelt)", price: 7.00, category: "Deko", isNew: false },
-      { id: 21, title: "Französische Bulldogge Schalen-Figur", price: 15.00, category: "Deko", isNew: true },
-      { id: 22, title: "Moderne Kürbis Deko (Geriffelt)", price: 6.00, category: "Deko", isNew: false },
-      { id: 23, title: "Moderne Osterhasen Deko (Geriffelt)", price: 5.00, category: "Deko", isNew: false },
-      { id: 24, title: "Süßer Untersetzer mit Armen (Hug Coaster)", price: 4.00, category: "Deko", isNew: false },
-      { id: 25, title: "Hirsch Teelichthalter Elegante Deko", price: 5.00, category: "Weihnachten", isNew: true },
-      { id: 26, title: "Elegante Erdmännchen Deko Figur", price: 8.00, category: "Deko", isNew: false },
-      { id: 27, title: "Deko Dackel Figur mit Schale", price: 15.00, category: "Deko", isNew: false },
-      { id: 28, title: "Gorilla Schlüsselbrett & Ablage Deko", price: 10.00, category: "Deko", isNew: false },
-      { id: 29, title: "Moderne Deko-Rentiere Skandi-Stil", price: 5.00, category: "Weihnachten", isNew: true },
-      { id: 30, title: "Flavor / Sirup Flaschen Halter", price: 5.00, category: "Werkstatt", isNew: false },
-      { id: 31, title: "Akku-Schrauber Halterung Werkbank", price: 5.00, category: "Werkstatt", isNew: false },
-      { id: 32, title: "Wunderschönes Tannenzapfen-Häuschen", price: 6.00, category: "Weihnachten", isNew: true },
-      { id: 33, title: "Akustikpaneel Halterung / Haken Schwarz", price: 5.00, category: "Werkstatt", isNew: false },
-      { id: 34, title: "Dekorative Eichel / Aufbewahrungsdose", price: 15.00, category: "Deko", isNew: false },
-      { id: 35, title: "Weihnachtsbaum Deko-Tannen 3er-Set Skandi", price: 5.00, category: "Weihnachten", isNew: true },
-      { id: 36, title: "Moderne Christbaumkugel Tanne", price: 5.00, category: "Weihnachten", isNew: false },
-      { id: 37, title: "UNO Kartenbox / Kartenetui", price: 7.00, category: "Deko", isNew: false },
-      { id: 38, title: "Französische Bulldogge Dekoschale", price: 20.00, category: "Deko", isNew: false },
-      { id: 39, title: "Französische Bulldogge Figur Deko", price: 15.00, category: "Deko", isNew: false },
-      { id: 40, title: "Design-Küchenrollenhalter Rillen-Look", price: 9.00, category: "Werkstatt", isNew: false },
-      { id: 41, title: "Dackel Ablageschale Deko-Hund Schwarz", price: 15.00, category: "Deko", isNew: false },
-      { id: 42, title: "Schönes Wandregal rund Metall-Regal Schwarz", price: 15.00, category: "Deko", isNew: false },
-      { id: 43, title: "Stylische Katzen Deko Rillen-Design", price: 5.00, category: "Deko", isNew: false },
-      { id: 44, title: "Moderner Schneemann Deko mit Hut", price: 5.00, category: "Weihnachten", isNew: true },
-      { id: 45, title: "Moderne Rillen-Vase (15 cm)", price: 10.00, category: "Deko", isNew: false },
-      { id: 46, title: "Rentier mit Schlitten Schale Weihnachtsdeko", price: 10.00, category: "Weihnachten", isNew: true },
-      { id: 47, title: "Süßer Blumentopf mit Herz-Händen Übertopf", price: 10.00, category: "Deko", isNew: false },
-      { id: 48, title: "PS5 Controller & Headset Halterung Standfuß", price: 10.00, category: "Werkstatt", isNew: false },
-      { id: 50, title: "Moderner Deko Kürbis Skandi / Japandi", price: 5.00, category: "Deko", isNew: false },
-      { id: 51, title: "Dekorative Vasen im Beutel-Design", price: 6.00, category: "Deko", isNew: false },
-      { id: 52, title: "Deko Rentier / Weihnachtsdeko modern", price: 6.00, category: "Weihnachten", isNew: true },
-      { id: 77, title: "Winkelschleifer Wandhalterung / Flex Halterung", price: 5.00, category: "Werkstatt", isNew: false },
-      { id: 80, title: "Makita 18V Akku Halterung für 3 Akkus", price: 5.00, category: "Werkstatt", isNew: false }
+      {
+        id: 45,
+        title: "Moderne Rillen-Vase (15 cm)",
+        price: "10,00 €",
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO",
+        category: "Deko",
+        isNew: true,
+        sizes: ["15 cm (Standard)", "20 cm (+3,00 €)"]
+      },
+      {
+        id: 17,
+        title: "Dekoratives Eichhörnchen Fuzzy Skin",
+        price: "6,00 €",
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO",
+        category: "Deko",
+        isNew: true,
+        sizes: ["Standard"]
+      },
+      {
+        id: 21,
+        title: "Französische Bulldogge Schalen-Figur",
+        price: "15,00 €",
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO",
+        category: "Deko",
+        isNew: false,
+        sizes: ["Standard"]
+      },
+      {
+        id: 18,
+        title: "Moderner Weihnachtswichtel / Gnom",
+        price: "6,00 €",
+        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO",
+        category: "Weihnachten",
+        isNew: true,
+        sizes: ["Standard"]
+      }
     ];
-
-    let cart = [];
-    let currentPage = 'all';
 
     function renderProducts(items) {
       const grid = document.getElementById('productGrid');
       grid.innerHTML = '';
 
       if (items.length === 0) {
-        grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted); padding: 40px;">Keine Produkte gefunden.</p>';
+        grid.innerHTML = '<p style="text-align:center; padding: 30px; color: #888;">Keine Produkte gefunden.</p>';
         return;
       }
 
@@ -639,157 +363,90 @@
         const card = document.createElement('div');
         card.className = 'product-card';
 
-        const imgUrl = `https://placehold.co/400x300/1e1e24/ff6b00?text=${encodeURIComponent(p.title)}`;
-
-        // Erstelle Optionen für das Farbauswahl-Dropdown
-        const colorOptionsHtml = availableColors.map(color => `<option value="${color}">${color}</option>`).join('');
+        const sizeOptions = p.sizes.map(s => `<option>${s}</option>`).join('');
+        const colorOptions = availableColors.map(c => `<option>${c}</option>`).join('');
 
         card.innerHTML = `
-          <img class="product-img" src="${imgUrl}" alt="${p.title}" loading="lazy">
-          <div class="product-info">
-            <div class="product-title">${p.title}</div>
-            <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
-            
-            <div class="product-options">
-              <label class="option-label" for="color-${p.id}">Farbe wählen:</label>
-              <select class="color-select" id="color-${p.id}">
-                ${colorOptionsHtml}
-              </select>
-            </div>
-
-            <button class="add-btn" onclick="addToCart(${p.id})">In den Warenkorb</button>
+          <div class="card-header">
+            <div class="section-headline">✨ ${p.isNew ? 'Neuheiten der Woche' : 'Produkt Highlights'}</div>
+            ${p.isNew ? '<span class="tag-fresh">Frisch gedruckt</span>' : ''}
           </div>
+          <div class="divider"></div>
+
+          <img class="product-img" src="${p.img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/f8f8f8/ff9800?text=${encodeURIComponent(p.title)}';">
+
+          <div class="product-title">${p.title}</div>
+          <div class="product-price">${p.price}</div>
+
+          <div class="form-group">
+            <label>Größe wählen:</label>
+            <select class="form-control" id="size-${p.id}">
+              ${sizeOptions}
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Farbe wählen:</label>
+            <select class="form-control" id="color-${p.id}">
+              ${colorOptions}
+            </select>
+          </div>
+
+          <button class="btn btn-orange" onclick="orderDirect(${p.id})">
+            🛒 Direkt bestellen
+          </button>
+          
+          <button class="btn btn-green" onclick="whatsappRequest('${p.title}', ${p.id})">
+            💬 Sonderwunsch per WhatsApp
+          </button>
         `;
+
         grid.appendChild(card);
       });
     }
 
-    function showPage(page) {
-      currentPage = page;
-      document.getElementById('navAll').classList.remove('active');
-      document.getElementById('navNew').classList.remove('active');
-      document.getElementById('navImpressum').classList.remove('active');
+    function showSection(section) {
+      document.getElementById('pillNew').classList.remove('active');
+      document.getElementById('pillAll').classList.remove('active');
+      document.getElementById('pillImpressum').classList.remove('active');
 
       document.getElementById('shopSection').style.display = 'block';
       document.getElementById('impressumSection').style.display = 'none';
 
-      if (page === 'all') {
-        document.getElementById('navAll').classList.add('active');
-        document.getElementById('sectionTitle').innerText = 'Alle Produkte';
+      if (section === 'new') {
+        document.getElementById('pillNew').classList.add('active');
+        renderProducts(products.filter(p => p.isNew));
+      } else if (section === 'all') {
+        document.getElementById('pillAll').classList.add('active');
         renderProducts(products);
-      } else if (page === 'new') {
-        document.getElementById('navNew').classList.add('active');
-        document.getElementById('sectionTitle').innerText = 'Neuheiten';
-        const newProducts = products.filter(p => p.isNew);
-        renderProducts(newProducts);
-      } else if (page === 'impressum') {
-        document.getElementById('navImpressum').classList.add('active');
+      } else if (section === 'impressum') {
+        document.getElementById('pillImpressum').classList.add('active');
         document.getElementById('shopSection').style.display = 'none';
         document.getElementById('impressumSection').style.display = 'block';
       }
     }
 
-    function filterCategory(cat) {
-      showPage('all');
-      document.getElementById('sectionTitle').innerText = cat === 'alle' ? 'Alle Produkte' : `Kategorie: ${cat}`;
-      if (cat === 'alle') {
-        renderProducts(products);
-      } else {
-        const filtered = products.filter(p => p.category === cat);
-        renderProducts(filtered);
-      }
+    function filterProducts() {
+      const q = document.getElementById('searchInput').value.toLowerCase();
+      renderProducts(products.filter(p => p.title.toLowerCase().includes(q)));
     }
 
-    function handleSearch() {
-      const query = document.getElementById('searchInput').value.toLowerCase();
-      if (currentPage === 'impressum') showPage('all');
-
-      const filtered = products.filter(p => p.title.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
-      document.getElementById('sectionTitle').innerText = `Suchergebnisse für "${query}"`;
-      renderProducts(filtered);
+    function orderDirect(id) {
+      const p = products.find(prod => prod.id === id);
+      const size = document.getElementById(`size-${id}`).value;
+      const color = document.getElementById(`color-${id}`).value;
+      alert(`Bestellung gestartet:\n${p.title}\nGröße: ${size}\nFarbe: ${color}`);
     }
 
-    /* Warenkorb-Funktionen */
-    function addToCart(productId) {
-      const product = products.find(p => p.id === productId);
-      const colorSelect = document.getElementById(`color-${productId}`);
-      const selectedColor = colorSelect ? colorSelect.value : "Schwarz";
-
-      // Unterscheide Artikel im Warenkorb auch nach der ausgewählten Farbe
-      const existing = cart.find(item => item.id === productId && item.selectedColor === selectedColor);
-
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ ...product, selectedColor: selectedColor, quantity: 1 });
-      }
-
-      updateCartUI();
+    function whatsappRequest(title, id) {
+      const size = document.getElementById(`size-${id}`).value;
+      const color = document.getElementById(`color-${id}`).value;
+      const msg = encodeURIComponent(`Hallo! Ich habe eine Frage / einen Sonderwunsch zum Produkt: ${title} (Größe: ${size}, Farbe: ${color})`);
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
     }
 
-    function removeFromCart(productId, color) {
-      cart = cart.filter(item => !(item.id === productId && item.selectedColor === color));
-      updateCartUI();
-    }
-
-    function updateCartUI() {
-      const badge = document.getElementById('cartBadge');
-      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-      badge.innerText = totalItems;
-
-      const cartItemsContainer = document.getElementById('cartItems');
-      const cartTotal = document.getElementById('cartTotal');
-
-      if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 20px;">Dein Warenkorb ist leer.</p>';
-        cartTotal.innerText = '0,00 €';
-        return;
-      }
-
-      cartItemsContainer.innerHTML = '';
-      let total = 0;
-
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        total += itemTotal;
-
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-          <div>
-            <div class="cart-item-title">${item.title}</div>
-            <div class="cart-item-meta">Farbe: ${item.selectedColor} | ${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</div>
-          </div>
-          <div>
-            <span class="cart-item-price">${itemTotal.toFixed(2).replace('.', ',')} €</span>
-            <span class="remove-item" onclick="removeFromCart(${item.id}, '${item.selectedColor}')">&times;</span>
-          </div>
-        `;
-        cartItemsContainer.appendChild(div);
-      });
-
-      cartTotal.innerText = `${total.toFixed(2).replace('.', ',')} €`;
-    }
-
-    function toggleCartModal() {
-      const modal = document.getElementById('cartModal');
-      modal.classList.toggle('active');
-    }
-
-    function checkout() {
-      if (cart.length === 0) {
-        alert('Dein Warenkorb ist leer!');
-        return;
-      }
-      alert('Vielen Dank für deine Bestellung bei Sefas3DShop!');
-      cart = [];
-      updateCartUI();
-      toggleCartModal();
-    }
-
-    // Beim Laden der Seite
     document.addEventListener('DOMContentLoaded', () => {
-      renderProducts(products);
+      showSection('new');
     });
   </script>
 </body>
