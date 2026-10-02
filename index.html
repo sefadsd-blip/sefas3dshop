@@ -39,7 +39,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 10px;
       position: sticky;
       top: 0;
       z-index: 100;
@@ -47,21 +47,22 @@
 
     .menu-icon {
       color: white;
-      font-size: 24px;
+      font-size: 22px;
       cursor: pointer;
       line-height: 1;
     }
 
     .logo {
-      font-size: 1.25rem;
+      font-size: 1.15rem;
       font-weight: 800;
       color: var(--orange);
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .search-box {
       flex: 1;
-      max-width: 220px;
+      max-width: 180px;
       position: relative;
     }
 
@@ -70,19 +71,47 @@
       background-color: #262626;
       border: 1px solid #3d3d3d;
       color: #ccc;
-      padding: 8px 12px 8px 32px;
+      padding: 7px 10px 7px 28px;
       border-radius: 20px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       outline: none;
     }
 
     .search-box::before {
       content: "🔍";
       position: absolute;
-      left: 10px;
+      left: 8px;
       top: 50%;
       transform: translateY(-50%);
-      font-size: 0.8rem;
+      font-size: 0.75rem;
+    }
+
+    /* Einkaufswagen Button oben rechts */
+    .cart-btn-icon {
+      position: relative;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 20px;
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .cart-badge {
+      position: absolute;
+      top: -4px;
+      right: -6px;
+      background-color: var(--orange);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 800;
+      border-radius: 10px;
+      padding: 2px 6px;
+      min-width: 18px;
+      text-align: center;
     }
 
     /* Category Navigation Pills */
@@ -252,6 +281,73 @@
       background-color: var(--green-hover);
     }
 
+    /* Warenkorb Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 450px;
+      border-radius: 16px;
+      padding: 20px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #888;
+    }
+
+    .cart-items {
+      overflow-y: auto;
+      flex: 1;
+      margin-bottom: 15px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .remove-item {
+      color: #ff4d4d;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
     /* Impressum Style */
     .impressum-box {
       background: white;
@@ -263,15 +359,21 @@
 </head>
 <body>
 
-  <!-- Top Header -->
+  <!-- Top Header mit Einkaufswagen oben rechts -->
   <header>
-    <div style="display: flex; align-items: center; gap: 12px;">
+    <div style="display: flex; align-items: center; gap: 8px;">
       <div class="menu-icon">☰</div>
       <div class="logo" onclick="showSection('all')">Sefas3DShop</div>
     </div>
+    
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Produkte suchen..." oninput="filterProducts()">
+      <input type="text" id="searchInput" placeholder="Suchen..." oninput="filterProducts()">
     </div>
+
+    <button class="cart-btn-icon" onclick="toggleCartModal()">
+      🛒
+      <span class="cart-badge" id="cartBadge">0</span>
+    </button>
   </header>
 
   <!-- Category Pills -->
@@ -305,6 +407,23 @@
 
   </div>
 
+  <!-- Warenkorb Modal (Popup) -->
+  <div class="modal-overlay" id="cartModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: var(--orange);">Dein Warenkorb</h3>
+        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>
+      </div>
+      <div style="border-top: 1px solid var(--border-light); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 1.1rem; font-weight: 800;">Gesamt: <span id="cartTotal">0,00 €</span></div>
+        <button class="btn btn-orange" style="width: auto; padding: 10px 18px; margin: 0;" onclick="checkout()">Zur Kasse</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const availableColors = [
       "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
@@ -315,7 +434,7 @@
       {
         id: 45,
         title: "Moderne Rillen-Vase (15 cm)",
-        price: "10,00 €",
+        price: 10.00,
         img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO",
         category: "Deko",
         isNew: true,
@@ -324,7 +443,7 @@
       {
         id: 17,
         title: "Dekoratives Eichhörnchen Fuzzy Skin",
-        price: "6,00 €",
+        price: 6.00,
         img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO",
         category: "Deko",
         isNew: true,
@@ -333,7 +452,7 @@
       {
         id: 21,
         title: "Französische Bulldogge Schalen-Figur",
-        price: "15,00 €",
+        price: 15.00,
         img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO",
         category: "Deko",
         isNew: false,
@@ -342,13 +461,15 @@
       {
         id: 18,
         title: "Moderner Weihnachtswichtel / Gnom",
-        price: "6,00 €",
+        price: 6.00,
         img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO",
         category: "Weihnachten",
         isNew: true,
         sizes: ["Standard"]
       }
     ];
+
+    let cart = [];
 
     function renderProducts(items) {
       const grid = document.getElementById('productGrid');
@@ -376,7 +497,7 @@
           <img class="product-img" src="${p.img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/f8f8f8/ff9800?text=${encodeURIComponent(p.title)}';">
 
           <div class="product-title">${p.title}</div>
-          <div class="product-price">${p.price}</div>
+          <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
 
           <div class="form-group">
             <label>Größe wählen:</label>
@@ -392,7 +513,7 @@
             </select>
           </div>
 
-          <button class="btn btn-orange" onclick="orderDirect(${p.id})">
+          <button class="btn btn-orange" onclick="addToCart(${p.id})">
             🛒 Direkt bestellen
           </button>
           
@@ -403,6 +524,78 @@
 
         grid.appendChild(card);
       });
+    }
+
+    function addToCart(id) {
+      const p = products.find(prod => prod.id === id);
+      const size = document.getElementById(`size-${id}`).value;
+      const color = document.getElementById(`color-${id}`).value;
+
+      const existing = cart.find(item => item.id === id && item.size === size && item.color === color);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({ ...p, size, color, quantity: 1 });
+      }
+
+      updateCartUI();
+    }
+
+    function removeFromCart(id, size, color) {
+      cart = cart.filter(item => !(item.id === id && item.size === size && item.color === color));
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const badge = document.getElementById('cartBadge');
+      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+      badge.innerText = totalCount;
+
+      const cartItemsContainer = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+
+      if (cart.length === 0) {
+        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>';
+        cartTotal.innerText = '0,00 €';
+        return;
+      }
+
+      cartItemsContainer.innerHTML = '';
+      let total = 0;
+
+      cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `
+          <div>
+            <div style="font-weight: bold; font-size: 0.9rem;">${item.title}</div>
+            <div style="font-size: 0.75rem; color: #666;">${item.color} | ${item.size}</div>
+            <div style="font-size: 0.8rem;">${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</div>
+          </div>
+          <div>
+            <span style="font-weight: bold; color: var(--orange);">${itemTotal.toFixed(2).replace('.', ',')} €</span>
+            <span class="remove-item" onclick="removeFromCart(${item.id}, '${item.size}', '${item.color}')">&times;</span>
+          </div>
+        `;
+        cartItemsContainer.appendChild(div);
+      });
+
+      cartTotal.innerText = `${total.toFixed(2).replace('.', ',')} €`;
+    }
+
+    function toggleCartModal() {
+      document.getElementById('cartModal').classList.toggle('active');
+    }
+
+    function checkout() {
+      if (cart.length === 0) return;
+      alert('Bestellung erfolgreich aufgenommen!');
+      cart = [];
+      updateCartUI();
+      toggleCartModal();
     }
 
     function showSection(section) {
@@ -431,13 +624,6 @@
       renderProducts(products.filter(p => p.title.toLowerCase().includes(q)));
     }
 
-    function orderDirect(id) {
-      const p = products.find(prod => prod.id === id);
-      const size = document.getElementById(`size-${id}`).value;
-      const color = document.getElementById(`color-${id}`).value;
-      alert(`Bestellung gestartet:\n${p.title}\nGröße: ${size}\nFarbe: ${color}`);
-    }
-
     function whatsappRequest(title, id) {
       const size = document.getElementById(`size-${id}`).value;
       const color = document.getElementById(`color-${id}`).value;
@@ -451,4 +637,3 @@
   </script>
 </body>
 </html>
-
