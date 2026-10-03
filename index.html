@@ -13,7 +13,6 @@
       --orange-hover: #e68a00;
       --green: #25d366;
       --green-hover: #1ebc57;
-      --paypal-blue: #0070ba;
       --text-dark: #1a1a1a;
       --text-muted: #666666;
       --border-light: #e0e0e0;
@@ -33,7 +32,7 @@
       padding-bottom: 40px;
     }
 
-    /* Top Navigation Header */
+    /* Header */
     header {
       background-color: var(--header-bg);
       padding: 12px 16px;
@@ -87,7 +86,6 @@
       font-size: 0.75rem;
     }
 
-    /* Einkaufswagen Button oben rechts */
     .cart-btn-icon {
       position: relative;
       background: none;
@@ -115,7 +113,7 @@
       text-align: center;
     }
 
-    /* Category Navigation Pills */
+    /* Navigation Pills */
     .nav-pills {
       display: flex;
       gap: 10px;
@@ -146,14 +144,14 @@
       color: white;
     }
 
-    /* Container & Layout */
+    /* Container */
     .container {
       max-width: 500px;
       margin: 16px auto;
       padding: 0 12px;
     }
 
-    /* Product Card Component */
+    /* Product Card */
     .product-card {
       background-color: var(--card-bg);
       border-radius: 16px;
@@ -218,7 +216,7 @@
     }
 
     .form-group {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .form-group label {
@@ -226,7 +224,7 @@
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-dark);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .form-control {
@@ -238,7 +236,11 @@
       font-size: 0.9rem;
       color: var(--text-dark);
       outline: none;
-      cursor: pointer;
+    }
+
+    .form-control:focus {
+      border-color: var(--orange);
+      background-color: #ffffff;
     }
 
     .btn {
@@ -296,13 +298,14 @@
 
     .modal-content {
       background: white;
-      width: 90%;
-      max-width: 450px;
+      width: 92%;
+      max-width: 480px;
       border-radius: 16px;
       padding: 20px;
-      max-height: 85vh;
+      max-height: 90vh;
       display: flex;
       flex-direction: column;
+      overflow-y: auto;
     }
 
     .modal-header {
@@ -323,8 +326,6 @@
     }
 
     .cart-items {
-      overflow-y: auto;
-      flex: 1;
       margin-bottom: 15px;
     }
 
@@ -332,7 +333,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
+      padding: 8px 0;
       border-bottom: 1px solid #eee;
     }
 
@@ -343,11 +344,22 @@
       margin-left: 10px;
     }
 
-    /* Zahlungsoptionen Radio-Buttons */
-    .payment-options {
-      margin-top: 15px;
-      padding-top: 12px;
+    .checkout-section {
       border-top: 1px solid var(--border-light);
+      padding-top: 15px;
+      margin-top: 10px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--orange);
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
     }
 
     .payment-option {
@@ -365,22 +377,41 @@
       accent-color: var(--orange);
     }
 
-    .impressum-box {
+    .summary-box {
+      background-color: #f9f9f9;
+      border: 1px solid var(--border-light);
+      padding: 12px;
+      border-radius: 8px;
+      margin: 15px 0;
+      font-size: 0.9rem;
+    }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+
+    .summary-line.total {
+      border-top: 1px solid var(--border-light);
+      padding-top: 6px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text-dark);
+      margin-bottom: 0;
+    }
+
+    .impressum-box, .bank-details {
       background: white;
       padding: 20px;
       border-radius: 16px;
       line-height: 1.6;
     }
 
-    /* Bankverbindung Info-Box */
     .bank-details {
       background-color: #f9f9f9;
       border: 1px solid var(--border-light);
-      padding: 15px;
-      border-radius: 10px;
-      margin-top: 15px;
       font-size: 0.9rem;
-      line-height: 1.5;
     }
   </style>
 </head>
@@ -446,9 +477,38 @@
         <p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>
       </div>
 
-      <!-- Zahlungsart Auswahl -->
-      <div class="payment-options" id="paymentSection" style="display: none;">
-        <label style="font-weight: 700; font-size: 0.85rem;">Zahlungsart wählen:</label>
+      <!-- Kundendaten & Versand Formular -->
+      <div class="checkout-section" id="checkoutSection" style="display: none;">
+        
+        <div class="section-subtitle">1. Kontaktdaten & Lieferadresse</div>
+        
+        <div class="form-group">
+          <label>Vollständiger Name *</label>
+          <input type="text" id="custName" class="form-control" placeholder="Max Mustermann">
+        </div>
+
+        <div class="form-group">
+          <label>E-Mail-Adresse *</label>
+          <input type="email" id="custEmail" class="form-control" placeholder="max@beispiel.de">
+        </div>
+
+        <div class="form-group">
+          <label>Straße & Hausnummer *</label>
+          <input type="text" id="custAddress" class="form-control" placeholder="Musterstraße 12">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group" style="flex: 1;">
+            <label>PLZ *</label>
+            <input type="text" id="custZip" class="form-control" placeholder="12345">
+          </div>
+          <div class="form-group" style="flex: 2;">
+            <label>Ort *</label>
+            <input type="text" id="custCity" class="form-control" placeholder="Musterstadt">
+          </div>
+        </div>
+
+        <div class="section-subtitle" style="margin-top: 15px;">2. Zahlungsart wählen</div>
         <label class="payment-option">
           <input type="radio" name="paymentMethod" value="paypal" checked>
           <span>🅿️ PayPal / PayPal.Me</span>
@@ -457,12 +517,26 @@
           <input type="radio" name="paymentMethod" value="bank">
           <span>🏦 Vorkasse / Überweisung (Revolut)</span>
         </label>
+
+        <!-- Gesamtpreis Übersicht -->
+        <div class="summary-box">
+          <div class="summary-line">
+            <span>Zwischensumme:</span>
+            <span id="subTotal">0,00 €</span>
+          </div>
+          <div class="summary-line">
+            <span>Versandkosten (Paket):</span>
+            <span>6,99 €</span>
+          </div>
+          <div class="summary-line total">
+            <span>Gesamtsumme:</span>
+            <span id="cartTotal">6,99 €</span>
+          </div>
+        </div>
+
+        <button class="btn btn-orange" onclick="checkout()">Kostenpflichtig bestellen</button>
       </div>
 
-      <div style="border-top: 1px solid var(--border-light); padding-top: 12px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-size: 1.1rem; font-weight: 800;">Gesamt: <span id="cartTotal">0,00 €</span></div>
-        <button class="btn btn-orange" style="width: auto; padding: 10px 18px; margin: 0;" onclick="checkout()">Kostenpflichtig bestellen</button>
-      </div>
     </div>
   </div>
 
@@ -475,12 +549,12 @@
       </div>
       <p style="font-size: 0.9rem;">Vielen Dank für deine Bestellung. Bitte überweise den Gesamtbetrag auf folgendes Konto:</p>
       
-      <div class="bank-details">
+      <div class="bank-details" style="margin-top: 12px;">
         <p><strong>Empfänger:</strong> Sefa Demir</p>
         <p><strong>Bank:</strong> Revolut Bank</p>
         <p><strong>IBAN:</strong> LT12 3456 7890 1234 5678</p>
         <p><strong>Verwendungszweck:</strong> <span id="bankOrderRef" style="color: var(--orange); font-weight: bold;"></span></p>
-        <p><strong>Betrag:</strong> <span id="bankOrderTotal" style="font-weight: bold;"></span></p>
+        <p><strong>Gesamtbetrag (inkl. Versand):</strong> <span id="bankOrderTotal" style="font-weight: bold;"></span></p>
       </div>
 
       <button class="btn btn-orange" style="margin-top: 15px;" onclick="toggleBankModal()">Schließen</button>
@@ -488,6 +562,8 @@
   </div>
 
   <script>
+    const shippingFee = 6.99; // Pauschale Versandkosten
+
     const availableColors = [
       "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
       "Blau", "Rot", "Orange", "Braun / Holz-Optik", "Rosa", "Silber", "Gold"
@@ -577,7 +653,7 @@
           </div>
 
           <button class="btn btn-orange" onclick="addToCart(${p.id})">
-            🛒 Direkt bestellen
+            🛒 In den Warenkorb
           </button>
           
           <button class="btn btn-green" onclick="whatsappRequest('${p.title}', ${p.id})">
@@ -602,6 +678,7 @@
       }
 
       updateCartUI();
+      toggleCartModal();
     }
 
     function removeFromCart(id, size, color) {
@@ -615,23 +692,23 @@
       badge.innerText = totalCount;
 
       const cartItemsContainer = document.getElementById('cartItems');
-      const cartTotal = document.getElementById('cartTotal');
-      const paymentSection = document.getElementById('paymentSection');
+      const subTotalEl = document.getElementById('subTotal');
+      const cartTotalEl = document.getElementById('cartTotal');
+      const checkoutSection = document.getElementById('checkoutSection');
 
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>';
-        cartTotal.innerText = '0,00 €';
-        paymentSection.style.display = 'none';
+        checkoutSection.style.display = 'none';
         return;
       }
 
-      paymentSection.style.display = 'block';
+      checkoutSection.style.display = 'block';
       cartItemsContainer.innerHTML = '';
-      let total = 0;
+      let subTotal = 0;
 
       cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
-        total += itemTotal;
+        subTotal += itemTotal;
 
         const div = document.createElement('div');
         div.className = 'cart-item';
@@ -649,7 +726,9 @@
         cartItemsContainer.appendChild(div);
       });
 
-      cartTotal.innerText = `${total.toFixed(2).replace('.', ',')} €`;
+      const finalTotal = subTotal + shippingFee;
+      subTotalEl.innerText = `${subTotal.toFixed(2).replace('.', ',')} €`;
+      cartTotalEl.innerText = `${finalTotal.toFixed(2).replace('.', ',')} €`;
     }
 
     function toggleCartModal() {
@@ -660,28 +739,44 @@
       document.getElementById('bankModal').classList.toggle('active');
     }
 
-    /* Checkout & Bezahl-Umleitung */
+    /* Checkout Validierung & Bezahlung */
     async function checkout() {
       if (cart.length === 0) {
         alert('Dein Warenkorb ist leer!');
         return;
       }
 
-      const totalSum = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      // Validierung der Kontaktdaten
+      const name = document.getElementById('custName').value.trim();
+      const email = document.getElementById('custEmail').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const zip = document.getElementById('custZip').value.trim();
+      const city = document.getElementById('custCity').value.trim();
+
+      if (!name || !email || !address || !zip || !city) {
+        alert('Bitte fülle alle Kontaktdaten und die Lieferadresse aus!');
+        return;
+      }
+
+      const subTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+      const totalAmount = subTotal + shippingFee;
       const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
       const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-      // 1. Bestell-Objekt für Cloud/Dashboard
+      // Bestell-Objekt inklusive Kundendaten & Versand
       const orderData = {
         orderId: orderId,
         timestamp: new Date().toISOString(),
+        customer: { name, email, address, zip, city },
         items: cart,
-        totalAmount: totalSum,
+        shippingFee: shippingFee,
+        subTotal: subTotal,
+        totalAmount: totalAmount,
         paymentMethod: selectedPayment,
         status: "Neu"
       };
 
-      // 2. Optional: Sende Daten an Dashboard Cloud Endpoint
+      // Optional: Daten an Dashboard Cloud Endpoint senden
       try {
         /*
         await fetch('DEINE_CLOUD_URL', {
@@ -694,19 +789,26 @@
         console.log("Cloud-Sync übersprungen");
       }
 
-      // 3. Warenkorb zurücksetzen
+      // Zurücksetzen
       cart = [];
       updateCartUI();
       toggleCartModal();
 
-      // 4. Weiterleitung je nach Zahlungsmethode
+      // Formular zurücksetzen
+      document.getElementById('custName').value = '';
+      document.getElementById('custEmail').value = '';
+      document.getElementById('custAddress').value = '';
+      document.getElementById('custZip').value = '';
+      document.getElementById('custCity').value = '';
+
+      // Bezahl-Weiterleitung
       if (selectedPayment === 'paypal') {
         alert(`Bestellung ${orderId} aufgenommen! Du wirst jetzt zu PayPal weitergeleitet.`);
-        const paypalAmount = totalSum.toFixed(2);
+        const paypalAmount = totalAmount.toFixed(2);
         window.open(`https://paypal.me/SefaDemir/${paypalAmount}EUR`, '_blank');
       } else if (selectedPayment === 'bank') {
         document.getElementById('bankOrderRef').innerText = orderId;
-        document.getElementById('bankOrderTotal').innerText = `${totalSum.toFixed(2).replace('.', ',')} €`;
+        document.getElementById('bankOrderTotal').innerText = `${totalAmount.toFixed(2).replace('.', ',')} €`;
         toggleBankModal();
       }
     }
