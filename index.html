@@ -9,7 +9,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function(){
-      // Hier deinen EmailJS Public Key eintragen (Account -> API Keys)
+      // HIER DEINEN PUBLIC KEY EINTRAGEN (EmailJS Dashboard -> Account -> API Keys)
       emailjs.init("DEIN_PUBLIC_KEY");
     })();
   </script>
@@ -426,7 +426,7 @@
 </head>
 <body>
 
-  <!-- Top Header -->
+  <!-- Header -->
   <header>
     <div style="display: flex; align-items: center; gap: 8px;">
       <div class="menu-icon">☰</div>
@@ -482,7 +482,7 @@
         <p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>
       </div>
 
-      <!-- Kundendaten & Versand Formular -->
+      <!-- Formular -->
       <div class="checkout-section" id="checkoutSection" style="display: none;">
         <div class="section-subtitle">1. Kontaktdaten & Lieferadresse</div>
         
@@ -782,8 +782,7 @@
       };
 
       try {
-        // E-Mails via EmailJS senden
-        // Ersetze DEIN_TEMPLATE_KUNDE und DEIN_TEMPLATE_ADMIN durch deine Template-IDs aus EmailJS
+        // HIER DEINE TEMPLATE-IDs EINSETZEN:
         await emailjs.send(serviceID, 'DEIN_TEMPLATE_KUNDE', emailParams);
         await emailjs.send(serviceID, 'DEIN_TEMPLATE_ADMIN', emailParams);
       } catch (e) {
