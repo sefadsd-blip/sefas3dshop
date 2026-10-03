@@ -4,6 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sefas3DShop</title>
+  
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function(){
+      // Hier deinen EmailJS Public Key eintragen (Account -> API Keys)
+      emailjs.init("DEIN_PUBLIC_KEY");
+    })();
+  </script>
+
   <style>
     :root {
       --header-bg: #121212;
@@ -144,7 +154,6 @@
       color: white;
     }
 
-    /* Container */
     .container {
       max-width: 500px;
       margin: 16px auto;
@@ -278,7 +287,7 @@
       background-color: var(--green-hover);
     }
 
-    /* Modal Styling */
+    /* Modals */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -434,7 +443,7 @@
     </button>
   </header>
 
-  <!-- Category Pills -->
+  <!-- Navigation Pills -->
   <div class="nav-pills">
     <button class="pill active" id="pillNew" onclick="showSection('new')">✨ Neuheiten</button>
     <button class="pill" id="pillAll" onclick="showSection('all')">📦 Alle Produkte</button>
@@ -442,13 +451,10 @@
   </div>
 
   <div class="container">
-    
-    <!-- Hauptbereich -->
     <div id="shopSection">
       <div id="productGrid"></div>
     </div>
 
-    <!-- Impressum -->
     <div id="impressumSection" style="display: none;">
       <div class="impressum-box">
         <h2 style="margin-bottom: 12px; color: var(--orange);">Impressum</h2>
@@ -462,7 +468,6 @@
         <p>E-Mail: info@sefas3dshop.de</p>
       </div>
     </div>
-
   </div>
 
   <!-- Warenkorb Modal -->
@@ -479,7 +484,6 @@
 
       <!-- Kundendaten & Versand Formular -->
       <div class="checkout-section" id="checkoutSection" style="display: none;">
-        
         <div class="section-subtitle">1. Kontaktdaten & Lieferadresse</div>
         
         <div class="form-group">
@@ -518,7 +522,6 @@
           <span>🏦 Vorkasse / Überweisung (Revolut)</span>
         </label>
 
-        <!-- Gesamtpreis Übersicht -->
         <div class="summary-box">
           <div class="summary-line">
             <span>Zwischensumme:</span>
@@ -536,11 +539,10 @@
 
         <button class="btn btn-orange" onclick="checkout()">Kostenpflichtig bestellen</button>
       </div>
-
     </div>
   </div>
 
-  <!-- Überweisungs-Info Modal (Revolut Bank) -->
+  <!-- Überweisungs-Info Modal -->
   <div class="modal-overlay" id="bankModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -562,7 +564,8 @@
   </div>
 
   <script>
-    const shippingFee = 6.99; // Pauschale Versandkosten
+    const shippingFee = 6.99;
+    const serviceID = "service_x0ojsah"; // Deine EmailJS Service ID
 
     const availableColors = [
       "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
@@ -739,14 +742,13 @@
       document.getElementById('bankModal').classList.toggle('active');
     }
 
-    /* Checkout Validierung & Bezahlung */
+    /* Checkout & Automatischer E-Mail Versand */
     async function checkout() {
       if (cart.length === 0) {
         alert('Dein Warenkorb ist leer!');
         return;
       }
 
-      // Validierung der Kontaktdaten
       const name = document.getElementById('custName').value.trim();
       const email = document.getElementById('custEmail').value.trim();
       const address = document.getElementById('custAddress').value.trim();
@@ -763,47 +765,43 @@
       const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
       const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-      // Bestell-Objekt inklusive Kundendaten & Versand
-      const orderData = {
-        orderId: orderId,
-        timestamp: new Date().toISOString(),
-        customer: { name, email, address, zip, city },
-        items: cart,
-        shippingFee: shippingFee,
-        subTotal: subTotal,
-        totalAmount: totalAmount,
-        paymentMethod: selectedPayment,
-        status: "Neu"
+      // Artikelliste aufbereiten
+      const itemsListText = cart.map(item => 
+        `- ${item.title} (${item.size}, Farbe: ${item.color}) x${item.quantity}: ${(item.price * item.quantity).toFixed(2).replace('.', ',')} €`
+      ).join('\n');
+
+      const emailParams = {
+        order_id: orderId,
+        cust_name: name,
+        cust_email: email,
+        cust_address: `${address}, ${zip} ${city}`,
+        payment_method: selectedPayment === 'paypal' ? 'PayPal' : 'Überweisung (Revolut)',
+        items_list: itemsListText,
+        shipping_fee: "6,99 €",
+        total_amount: `${totalAmount.toFixed(2).replace('.', ',')} €`
       };
 
-      // Optional: Daten an Dashboard Cloud Endpoint senden
       try {
-        /*
-        await fetch('DEINE_CLOUD_URL', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(orderData)
-        });
-        */
+        // E-Mails via EmailJS senden
+        // Ersetze DEIN_TEMPLATE_KUNDE und DEIN_TEMPLATE_ADMIN durch deine Template-IDs aus EmailJS
+        await emailjs.send(serviceID, 'DEIN_TEMPLATE_KUNDE', emailParams);
+        await emailjs.send(serviceID, 'DEIN_TEMPLATE_ADMIN', emailParams);
       } catch (e) {
-        console.log("Cloud-Sync übersprungen");
+        console.error("E-Mail-Versand fehlgeschlagen:", e);
       }
 
-      // Zurücksetzen
       cart = [];
       updateCartUI();
       toggleCartModal();
 
-      // Formular zurücksetzen
       document.getElementById('custName').value = '';
       document.getElementById('custEmail').value = '';
       document.getElementById('custAddress').value = '';
       document.getElementById('custZip').value = '';
       document.getElementById('custCity').value = '';
 
-      // Bezahl-Weiterleitung
       if (selectedPayment === 'paypal') {
-        alert(`Bestellung ${orderId} aufgenommen! Du wirst jetzt zu PayPal weitergeleitet.`);
+        alert(`Vielen Dank! Deine Bestellung ${orderId} wurde aufgenommen und eine Bestätigung per E-Mail versendet.`);
         const paypalAmount = totalAmount.toFixed(2);
         window.open(`https://paypal.me/SefaDemir/${paypalAmount}EUR`, '_blank');
       } else if (selectedPayment === 'bank') {
