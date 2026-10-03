@@ -9,7 +9,7 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function(){
-      // Dein Public Key direkt eingebaut:
+      // Public Key eingebaut
       emailjs.init("H4O3Q8ZIwrl-GI4om");
     })();
   </script>
@@ -565,7 +565,8 @@
 
   <script>
     const shippingFee = 6.99;
-    const serviceID = "service_x0ojsah"; // Deine EmailJS Service ID
+    const serviceID = "service_x0ojsah";
+    const templateID = "template_1a2b3c4"; // Deine Template ID aus EmailJS
 
     const availableColors = [
       "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
@@ -742,7 +743,7 @@
       document.getElementById('bankModal').classList.toggle('active');
     }
 
-    /* Checkout & Automatischer E-Mail Versand */
+    /* Checkout & Automatischer E-Mail-Versand */
     async function checkout() {
       if (cart.length === 0) {
         alert('Dein Warenkorb ist leer!');
@@ -765,12 +766,13 @@
       const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
       const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
 
-      // Artikelliste aufbereiten
+      // Artikelliste formatiert aufbereiten
       const itemsListText = cart.map(item => 
         `- ${item.title} (${item.size}, Farbe: ${item.color}) x${item.quantity}: ${(item.price * item.quantity).toFixed(2).replace('.', ',')} €`
       ).join('\n');
 
-      const emailParams = {
+      // E-Mail-Parameter an den KUNDEN
+      const emailParamsCustomer = {
         order_id: orderId,
         cust_name: name,
         cust_email: email,
@@ -781,10 +783,23 @@
         total_amount: `${totalAmount.toFixed(2).replace('.', ',')} €`
       };
 
+      // E-Mail-Parameter an DICH (ADMIN)
+      const emailParamsAdmin = {
+        order_id: orderId,
+        cust_name: name,
+        cust_email: "sefad.sd@gmail.com",
+        cust_address: `${address}, ${zip} ${city}`,
+        payment_method: selectedPayment === 'paypal' ? 'PayPal' : 'Überweisung (Revolut)',
+        items_list: itemsListText,
+        shipping_fee: "6,99 €",
+        total_amount: `${totalAmount.toFixed(2).replace('.', ',')} €`
+      };
+
       try {
-        // HIER DEINE TEMPLATE-IDs AUS EMAILJS EINTRAGEN:
-        await emailjs.send(serviceID, 'DEIN_TEMPLATE_KUNDE', emailParams);
-        await emailjs.send(serviceID, 'DEIN_TEMPLATE_ADMIN', emailParams);
+        // Sendet 1. Bestätigung an den Kunden & 2. Benachrichtigung an dich
+        await emailjs.send(serviceID, templateID, emailParamsCustomer);
+        await emailjs.send(serviceID, templateID, emailParamsAdmin);
+        console.log("E-Mails erfolgreich versendet!");
       } catch (e) {
         console.error("E-Mail-Versand fehlgeschlagen:", e);
       }
