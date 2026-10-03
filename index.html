@@ -13,6 +13,8 @@
       --orange-hover: #e68a00;
       --green: #25d366;
       --green-hover: #1ebc57;
+      --paypal-blue: #0070ba;
+      --paypal-hover: #005ea6;
       --text-dark: #1a1a1a;
       --text-muted: #666666;
       --border-light: #e0e0e0;
@@ -32,7 +34,7 @@
       padding-bottom: 40px;
     }
 
-    /* Header */
+    /* Top Navigation Header */
     header {
       background-color: var(--header-bg);
       padding: 12px 16px;
@@ -86,6 +88,7 @@
       font-size: 0.75rem;
     }
 
+    /* Einkaufswagen Button oben rechts */
     .cart-btn-icon {
       position: relative;
       background: none;
@@ -113,7 +116,7 @@
       text-align: center;
     }
 
-    /* Navigation Pills */
+    /* Category Navigation Pills */
     .nav-pills {
       display: flex;
       gap: 10px;
@@ -144,14 +147,14 @@
       color: white;
     }
 
-    /* Container */
+    /* Container & Layout */
     .container {
       max-width: 500px;
       margin: 16px auto;
       padding: 0 12px;
     }
 
-    /* Product Card */
+    /* Product Card Component */
     .product-card {
       background-color: var(--card-bg);
       border-radius: 16px;
@@ -274,7 +277,7 @@
       background-color: var(--green-hover);
     }
 
-    /* Modal */
+    /* Modal Styling */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -298,7 +301,7 @@
       max-width: 450px;
       border-radius: 16px;
       padding: 20px;
-      max-height: 80vh;
+      max-height: 85vh;
       display: flex;
       flex-direction: column;
     }
@@ -341,11 +344,44 @@
       margin-left: 10px;
     }
 
+    /* Zahlungsoptionen Radio-Buttons */
+    .payment-options {
+      margin-top: 15px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      margin-top: 8px;
+      cursor: pointer;
+    }
+
+    .payment-option input {
+      accent-color: var(--orange);
+    }
+
     .impressum-box {
       background: white;
       padding: 20px;
       border-radius: 16px;
       line-height: 1.6;
+    }
+
+    /* Bankverbindung Info-Box */
+    .bank-details {
+      background-color: #f9f9f9;
+      border: 1px solid var(--border-light);
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
   </style>
 </head>
@@ -406,13 +442,49 @@
         <h3 style="color: var(--orange);">Dein Warenkorb</h3>
         <button class="close-btn" onclick="toggleCartModal()">&times;</button>
       </div>
+      
       <div class="cart-items" id="cartItems">
         <p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>
       </div>
-      <div style="border-top: 1px solid var(--border-light); padding-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-        <div style="font-size: 1.1rem; font-weight: 800;">Gesamt: <span id="cartTotal">0,00 €</span></div>
-        <button class="btn btn-orange" style="width: auto; padding: 10px 18px; margin: 0;" onclick="checkout()">Zur Kasse</button>
+
+      <!-- Zahlungsart Auswahl -->
+      <div class="payment-options" id="paymentSection" style="display: none;">
+        <label style="font-weight: 700; font-size: 0.85rem;">Zahlungsart wählen:</label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="paypal" checked>
+          <span>🅿️ PayPal / PayPal.Me</span>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="bank">
+          <span>🏦 Vorkasse / Überweisung</span>
+        </label>
       </div>
+
+      <div style="border-top: 1px solid var(--border-light); padding-top: 12px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 1.1rem; font-weight: 800;">Gesamt: <span id="cartTotal">0,00 €</span></div>
+        <button class="btn btn-orange" style="width: auto; padding: 10px 18px; margin: 0;" onclick="checkout()">Kostenpflichtig bestellen</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Überweisungs-Info Modal -->
+  <div class="modal-overlay" id="bankModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 style="color: var(--orange);">Bestellung aufgenommen!</h3>
+        <button class="close-btn" onclick="toggleBankModal()">&times;</button>
+      </div>
+      <p style="font-size: 0.9rem;">Vielen Dank für deine Bestellung. Bitte überweise den Gesamtbetrag auf folgendes Konto:</p>
+      
+      <div class="bank-details">
+        <p><strong>Empfänger:</strong> Sefa Demir</p>
+        <p><strong>Bank:</strong> C24 Bank</p>
+        <p><strong>IBAN:</strong> DE12 3456 7890 1234 5678 90</p>
+        <p><strong>Verwendungszweck:</strong> <span id="bankOrderRef" style="color: var(--orange); font-weight: bold;"></span></p>
+        <p><strong>Betrag:</strong> <span id="bankOrderTotal" style="font-weight: bold;"></span></p>
+      </div>
+
+      <button class="btn btn-orange" style="margin-top: 15px;" onclick="toggleBankModal()">Schließen</button>
     </div>
   </div>
 
@@ -545,13 +617,16 @@
 
       const cartItemsContainer = document.getElementById('cartItems');
       const cartTotal = document.getElementById('cartTotal');
+      const paymentSection = document.getElementById('paymentSection');
 
       if (cart.length === 0) {
         cartItemsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>';
         cartTotal.innerText = '0,00 €';
+        paymentSection.style.display = 'none';
         return;
       }
 
+      paymentSection.style.display = 'block';
       cartItemsContainer.innerHTML = '';
       let total = 0;
 
@@ -582,20 +657,60 @@
       document.getElementById('cartModal').classList.toggle('active');
     }
 
-    /* Checkout direkt verarbeiten */
-    function checkout() {
+    function toggleBankModal() {
+      document.getElementById('bankModal').classList.toggle('active');
+    }
+
+    /* Checkout & Bezahl-Umleitung */
+    async function checkout() {
       if (cart.length === 0) {
         alert('Dein Warenkorb ist leer!');
         return;
       }
 
+      const totalSum = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
-      
-      alert(`Vielen Dank! Deine Bestellung (${orderId}) wurde erfolgreich aufgenommen.`);
-      
+      const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+      // 1. Bestell-Objekt für Cloud/Dashboard
+      const orderData = {
+        orderId: orderId,
+        timestamp: new Date().toISOString(),
+        items: cart,
+        totalAmount: totalSum,
+        paymentMethod: selectedPayment,
+        status: "Neu"
+      };
+
+      // 2. Optional: Sende Daten an Dashboard Cloud Endpoint
+      try {
+        /*
+        await fetch('DEINE_CLOUD_URL', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(orderData)
+        });
+        */
+      } catch (e) {
+        console.log("Cloud-Sync übersprungen");
+      }
+
+      // 3. Warenkorb zurücksetzen
       cart = [];
       updateCartUI();
       toggleCartModal();
+
+      // 4. Weiterleitung je nach Zahlungsmethode
+      if (selectedPayment === 'paypal') {
+        alert(`Bestellung ${orderId} aufgenommen! Du wirst jetzt zu PayPal weitergeleitet.`);
+        // Passe hier deinen PayPal.Me Link an (z. B. https://paypal.me/DeinName/10.00EUR)
+        const paypalAmount = totalSum.toFixed(2);
+        window.open(`https://paypal.me/SefaDemir/${paypalAmount}EUR`, '_blank');
+      } else if (selectedPayment === 'bank') {
+        document.getElementById('bankOrderRef').innerText = orderId;
+        document.getElementById('bankOrderTotal').innerText = `${totalSum.toFixed(2).replace('.', ',')} €`;
+        toggleBankModal();
+      }
     }
 
     function showSection(section) {
