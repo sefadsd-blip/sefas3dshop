@@ -9,8 +9,8 @@
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
     (function(){
-      // HIER DEINEN PUBLIC KEY EINTRAGEN (EmailJS Dashboard -> Account -> API Keys)
-      emailjs.init("DEIN_PUBLIC_KEY");
+      // Dein Public Key direkt eingebaut:
+      emailjs.init("H4O3Q8ZIwrl-GI4om");
     })();
   </script>
 
@@ -782,7 +782,7 @@
       };
 
       try {
-        // HIER DEINE TEMPLATE-IDs EINSETZEN:
+        // HIER DEINE TEMPLATE-IDs AUS EMAILJS EINTRAGEN:
         await emailjs.send(serviceID, 'DEIN_TEMPLATE_KUNDE', emailParams);
         await emailjs.send(serviceID, 'DEIN_TEMPLATE_ADMIN', emailParams);
       } catch (e) {
