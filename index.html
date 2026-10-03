@@ -14,7 +14,6 @@
       --green: #25d366;
       --green-hover: #1ebc57;
       --paypal-blue: #0070ba;
-      --paypal-hover: #005ea6;
       --text-dark: #1a1a1a;
       --text-muted: #666666;
       --border-light: #e0e0e0;
@@ -456,7 +455,7 @@
         </label>
         <label class="payment-option">
           <input type="radio" name="paymentMethod" value="bank">
-          <span>🏦 Vorkasse / Überweisung</span>
+          <span>🏦 Vorkasse / Überweisung (Revolut)</span>
         </label>
       </div>
 
@@ -467,7 +466,7 @@
     </div>
   </div>
 
-  <!-- Überweisungs-Info Modal -->
+  <!-- Überweisungs-Info Modal (Revolut) -->
   <div class="modal-overlay" id="bankModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -478,8 +477,8 @@
       
       <div class="bank-details">
         <p><strong>Empfänger:</strong> Sefa Demir</p>
-        <p><strong>Bank:</strong> C24 Bank</p>
-        <p><strong>IBAN:</strong> DE12 3456 7890 1234 5678 90</p>
+        <p><strong>Bank:</strong> Revolut Bank</p>
+        <p><strong>IBAN:</strong> LT12 3456 7890 1234 5678</p>
         <p><strong>Verwendungszweck:</strong> <span id="bankOrderRef" style="color: var(--orange); font-weight: bold;"></span></p>
         <p><strong>Betrag:</strong> <span id="bankOrderTotal" style="font-weight: bold;"></span></p>
       </div>
@@ -703,7 +702,6 @@
       // 4. Weiterleitung je nach Zahlungsmethode
       if (selectedPayment === 'paypal') {
         alert(`Bestellung ${orderId} aufgenommen! Du wirst jetzt zu PayPal weitergeleitet.`);
-        // Passe hier deinen PayPal.Me Link an (z. B. https://paypal.me/DeinName/10.00EUR)
         const paypalAmount = totalSum.toFixed(2);
         window.open(`https://paypal.me/SefaDemir/${paypalAmount}EUR`, '_blank');
       } else if (selectedPayment === 'bank') {
