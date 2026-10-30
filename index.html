@@ -56,7 +56,7 @@
       Individueller 3D-Druck aus Rahden
     </div>
     <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight">
-      Praktische Helfer für deinen <br><span class="text-orange-500">Alltag & Werkstatt</span>
+      Praktische Helfer für deinen <br><span class="text-orange-500">Alltag & Zuhause</span>
     </h1>
     <p class="text-lg text-gray-400 max-w-2xl mx-auto">
       Hier findest du meine selbstkonstruierten und 3D-gedruckten Topseller. Hochfester Kunststoff (PLA, PETG, ASA), perfekte Passgenauigkeit und schneller Versand.
@@ -103,10 +103,10 @@
             <div>
               <label class="block text-xs font-bold text-gray-400 mb-1">Gekauftes Produkt</label>
               <select id="revProduct" required class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
-                <option value="Flavor / Sirup Flaschen Halter">Flavor / Sirup Flaschen Halter</option>
-                <option value="Tannenzapfen-Häuschen">Tannenzapfen-Häuschen</option>
-                <option value="Akustikpaneel Halterung">Akustikpaneel Halterung</option>
-                <option value="Werkzeug-Organizer">Werkzeug-Organizer</option>
+                <option value="Moderne Rillen-Vase (15 cm)">Moderne Rillen-Vase (15 cm)</option>
+                <option value="Dekoratives Eichhörnchen">Dekoratives Eichhörnchen</option>
+                <option value="Französische Bulldogge">Französische Bulldogge</option>
+                <option value="Weihnachtswichtel / Gnom">Weihnachtswichtel / Gnom</option>
                 <option value="Sonderanfertigung">Sonderanfertigung nach Maß</option>
               </select>
             </div>
@@ -244,8 +244,8 @@
           <input type="number" id="adminPrice" step="0.01" required class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white outline-none focus:border-orange-500">
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-400 mb-1">Bild Icon (FontAwesome Klasse, z.B. fa-car)</label>
-          <input type="text" id="adminIcon" value="fa-cube" class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white outline-none focus:border-orange-500">
+          <label class="block text-xs font-bold text-gray-400 mb-1">Bild URL (Internet-Link zum Bild)</label>
+          <input type="url" id="adminImg" placeholder="https://..." class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white outline-none focus:border-orange-500">
         </div>
         <button type="submit" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg transition mt-2">Produkt speichern</button>
       </form>
@@ -258,15 +258,15 @@
     const serviceID = "service_x0ojsah";
     const templateID = "template_1a2b3c4"; 
 
-    const availableColors = ["Schwarz (Matt)", "Weiß", "Grau", "Blau", "Rot", "Grün (Sage)", "Orange"];
+    const availableColors = ["Schwarz (Matt)", "Weiß", "Grau", "Blau", "Rot", "Grün (Sage)", "Orange", "Beige", "Braun / Holz-Optik"];
     const availableSizes = ["Standard", "Groß (+2€)"];
 
-    // Fest codierte Basis-Produkte
+    // Fest codierte Basis-Produkte mit ECHTEN BILDERN
     const baseProducts = [
-      { id: 1, name: "Flavor / Sirup Flaschen Halter", desc: "Sicherer Stand für alle gängigen Sirup-Flaschen. Wackelt nicht, extrem stabil.", price: 5.00, imgIcon: "fa-bottle-water" },
-      { id: 2, name: "Tannenzapfen-Häuschen", desc: "Dekoratives Häuschen für den Garten oder Balkon. Wetterfestes PETG.", price: 6.00, imgIcon: "fa-tree" },
-      { id: 3, name: "Akustikpaneel Halterung", desc: "Unsichtbare Wandbefestigung für schwere Holz-Akustikpaneele.", price: 5.00, imgIcon: "fa-bars-staggered" },
-      { id: 4, name: "Werkzeug-Organizer", desc: "Perfekte Ordnung für Schraubendreher und Zangen in der Werkstatt.", price: 8.50, imgIcon: "fa-wrench" }
+      { id: 1, name: "Moderne Rillen-Vase (15 cm)", desc: "Sehr sauberes Druckbild. Perfekt für Trockenblumen.", price: 10.00, img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO" },
+      { id: 2, name: "Dekoratives Eichhörnchen", desc: "Tolle Deko-Figur mit Fuzzy Skin Oberfläche.", price: 6.00, img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO" },
+      { id: 3, name: "Französische Bulldogge", desc: "Schicke Schalen-Figur für Schlüssel oder Süßigkeiten.", price: 15.00, img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO" },
+      { id: 4, name: "Weihnachtswichtel / Gnom", desc: "Stimmungsvolle Weihnachtsdeko.", price: 6.00, img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO" }
     ];
 
     // Admin-Produkte aus dem LocalStorage laden
@@ -276,7 +276,7 @@
     let allProducts = [...baseProducts, ...customProducts];
     let cart = JSON.parse(localStorage.getItem('sefas_shop_cart')) || [];
     let reviews = JSON.parse(localStorage.getItem('sefas_shop_reviews')) || [
-      { name: "Berkant E.", product: "Sonderanfertigung", rating: 5, text: "Sefa hat mir ein spezielles Unterdruckschlauch-T-Stück für meinen Passat gedruckt. Passt perfekt!", date: "15.10.2026" }
+      { name: "Berkant E.", product: "Moderne Rillen-Vase (15 cm)", rating: 5, text: "Sehr sauberes Druckbild! Vase sieht im Wohnzimmer richtig edel aus.", date: "15.10.2026" }
     ];
 
     window.onload = () => {
@@ -285,7 +285,7 @@
       updateCartUI();
     };
 
-    // --- 2. PRODUKTE RENDERN (Inkl. Farben & Größen) ---
+    // --- 2. PRODUKTE RENDERN (Mit echten Bildern) ---
     function renderProducts() {
       const grid = document.getElementById('productGrid');
       
@@ -294,10 +294,10 @@
 
       grid.innerHTML = allProducts.map(p => `
         <div class="bg-[#161920] border border-gray-800 rounded-xl p-5 flex flex-col h-full hover:border-orange-500/50 transition-colors relative">
-          ${p.id > 1000 ? '<span class="absolute top-2 right-2 bg-orange-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">NEU</span>' : ''}
-          <div class="bg-[#0f1115] rounded-lg aspect-square flex items-center justify-center mb-4 border border-gray-800">
-            <i class="fa-solid ${p.imgIcon} text-5xl text-gray-700"></i>
-          </div>
+          ${p.id > 1000 ? '<span class="absolute top-2 right-2 bg-orange-500 text-white text-[9px] px-2 py-0.5 rounded-full font-bold z-10 shadow">NEU</span>' : ''}
+          
+          <img src="${p.img}" alt="${p.name}" class="w-full h-48 object-cover rounded-lg mb-4 border border-gray-800 bg-[#0f1115]" onerror="this.src='https://placehold.co/400x300/161920/ff9800?text=Bild+Fehlt'">
+          
           <h3 class="text-white font-bold text-lg mb-1 leading-tight">${p.name}</h3>
           <p class="text-gray-400 text-xs mb-4 flex-1">${p.desc}</p>
           
@@ -326,11 +326,9 @@
       const size = document.getElementById(`size-${id}`).value;
       const color = document.getElementById(`color-${id}`).value;
       
-      // Basispreis, wenn Größe "Groß" gewählt wird, +2€
       let finalPrice = parseFloat(product.price);
       if (size.includes("+2€")) finalPrice += 2.00;
 
-      // Eindeutige ID generieren (damit Rot und Schwarz getrennt im Korb liegen)
       const cartItemId = `${id}-${size}-${color}`;
       const existing = cart.find(item => item.cartId === cartItemId);
       
@@ -343,7 +341,6 @@
       saveCart();
       updateCartUI();
       
-      // Button Feedback
       const originalHTML = btnElement.innerHTML;
       btnElement.innerHTML = '<i class="fa-solid fa-check"></i>';
       btnElement.classList.add('bg-green-600', 'border-green-600', 'text-white');
@@ -379,6 +376,7 @@
           subtotalPrice += item.finalPrice * item.qty;
           return `
             <div class="bg-[#0f1115] border border-gray-800 rounded-lg p-3 flex gap-3 items-center">
+              <img src="${item.img}" class="w-12 h-12 rounded-md object-cover border border-gray-800 flex-shrink-0 bg-[#161920]" onerror="this.src='https://placehold.co/400x300/161920/ff9800?text=Bild'">
               <div class="flex-1">
                 <h4 class="text-white text-sm font-bold leading-tight">${item.name}</h4>
                 <p class="text-gray-500 text-[10px] uppercase mt-0.5">${item.color} | ${item.size}</p>
@@ -410,10 +408,9 @@
       setTimeout(() => overlay.classList.toggle('opacity-0'), 10);
     }
 
-    // Modal Steuerungen
     function openCheckoutModal() {
       if(cart.length === 0) return alert("Warenkorb ist leer!");
-      toggleCart(); // Sidebar zu
+      toggleCart(); 
       document.getElementById('checkoutModal').classList.replace('hidden', 'flex');
     }
     function closeCheckoutModal() {
@@ -450,10 +447,8 @@
       };
 
       try {
-        // Sendet an den Kunden und (falls in EmailJS konfiguriert) auch an dich
         await emailjs.send(serviceID, templateID, emailParams);
         
-        // Korb leeren
         cart = [];
         updateCartUI();
         closeCheckoutModal();
@@ -508,7 +503,7 @@
       e.target.reset();
     }
 
-    // --- 5. ADMIN BEREICH (Neu) ---
+    // --- 5. ADMIN BEREICH (Mit Bild-URL) ---
     function openAdmin() {
       const pass = prompt("Bitte Admin-Passwort eingeben:");
       if (pass === "sefa2026") {
@@ -524,19 +519,23 @@
 
     function addNewProduct(e) {
       e.preventDefault();
+      
+      const imgVal = document.getElementById('adminImg').value.trim();
+      const finalImg = imgVal !== "" ? imgVal : "https://placehold.co/400x300/161920/ff9800?text=Kein+Bild";
+
       const newProduct = {
-        id: Date.now(), // generiert eine einzigartige ID > 1000
+        id: Date.now(), 
         name: document.getElementById('adminName').value,
         desc: document.getElementById('adminDesc').value,
         price: parseFloat(document.getElementById('adminPrice').value),
-        imgIcon: document.getElementById('adminIcon').value || "fa-cube"
+        img: finalImg
       };
 
       customProducts.push(newProduct);
       localStorage.setItem('sefas_admin_products', JSON.stringify(customProducts));
       
-      allProducts = [...baseProducts, ...customProducts]; // Aktualisieren
-      renderProducts(); // Shop neu laden
+      allProducts = [...baseProducts, ...customProducts]; 
+      renderProducts(); 
       
       closeAdmin();
       e.target.reset();
