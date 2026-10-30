@@ -1,866 +1,400 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sefas3DShop</title>
-  
-  <!-- EmailJS SDK -->
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-  <script type="text/javascript">
-    (function(){
-      // Public Key eingebaut
-      emailjs.init("H4O3Q8ZIwrl-GI4om");
-    })();
-  </script>
-
+  <title>Sefas3DShop - Shop & Bewertungen</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root {
-      --header-bg: #121212;
-      --page-bg: #f2f4f7;
-      --card-bg: #ffffff;
-      --orange: #ff9800;
-      --orange-hover: #e68a00;
-      --green: #25d366;
-      --green-hover: #1ebc57;
-      --text-dark: #1a1a1a;
-      --text-muted: #666666;
-      --border-light: #e0e0e0;
-      --pill-bg: #eef1f5;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #0f1115; color: #f3f4f6; }
+    
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #0f1115; }
+    ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #f97316; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background-color: var(--page-bg);
-      color: var(--text-dark);
-      padding-bottom: 40px;
-    }
-
-    /* Header */
-    header {
-      background-color: var(--header-bg);
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .menu-icon {
-      color: white;
-      font-size: 22px;
-      cursor: pointer;
-      line-height: 1;
-    }
-
-    .logo {
-      font-size: 1.15rem;
-      font-weight: 800;
-      color: var(--orange);
-      white-space: nowrap;
-      cursor: pointer;
-    }
-
-    .search-box {
-      flex: 1;
-      max-width: 180px;
-      position: relative;
-    }
-
-    .search-box input {
-      width: 100%;
-      background-color: #262626;
-      border: 1px solid #3d3d3d;
-      color: #ccc;
-      padding: 7px 10px 7px 28px;
-      border-radius: 20px;
-      font-size: 0.8rem;
-      outline: none;
-    }
-
-    .search-box::before {
-      content: "🔍";
-      position: absolute;
-      left: 8px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.75rem;
-    }
-
-    .cart-btn-icon {
-      position: relative;
-      background: none;
-      border: none;
-      color: white;
-      font-size: 20px;
-      cursor: pointer;
-      padding: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .cart-badge {
-      position: absolute;
-      top: -4px;
-      right: -6px;
-      background-color: var(--orange);
-      color: white;
-      font-size: 0.7rem;
-      font-weight: 800;
-      border-radius: 10px;
-      padding: 2px 6px;
-      min-width: 18px;
-      text-align: center;
-    }
-
-    /* Navigation Pills */
-    .nav-pills {
-      display: flex;
-      gap: 10px;
-      padding: 14px 16px;
-      background-color: white;
-      border-bottom: 1px solid var(--border-light);
-      overflow-x: auto;
-      white-space: nowrap;
-    }
-
-    .pill {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      background-color: var(--pill-bg);
-      color: var(--text-dark);
-      border: none;
-      transition: all 0.2s ease;
-    }
-
-    .pill.active {
-      background-color: var(--orange);
-      color: white;
-    }
-
-    .container {
-      max-width: 500px;
-      margin: 16px auto;
-      padding: 0 12px;
-    }
-
-    /* Product Card */
-    .product-card {
-      background-color: var(--card-bg);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-      margin-bottom: 20px;
-    }
-
-    .card-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-    }
-
-    .section-headline {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--text-dark);
-      line-height: 1.2;
-    }
-
-    .tag-fresh {
-      background-color: var(--orange);
-      color: white;
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 6px 14px;
-      border-radius: 20px;
-      white-space: nowrap;
-    }
-
-    .divider {
-      height: 2px;
-      background-color: var(--orange);
-      opacity: 0.4;
-      margin-bottom: 16px;
-      border-radius: 2px;
-    }
-
-    .product-img {
-      width: 100%;
-      height: 240px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 16px;
-      background-color: #eee;
-    }
-
-    .product-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-dark);
-    }
-
-    .product-price {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--orange);
-      margin-bottom: 16px;
-    }
-
-    .form-group {
-      margin-bottom: 12px;
-    }
-
-    .form-group label {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--text-dark);
-      margin-bottom: 4px;
-    }
-
-    .form-control {
-      width: 100%;
-      padding: 10px 14px;
-      border: 1px solid var(--border-light);
-      background-color: #f9f9f9;
-      border-radius: 8px;
-      font-size: 0.9rem;
-      color: var(--text-dark);
-      outline: none;
-    }
-
-    .form-control:focus {
-      border-color: var(--orange);
-      background-color: #ffffff;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-size: 0.95rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 10px;
-      transition: background-color 0.2s ease;
-    }
-
-    .btn-orange {
-      background-color: var(--orange);
-      color: white;
-    }
-
-    .btn-orange:hover {
-      background-color: var(--orange-hover);
-    }
-
-    .btn-green {
-      background-color: var(--green);
-      color: white;
-      margin-bottom: 0;
-    }
-
-    .btn-green:hover {
-      background-color: var(--green-hover);
-    }
-
-    /* Modals */
-    .modal-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.6);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-content {
-      background: white;
-      width: 92%;
-      max-width: 480px;
-      border-radius: 16px;
-      padding: 20px;
-      max-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-light);
-      padding-bottom: 10px;
-      margin-bottom: 15px;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #888;
-    }
-
-    .cart-items {
-      margin-bottom: 15px;
-    }
-
-    .cart-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 8px 0;
-      border-bottom: 1px solid #eee;
-    }
-
-    .remove-item {
-      color: #ff4d4d;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
-    }
-
-    .checkout-section {
-      border-top: 1px solid var(--border-light);
-      padding-top: 15px;
-      margin-top: 10px;
-    }
-
-    .section-subtitle {
-      font-size: 0.9rem;
-      font-weight: 700;
-      margin-bottom: 10px;
-      color: var(--orange);
-    }
-
-    .form-row {
-      display: flex;
-      gap: 10px;
-    }
-
-    .payment-option {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px;
-      border: 1px solid var(--border-light);
-      border-radius: 8px;
-      margin-top: 8px;
-      cursor: pointer;
-    }
-
-    .payment-option input {
-      accent-color: var(--orange);
-    }
-
-    .summary-box {
-      background-color: #f9f9f9;
-      border: 1px solid var(--border-light);
-      padding: 12px;
-      border-radius: 8px;
-      margin: 15px 0;
-      font-size: 0.9rem;
-    }
-
-    .summary-line {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .summary-line.total {
-      border-top: 1px solid var(--border-light);
-      padding-top: 6px;
-      font-weight: 800;
-      font-size: 1.05rem;
-      color: var(--text-dark);
-      margin-bottom: 0;
-    }
-
-    .impressum-box, .bank-details {
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-      line-height: 1.6;
-    }
-
-    .bank-details {
-      background-color: #f9f9f9;
-      border: 1px solid var(--border-light);
-      font-size: 0.9rem;
-    }
+    /* Star Rating System */
+    .star-rating { display: flex; flex-direction: row-reverse; justify-content: flex-end; gap: 4px; }
+    .star-rating input { display: none; }
+    .star-rating label { color: #374151; font-size: 28px; cursor: pointer; transition: color 0.2s; }
+    .star-rating label:hover, .star-rating label:hover ~ label, .star-rating input:checked ~ label { color: #f59e0b; }
   </style>
 </head>
-<body>
+<body class="antialiased flex flex-col min-h-screen">
 
-  <!-- Header -->
-  <header>
-    <div style="display: flex; align-items: center; gap: 8px;">
-      <div class="menu-icon">☰</div>
-      <div class="logo" onclick="showSection('all')">Sefas3DShop</div>
+  <!-- Header / Navigation -->
+  <header class="bg-[#161920] border-b border-gray-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+          <i class="fa-solid fa-cube text-orange-500 text-2xl"></i>
+          <span class="font-extrabold text-xl tracking-wide text-white">SEFAS<span class="text-orange-500">3D</span>SHOP</span>
+        </div>
+        <div class="flex items-center gap-6">
+          <a href="#produkte" class="text-sm font-semibold text-gray-400 hover:text-white transition">Shop</a>
+          <a href="#bewertungen" class="text-sm font-semibold text-gray-400 hover:text-white transition">Bewertungen</a>
+          <button onclick="toggleCart()" class="relative bg-gray-800 hover:bg-gray-700 p-2.5 rounded-lg text-gray-300 hover:text-white transition border border-gray-700 flex items-center gap-2">
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span id="cartCountBadge" class="bg-orange-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+          </button>
+        </div>
+      </div>
     </div>
-    
-    <div class="search-box">
-      <input type="text" id="searchInput" placeholder="Suchen..." oninput="filterProducts()">
-    </div>
-
-    <button class="cart-btn-icon" onclick="toggleCartModal()">
-      🛒
-      <span class="cart-badge" id="cartBadge">0</span>
-    </button>
   </header>
 
-  <!-- Navigation Pills -->
-  <div class="nav-pills">
-    <button class="pill active" id="pillNew" onclick="showSection('new')">✨ Neuheiten</button>
-    <button class="pill" id="pillAll" onclick="showSection('all')">📦 Alle Produkte</button>
-    <button class="pill" id="pillImpressum" onclick="showSection('impressum')">⚖️ Impressum</button>
-  </div>
-
-  <div class="container">
-    <div id="shopSection">
-      <div id="productGrid"></div>
+  <!-- Hero Section -->
+  <section class="py-12 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center space-y-6">
+    <div class="inline-block px-4 py-1.5 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 text-xs font-bold uppercase tracking-wider">
+      Individueller 3D-Druck aus Rahden
     </div>
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-black text-white leading-tight">
+      Praktische Helfer für deinen <br><span class="text-orange-500">Alltag & Werkstatt</span>
+    </h1>
+    <p class="text-lg text-gray-400 max-w-2xl mx-auto">
+      Hier findest du meine selbstkonstruierten und 3D-gedruckten Topseller. Hochfester Kunststoff (PLA, PETG, ASA), perfekte Passgenauigkeit und schneller Versand.
+    </p>
+  </section>
 
-    <div id="impressumSection" style="display: none;">
-      <div class="impressum-box">
-        <h2 style="margin-bottom: 12px; color: var(--orange);">Impressum</h2>
-        <p><strong>Sefas3DShop</strong></p>
-        <p>Inhaber: Sefa Demir</p>
-        <p>Neuer Weg 42</p>
-        <p>32369 Rahden</p>
-        <p>Deutschland</p>
-        <br>
-        <p><strong>Kontakt:</strong></p>
-        <p>E-Mail: info@sefas3dshop.de</p>
+  <!-- PRODUKTE (Shop-Bereich) -->
+  <section id="produkte" class="py-12 bg-[#12141a] border-y border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-end mb-8">
+        <div>
+          <h2 class="text-2xl font-black text-white uppercase tracking-wide">Produkte</h2>
+          <p class="text-gray-500 text-sm mt-1">Lege deine Wunschartikel direkt in den Warenkorb.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="productGrid">
+        <!-- Produkte werden via JS geladen -->
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Warenkorb Modal -->
-  <div class="modal-overlay" id="cartModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="color: var(--orange);">Dein Warenkorb</h3>
-        <button class="close-btn" onclick="toggleCartModal()">&times;</button>
-      </div>
+  <!-- BEWERTUNGEN (Review-Bereich) -->
+  <section id="bewertungen" class="py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       
-      <div class="cart-items" id="cartItems">
-        <p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>
-      </div>
-
-      <!-- Formular -->
-      <div class="checkout-section" id="checkoutSection" style="display: none;">
-        <div class="section-subtitle">1. Kontaktdaten & Lieferadresse</div>
+      <!-- Split-Layout: Links Bewertungen, Rechts Formular -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
         
-        <div class="form-group">
-          <label>Vollständiger Name *</label>
-          <input type="text" id="custName" class="form-control" placeholder="Max Mustermann">
-        </div>
-
-        <div class="form-group">
-          <label>E-Mail-Adresse *</label>
-          <input type="email" id="custEmail" class="form-control" placeholder="max@beispiel.de">
-        </div>
-
-        <div class="form-group">
-          <label>Straße & Hausnummer *</label>
-          <input type="text" id="custAddress" class="form-control" placeholder="Musterstraße 12">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group" style="flex: 1;">
-            <label>PLZ *</label>
-            <input type="text" id="custZip" class="form-control" placeholder="12345">
+        <!-- Linke Seite: Liste der Bewertungen -->
+        <div class="lg:col-span-2 space-y-6">
+          <div>
+            <h2 class="text-2xl font-black text-white uppercase tracking-wide mb-1">Kundenstimmen</h2>
+            <div class="flex items-center gap-2 mb-6">
+              <span class="text-3xl font-black text-orange-500" id="averageRating">5.0</span>
+              <div class="flex text-orange-500 text-lg"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+              <span class="text-gray-500 text-sm ml-2" id="reviewCountText">(0 Bewertungen)</span>
+            </div>
           </div>
-          <div class="form-group" style="flex: 2;">
-            <label>Ort *</label>
-            <input type="text" id="custCity" class="form-control" placeholder="Musterstadt">
+          
+          <div id="reviewsList" class="space-y-4 max-h-[600px] overflow-y-auto pr-2">
+            <!-- Bewertungen werden via JS geladen -->
           </div>
         </div>
 
-        <div class="section-subtitle" style="margin-top: 15px;">2. Zahlungsart wählen</div>
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="paypal" checked>
-          <span>🅿️ PayPal / PayPal.Me</span>
-        </label>
-        <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="bank">
-          <span>🏦 Vorkasse / Überweisung (Revolut)</span>
-        </label>
-
-        <div class="summary-box">
-          <div class="summary-line">
-            <span>Zwischensumme:</span>
-            <span id="subTotal">0,00 €</span>
-          </div>
-          <div class="summary-line">
-            <span>Versandkosten (Paket):</span>
-            <span>6,99 €</span>
-          </div>
-          <div class="summary-line total">
-            <span>Gesamtsumme:</span>
-            <span id="cartTotal">6,99 €</span>
-          </div>
+        <!-- Rechte Seite: Formular zum Schreiben -->
+        <div class="bg-[#161920] border border-gray-800 rounded-2xl p-6 h-fit sticky top-24">
+          <h3 class="text-lg font-bold text-white mb-4"><i class="fa-solid fa-pen-to-square text-orange-500 mr-2"></i>Bewertung schreiben</h3>
+          <form onsubmit="submitReview(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-gray-400 mb-1">Dein Name</label>
+              <input type="text" id="revName" required class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 mb-1">Welches Produkt hast du gekauft?</label>
+              <select id="revProduct" required class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500">
+                <option value="Flavor / Sirup Flaschen Halter">Flavor / Sirup Flaschen Halter</option>
+                <option value="Tannenzapfen-Häuschen">Tannenzapfen-Häuschen</option>
+                <option value="Akustikpaneel Halterung">Akustikpaneel Halterung</option>
+                <option value="Werkzeug-Organizer">Werkzeug-Organizer</option>
+                <option value="Sonderanfertigung">Sonderanfertigung nach Maß</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 mb-1">Sterne</label>
+              <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required/><label for="star5" title="5 Sterne"><i class="fa-solid fa-star"></i></label>
+                <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 Sterne"><i class="fa-solid fa-star"></i></label>
+                <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 Sterne"><i class="fa-solid fa-star"></i></label>
+                <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 Sterne"><i class="fa-solid fa-star"></i></label>
+                <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 Stern"><i class="fa-solid fa-star"></i></label>
+              </div>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-gray-400 mb-1">Deine Erfahrung</label>
+              <textarea id="revText" required rows="4" placeholder="Wie zufrieden bist du mit dem Produkt und dem Versand?" class="w-full bg-[#0f1115] border border-gray-700 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-500 resize-none"></textarea>
+            </div>
+            <button type="submit" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-lg transition shadow-md">Bewertung absenden</button>
+          </form>
         </div>
 
-        <button class="btn btn-orange" onclick="checkout()">Kostenpflichtig bestellen</button>
       </div>
     </div>
-  </div>
+  </section>
 
-  <!-- Überweisungs-Info Modal -->
-  <div class="modal-overlay" id="bankModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h3 style="color: var(--orange);">Bestellung aufgenommen!</h3>
-        <button class="close-btn" onclick="toggleBankModal()">&times;</button>
+  <!-- Footer -->
+  <footer class="bg-[#0f1115] border-t border-gray-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-cube text-gray-600"></i>
+        <span class="font-bold text-gray-500 text-sm">SEFAS3DSHOP</span>
       </div>
-      <p style="font-size: 0.9rem;">Vielen Dank für deine Bestellung. Bitte überweise den Gesamtbetrag auf folgendes Konto:</p>
-      
-      <div class="bank-details" style="margin-top: 12px;">
-        <p><strong>Empfänger:</strong> Sefa Demir</p>
-        <p><strong>Bank:</strong> Revolut Bank</p>
-        <p><strong>IBAN:</strong> DE20 1001 0178 0592 6798 08</p>
-        <p><strong>Verwendungszweck:</strong> <span id="bankOrderRef" style="color: var(--orange); font-weight: bold;"></span></p>
-        <p><strong>Gesamtbetrag (inkl. Versand):</strong> <span id="bankOrderTotal" style="font-weight: bold;"></span></p>
+      <div class="text-gray-600 text-xs text-center">
+        © 2026 Sefa Demir | Neuer Weg 4, 32369 Rahden | Kleinunternehmer gem. § 19 UStG.
       </div>
+      <div class="flex gap-4">
+        <a href="mailto:sefad.sd@gmail.com" class="text-gray-500 hover:text-orange-500 transition"><i class="fa-solid fa-envelope text-xl"></i></a>
+      </div>
+    </div>
+  </footer>
 
-      <button class="btn btn-orange" style="margin-top: 15px;" onclick="toggleBankModal()">Schließen</button>
+  <!-- WARENKORB SIDEBAR -->
+  <div id="cartSidebar" class="fixed inset-y-0 right-0 w-full md:w-[400px] bg-[#161920] border-l border-gray-800 shadow-2xl transform translate-x-full transition-transform duration-300 z-[60] flex flex-col">
+    <div class="p-5 border-b border-gray-800 flex justify-between items-center bg-[#12141a]">
+      <h3 class="text-lg font-black text-white flex items-center gap-2"><i class="fa-solid fa-cart-shopping text-orange-500"></i> Dein Warenkorb</h3>
+      <button onclick="toggleCart()" class="text-gray-400 hover:text-white bg-gray-800 p-2 rounded-lg transition"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    
+    <div id="cartItems" class="flex-1 overflow-y-auto p-5 space-y-4">
+      <!-- Cart Items via JS -->
+    </div>
+
+    <div class="p-5 border-t border-gray-800 bg-[#12141a]">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-gray-400 font-medium">Zwischensumme:</span>
+        <span id="cartSubtotal" class="text-white font-bold">0,00 €</span>
+      </div>
+      <div class="flex justify-between items-center mb-4 pb-4 border-b border-gray-800">
+        <span class="text-gray-400 font-medium">Versandkosten:</span>
+        <span class="text-white font-bold">5,00 €</span>
+      </div>
+      <div class="flex justify-between items-center mb-6">
+        <span class="text-white font-bold text-lg">Gesamtbetrag:</span>
+        <span id="cartTotal" class="text-2xl font-black text-orange-500">0,00 €</span>
+      </div>
+      <button onclick="checkout()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3.5 rounded-lg transition shadow-lg flex justify-center items-center gap-2 text-lg">
+        Jetzt bestellen <i class="fa-solid fa-check"></i>
+      </button>
+      <p class="text-[11px] text-gray-500 text-center mt-3">Du schließt die Bestellung per E-Mail ab (Zahlung per PayPal/Überweisung).</p>
     </div>
   </div>
+  
+  <!-- Overlay für Warenkorb -->
+  <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-black/70 backdrop-blur-sm z-[55] hidden opacity-0 transition-opacity"></div>
 
   <script>
-    const shippingFee = 6.99;
-    const serviceID = "service_x0ojsah";
-    const templateID = "template_1a2b3c4"; // Deine Template ID aus EmailJS
-
-    const availableColors = [
-      "Schwarz (Matt)", "Beige", "Grün (Sage)", "Weiß", 
-      "Blau", "Rot", "Orange", "Braun / Holz-Optik", "Rosa", "Silber", "Gold"
-    ];
-
+    // --- 1. PRODUKT DATEN (Dein Katalog) ---
     const products = [
-      {
-        id: 45,
-        title: "Moderne Rillen-Vase (15 cm)",
-        price: 10.00,
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/22/220fb28d-19cd-48e0-bb1a-f7ee840fbcf9?rule=$_59.AUTO",
-        category: "Deko",
-        isNew: true,
-        sizes: ["15 cm (Standard)", "20 cm (+3,00 €)"]
-      },
-      {
-        id: 17,
-        title: "Dekoratives Eichhörnchen Fuzzy Skin",
-        price: 6.00,
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/d6/d60ef433-38f0-4267-9317-f8b00246c854?rule=$_59.AUTO",
-        category: "Deko",
-        isNew: true,
-        sizes: ["Standard"]
-      },
-      {
-        id: 21,
-        title: "Französische Bulldogge Schalen-Figur",
-        price: 15.00,
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/9a/9a410313-085e-44ef-a6bc-e578b8f2d591?rule=$_59.AUTO",
-        category: "Deko",
-        isNew: false,
-        sizes: ["Standard"]
-      },
-      {
-        id: 18,
-        title: "Moderner Weihnachtswichtel / Gnom",
-        price: 6.00,
-        img: "https://img.kleinanzeigen.de/api/v1/prod-ads/images/72/72eb962f-d890-449e-b924-f7b58713d96e?rule=$_59.AUTO",
-        category: "Weihnachten",
-        isNew: true,
-        sizes: ["Standard"]
-      }
+      { id: 1, name: "Flavor / Sirup Flaschen Halter", desc: "Sicherer Stand für alle gängigen Sirup-Flaschen. Wackelt nicht, extrem stabil.", price: 5.00, imgIcon: "fa-bottle-water" },
+      { id: 2, name: "Tannenzapfen-Häuschen", desc: "Dekoratives Häuschen für den Garten oder Balkon. Wetterfestes PETG.", price: 6.00, imgIcon: "fa-tree" },
+      { id: 3, name: "Akustikpaneel Halterung", desc: "Unsichtbare Wandbefestigung für schwere Holz-Akustikpaneele.", price: 5.00, imgIcon: "fa-bars-staggered" },
+      { id: 4, name: "Werkzeug-Organizer", desc: "Perfekte Ordnung für Schraubendreher und Zangen in der Werkstatt.", price: 8.50, imgIcon: "fa-wrench" }
     ];
 
-    let cart = [];
+    // --- 2. STATE (Speicher für Warenkorb & Bewertungen) ---
+    let cart = JSON.parse(localStorage.getItem('sefas_shop_cart')) || [];
+    let reviews = JSON.parse(localStorage.getItem('sefas_shop_reviews')) || [
+      { name: "Berkant E.", product: "Sonderanfertigung", rating: 5, text: "Sefa hat mir ein spezielles Unterdruckschlauch-T-Stück für meinen Passat gedruckt. Passt perfekt, super Typ!", date: "15.10.2026" },
+      { name: "Julia M.", product: "Flavor / Sirup Flaschen Halter", rating: 5, text: "Super Qualität, wackelt nicht und die Kaffeestation sieht endlich ordentlich aus.", date: "10.10.2026" }
+    ];
 
-    function renderProducts(items) {
+    // --- 3. INITIALISIERUNG ---
+    window.onload = () => {
+      renderProducts();
+      renderReviews();
+      updateCartUI();
+    };
+
+    // --- 4. SHOP & PRODUKTE ---
+    function renderProducts() {
       const grid = document.getElementById('productGrid');
-      grid.innerHTML = '';
-
-      if (items.length === 0) {
-        grid.innerHTML = '<p style="text-align:center; padding: 30px; color: #888;">Keine Produkte gefunden.</p>';
-        return;
-      }
-
-      items.forEach(p => {
-        const card = document.createElement('div');
-        card.className = 'product-card';
-
-        const sizeOptions = p.sizes.map(s => `<option>${s}</option>`).join('');
-        const colorOptions = availableColors.map(c => `<option>${c}</option>`).join('');
-
-        card.innerHTML = `
-          <div class="card-header">
-            <div class="section-headline">✨ ${p.isNew ? 'Neuheiten der Woche' : 'Produkt Highlights'}</div>
-            ${p.isNew ? '<span class="tag-fresh">Frisch gedruckt</span>' : ''}
+      grid.innerHTML = products.map(p => `
+        <div class="bg-[#161920] border border-gray-800 rounded-xl p-5 flex flex-col h-full hover:border-orange-500/50 transition-colors">
+          <div class="bg-[#0f1115] rounded-lg aspect-square flex items-center justify-center mb-4 border border-gray-800">
+            <i class="fa-solid ${p.imgIcon} text-5xl text-gray-700"></i>
           </div>
-          <div class="divider"></div>
-
-          <img class="product-img" src="${p.img}" alt="${p.title}" onerror="this.onerror=null; this.src='https://placehold.co/400x300/f8f8f8/ff9800?text=${encodeURIComponent(p.title)}';">
-
-          <div class="product-title">${p.title}</div>
-          <div class="product-price">${p.price.toFixed(2).replace('.', ',')} €</div>
-
-          <div class="form-group">
-            <label>Größe wählen:</label>
-            <select class="form-control" id="size-${p.id}">
-              ${sizeOptions}
-            </select>
+          <h3 class="text-white font-bold text-lg mb-1">${p.name}</h3>
+          <p class="text-gray-400 text-xs mb-4 flex-1 line-clamp-3">${p.desc}</p>
+          <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-800">
+            <span class="text-xl font-black text-white">${p.price.toFixed(2).replace('.', ',')} €</span>
+            <button onclick="addToCart(${p.id}, this)" class="bg-gray-800 hover:bg-orange-500 text-gray-300 hover:text-white font-bold py-2 px-4 rounded-lg transition-colors border border-gray-700 hover:border-orange-500 flex items-center gap-2">
+              <i class="fa-solid fa-plus"></i> <span class="hidden sm:inline">Kaufen</span>
+            </button>
           </div>
-
-          <div class="form-group">
-            <label>Farbe wählen:</label>
-            <select class="form-control" id="color-${p.id}">
-              ${colorOptions}
-            </select>
-          </div>
-
-          <button class="btn btn-orange" onclick="addToCart(${p.id})">
-            🛒 In den Warenkorb
-          </button>
-          
-          <button class="btn btn-green" onclick="whatsappRequest('${p.title}', ${p.id})">
-            💬 Sonderwunsch per WhatsApp
-          </button>
-        `;
-
-        grid.appendChild(card);
-      });
+        </div>
+      `).join('');
     }
 
-    function addToCart(id) {
-      const p = products.find(prod => prod.id === id);
-      const size = document.getElementById(`size-${id}`).value;
-      const color = document.getElementById(`color-${id}`).value;
-
-      const existing = cart.find(item => item.id === id && item.size === size && item.color === color);
-      if (existing) {
-        existing.quantity += 1;
-      } else {
-        cart.push({ ...p, size, color, quantity: 1 });
-      }
-
+    // --- 5. WARENKORB LOGIK ---
+    function addToCart(id, btnElement) {
+      const product = products.find(p => p.id === id);
+      const existing = cart.find(item => item.id === id);
+      if (existing) existing.qty += 1;
+      else cart.push({ ...product, qty: 1 });
+      
+      saveCart();
       updateCartUI();
-      toggleCartModal();
+      
+      // Button Feedback Animation
+      const originalHTML = btnElement.innerHTML;
+      btnElement.innerHTML = '<i class="fa-solid fa-check"></i> Drin!';
+      btnElement.classList.replace('bg-gray-800', 'bg-green-600');
+      btnElement.classList.replace('border-gray-700', 'border-green-600');
+      btnElement.classList.replace('text-gray-300', 'text-white');
+      setTimeout(() => { 
+        btnElement.innerHTML = originalHTML; 
+        btnElement.classList.replace('bg-green-600', 'bg-gray-800');
+        btnElement.classList.replace('border-green-600', 'border-gray-700');
+        btnElement.classList.replace('text-white', 'text-gray-300');
+      }, 1000);
     }
 
-    function removeFromCart(id, size, color) {
-      cart = cart.filter(item => !(item.id === id && item.size === size && item.color === color));
+    function updateItemQty(id, delta) {
+      const item = cart.find(i => i.id === id);
+      if (!item) return;
+      item.qty += delta;
+      if (item.qty <= 0) cart = cart.filter(i => i.id !== id);
+      saveCart();
       updateCartUI();
     }
+
+    function saveCart() { localStorage.setItem('sefas_shop_cart', JSON.stringify(cart)); }
 
     function updateCartUI() {
-      const badge = document.getElementById('cartBadge');
-      const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
-      badge.innerText = totalCount;
-
-      const cartItemsContainer = document.getElementById('cartItems');
-      const subTotalEl = document.getElementById('subTotal');
-      const cartTotalEl = document.getElementById('cartTotal');
-      const checkoutSection = document.getElementById('checkoutSection');
+      const container = document.getElementById('cartItems');
+      const countBadge = document.getElementById('cartCountBadge');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const totalEl = document.getElementById('cartTotal');
+      
+      let totalQty = 0;
+      let subtotalPrice = 0;
 
       if (cart.length === 0) {
-        cartItemsContainer.innerHTML = '<p style="text-align: center; color: #888; padding: 20px;">Dein Warenkorb ist leer.</p>';
-        checkoutSection.style.display = 'none';
+        container.innerHTML = '<div class="text-center text-gray-500 mt-10"><i class="fa-solid fa-box-open text-4xl mb-3 opacity-30"></i><p>Dein Warenkorb ist leer.</p></div>';
+      } else {
+        container.innerHTML = cart.map(item => {
+          totalQty += item.qty;
+          subtotalPrice += item.price * item.qty;
+          return `
+            <div class="bg-[#0f1115] border border-gray-800 rounded-lg p-3 flex gap-3 items-center">
+              <div class="bg-[#161920] w-12 h-12 rounded-md flex items-center justify-center flex-shrink-0 border border-gray-800">
+                <i class="fa-solid ${item.imgIcon} text-gray-500"></i>
+              </div>
+              <div class="flex-1">
+                <h4 class="text-white text-sm font-bold leading-tight line-clamp-1">${item.name}</h4>
+                <div class="text-gray-400 font-bold text-xs mt-1">${item.price.toFixed(2).replace('.',',')} €</div>
+              </div>
+              <div class="flex items-center gap-2 bg-[#161920] rounded-md p-1 border border-gray-800">
+                <button onclick="updateItemQty(${item.id}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded"><i class="fa-solid fa-minus text-[10px]"></i></button>
+                <span class="text-white text-xs font-bold w-4 text-center">${item.qty}</span>
+                <button onclick="updateItemQty(${item.id}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 rounded"><i class="fa-solid fa-plus text-[10px]"></i></button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      if (totalQty > 0) { 
+        countBadge.innerText = totalQty; 
+        countBadge.classList.remove('hidden'); 
+      } else { 
+        countBadge.classList.add('hidden'); 
+      }
+      
+      subtotalEl.innerText = subtotalPrice.toFixed(2).replace('.', ',') + ' €';
+      const finalTotal = subtotalPrice > 0 ? subtotalPrice + 5.00 : 0; // + 5€ Versand
+      totalEl.innerText = finalTotal.toFixed(2).replace('.', ',') + ' €';
+    }
+
+    function toggleCart() {
+      const sidebar = document.getElementById('cartSidebar');
+      const overlay = document.getElementById('cartOverlay');
+      if (sidebar.classList.contains('translate-x-full')) {
+        sidebar.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+      } else {
+        sidebar.classList.add('translate-x-full');
+        overlay.classList.add('opacity-0');
+        setTimeout(() => overlay.classList.add('hidden'), 300);
+      }
+    }
+
+    function checkout() {
+      if (cart.length === 0) return alert("Dein Warenkorb ist leer!");
+      let orderText = cart.map(i => `- ${i.qty}x ${i.name}`).join('%0A');
+      let total = document.getElementById('cartTotal').innerText;
+      
+      const subject = "Neue Bestellung bei Sefas3DShop";
+      const body = `Hallo Sefa,%0A%0Aich möchte gerne folgende Artikel bestellen:%0A%0A${orderText}%0A%0AVersandkosten: 5,00 €%0AGesamtpreis: ${total}%0A%0AMeine Lieferadresse lautet:%0A[Bitte Name, Straße, PLZ, Ort eintragen]%0A%0ABitte sende mir deine Zahlungsdaten (PayPal oder IBAN).%0A%0AViele Grüße`;
+      
+      window.location.href = `mailto:sefad.sd@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // --- 6. BEWERTUNGEN LOGIK ---
+    function renderReviews() {
+      const list = document.getElementById('reviewsList');
+      const countText = document.getElementById('reviewCountText');
+      const avgText = document.getElementById('averageRating');
+
+      if (reviews.length === 0) {
+        list.innerHTML = '<p class="text-gray-500">Noch keine Bewertungen vorhanden. Sei der Erste!</p>';
         return;
       }
 
-      checkoutSection.style.display = 'block';
-      cartItemsContainer.innerHTML = '';
-      let subTotal = 0;
-
-      cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        subTotal += itemTotal;
-
-        const div = document.createElement('div');
-        div.className = 'cart-item';
-        div.innerHTML = `
-          <div>
-            <div style="font-weight: bold; font-size: 0.9rem;">${item.title}</div>
-            <div style="font-size: 0.75rem; color: #666;">${item.color} | ${item.size}</div>
-            <div style="font-size: 0.8rem;">${item.quantity}x ${item.price.toFixed(2).replace('.', ',')} €</div>
+      let totalStars = 0;
+      list.innerHTML = reviews.map(r => {
+        totalStars += r.rating;
+        const stars = Array(5).fill(0).map((_, i) => `<i class="fa-solid fa-star ${i < r.rating ? 'text-orange-500' : 'text-gray-700'} text-[10px]"></i>`).join('');
+        return `
+        <div class="bg-[#161920] border border-gray-800 rounded-xl p-5 flex flex-col gap-3">
+          <div class="flex justify-between items-start">
+            <div>
+              <span class="text-white font-bold text-sm block">${r.name}</span>
+              <span class="text-gray-500 text-[10px] font-bold uppercase tracking-wider">Kaufte: ${r.product}</span>
+            </div>
+            <div class="flex gap-0.5">${stars}</div>
           </div>
-          <div>
-            <span style="font-weight: bold; color: var(--orange);">${itemTotal.toFixed(2).replace('.', ',')} €</span>
-            <span class="remove-item" onclick="removeFromCart(${item.id}, '${item.size}', '${item.color}')">&times;</span>
-          </div>
-        `;
-        cartItemsContainer.appendChild(div);
-      });
+          <p class="text-gray-300 text-sm leading-relaxed">"${r.text}"</p>
+          <span class="text-gray-600 text-[10px] mt-2">${r.date}</span>
+        </div>
+      `}).join('');
 
-      const finalTotal = subTotal + shippingFee;
-      subTotalEl.innerText = `${subTotal.toFixed(2).replace('.', ',')} €`;
-      cartTotalEl.innerText = `${finalTotal.toFixed(2).replace('.', ',')} €`;
+      countText.innerText = `(${reviews.length} Bewertungen)`;
+      const avg = (totalStars / reviews.length).toFixed(1);
+      avgText.innerText = avg;
     }
 
-    function toggleCartModal() {
-      document.getElementById('cartModal').classList.toggle('active');
-    }
+    function submitReview(e) {
+      e.preventDefault();
+      const ratingInput = document.querySelector('input[name="rating"]:checked');
+      if (!ratingInput) return alert("Bitte wähle eine Sterne-Bewertung aus.");
 
-    function toggleBankModal() {
-      document.getElementById('bankModal').classList.toggle('active');
-    }
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('de-DE');
 
-    /* Checkout & Automatischer E-Mail-Versand */
-    async function checkout() {
-      if (cart.length === 0) {
-        alert('Dein Warenkorb ist leer!');
-        return;
-      }
-
-      const name = document.getElementById('custName').value.trim();
-      const email = document.getElementById('custEmail').value.trim();
-      const address = document.getElementById('custAddress').value.trim();
-      const zip = document.getElementById('custZip').value.trim();
-      const city = document.getElementById('custCity').value.trim();
-
-      if (!name || !email || !address || !zip || !city) {
-        alert('Bitte fülle alle Kontaktdaten und die Lieferadresse aus!');
-        return;
-      }
-
-      const subTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const totalAmount = subTotal + shippingFee;
-      const orderId = "ORD-" + Math.floor(100000 + Math.random() * 900000);
-      const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked').value;
-
-      // Artikelliste formatiert aufbereiten
-      const itemsListText = cart.map(item => 
-        `- ${item.title} (${item.size}, Farbe: ${item.color}) x${item.quantity}: ${(item.price * item.quantity).toFixed(2).replace('.', ',')} €`
-      ).join('\n');
-
-      // E-Mail-Parameter an den KUNDEN
-      const emailParamsCustomer = {
-        order_id: orderId,
-        cust_name: name,
-        cust_email: email,
-        cust_address: `${address}, ${zip} ${city}`,
-        payment_method: selectedPayment === 'paypal' ? 'PayPal' : 'Überweisung (Revolut)',
-        items_list: itemsListText,
-        shipping_fee: "6,99 €",
-        total_amount: `${totalAmount.toFixed(2).replace('.', ',')} €`
+      const newReview = {
+        name: document.getElementById('revName').value.trim(),
+        product: document.getElementById('revProduct').value,
+        rating: parseInt(ratingInput.value),
+        text: document.getElementById('revText').value.trim(),
+        date: dateStr
       };
 
-      // E-Mail-Parameter an DICH (ADMIN)
-      const emailParamsAdmin = {
-        order_id: orderId,
-        cust_name: name,
-        cust_email: "sefad.sd@gmail.com",
-        cust_address: `${address}, ${zip} ${city}`,
-        payment_method: selectedPayment === 'paypal' ? 'PayPal' : 'Überweisung (Revolut)',
-        items_list: itemsListText,
-        shipping_fee: "6,99 €",
-        total_amount: `${totalAmount.toFixed(2).replace('.', ',')} €`
-      };
-
-      try {
-        // Sendet 1. Bestätigung an den Kunden & 2. Benachrichtigung an dich
-        await emailjs.send(serviceID, templateID, emailParamsCustomer);
-        await emailjs.send(serviceID, templateID, emailParamsAdmin);
-        console.log("E-Mails erfolgreich versendet!");
-      } catch (e) {
-        console.error("E-Mail-Versand fehlgeschlagen:", e);
-      }
-
-      cart = [];
-      updateCartUI();
-      toggleCartModal();
-
-      document.getElementById('custName').value = '';
-      document.getElementById('custEmail').value = '';
-      document.getElementById('custAddress').value = '';
-      document.getElementById('custZip').value = '';
-      document.getElementById('custCity').value = '';
-
-      if (selectedPayment === 'paypal') {
-        alert(`Vielen Dank! Deine Bestellung ${orderId} wurde aufgenommen und eine Bestätigung per E-Mail versendet.`);
-        const paypalAmount = totalAmount.toFixed(2);
-        window.open(`https://paypal.me/SefaDemir/${paypalAmount}EUR`, '_blank');
-      } else if (selectedPayment === 'bank') {
-        document.getElementById('bankOrderRef').innerText = orderId;
-        document.getElementById('bankOrderTotal').innerText = `${totalAmount.toFixed(2).replace('.', ',')} €`;
-        toggleBankModal();
-      }
+      // Bewertung ganz oben einfügen
+      reviews.unshift(newReview);
+      localStorage.setItem('sefas_shop_reviews', JSON.stringify(reviews));
+      
+      renderReviews();
+      e.target.reset();
+      
+      alert("Vielen Dank für deine Bewertung!");
     }
-
-    function showSection(section) {
-      document.getElementById('pillNew').classList.remove('active');
-      document.getElementById('pillAll').classList.remove('active');
-      document.getElementById('pillImpressum').classList.remove('active');
-
-      document.getElementById('shopSection').style.display = 'block';
-      document.getElementById('impressumSection').style.display = 'none';
-
-      if (section === 'new') {
-        document.getElementById('pillNew').classList.add('active');
-        renderProducts(products.filter(p => p.isNew));
-      } else if (section === 'all') {
-        document.getElementById('pillAll').classList.add('active');
-        renderProducts(products);
-      } else if (section === 'impressum') {
-        document.getElementById('pillImpressum').classList.add('active');
-        document.getElementById('shopSection').style.display = 'none';
-        document.getElementById('impressumSection').style.display = 'block';
-      }
-    }
-
-    function filterProducts() {
-      const q = document.getElementById('searchInput').value.toLowerCase();
-      renderProducts(products.filter(p => p.title.toLowerCase().includes(q)));
-    }
-
-    function whatsappRequest(title, id) {
-      const size = document.getElementById(`size-${id}`).value;
-      const color = document.getElementById(`color-${id}`).value;
-      const msg = encodeURIComponent(`Hallo! Ich habe eine Frage / einen Sonderwunsch zum Produkt: ${title} (Größe: ${size}, Farbe: ${color})`);
-      window.open(`https://wa.me/?text=${msg}`, '_blank');
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-      showSection('new');
-    });
   </script>
 </body>
 </html>
